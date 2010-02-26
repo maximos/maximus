@@ -25,6 +25,7 @@ SuperStrict
 
 Framework brl.blitz
 Import brl.standardio
+Import brl.maxutil
 Import cower.jonk
 Import duct.objectmap
 
@@ -36,7 +37,8 @@ Include "src/impl/version.bmx"
 Include "src/sources.bmx"
 
 Global logger:mxLogger = New mxLogger
-Global mainapp:mxApp = New mxApp.Create(AppArgs[1..]) ' Skip the first element because it is the program's location
+Global mainapp:mxApp
+New mxApp.Create(AppArgs[1..]) ' Skip the first element because it is the program's location
 mainapp.Run()
 
 Rem
@@ -47,6 +49,8 @@ Type mxApp
 	
 	Const c_version:String = "0.01"
 	
+	Field m_maxpath:String
+	
 	Field m_args:String[]
 	Field m_arghandler:mxArgumentHandler
 	
@@ -55,7 +59,8 @@ Type mxApp
 		returns: The new mxApp.
 	End Rem
 	Method Create:mxApp(args:String[])
-		m_args = args
+		mainapp = Self
+		SetArgs(args)
 		OnInit()
 		Return Self
 	End Method
@@ -65,6 +70,11 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method OnInit()
+		Try
+			m_maxpath = BlitzMaxPath()
+		Catch e:Object
+			ThrowError("Unable to determine the path to BlitzMax!~nHave you set the 'BMXPATH' environment variable?")
+		End Try
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
@@ -117,6 +127,18 @@ Type mxApp
 	Method ParseCommandArgs(argimpl:mxArgumentImplementation, args:String[])
 		' This will need to be parsed eventually, but for now..
 		argimpl.SetArgs(args)
+	End Method
+	
+	Rem
+		bbdoc: Set the application's arguments.
+		returns: Nothing.
+		about: NOTE: This will resolve to '--help' if the given args are Null.
+	End Rem
+	Method SetArgs(args:String[])
+		If args = Null
+			args = ["--help"]
+		End If
+		m_args = args
 	End Method
 	
 End Type
