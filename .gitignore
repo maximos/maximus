@@ -2,8 +2,6 @@
 *.[ai]
 .bmx/
 *.exe
-# generated docs
-doc/
 # backup files produced by MaxIDE
 *.bak
 *~
