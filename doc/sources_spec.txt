@@ -8,16 +8,19 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 {
 	"MODSCOPE": {					## e.g. "pub"
 		"name": "FORMAL NAME",		## e.g. "Public modules"
-		"deps": ["MODSCOPE", "MOD", ...]	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.filesystem").
+		"deps": ["MODSCOPE", "MOD", ...],	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.filesystem").
 											## This array can be absent if there are no dependencies.
+											## NOTE: This value adds dependencies for /all/ of the modules in this scope.
 		
 		"MOD": {						## e.g. "zlib"
-			"name": "FORMAL NAME"		## e.g. "zlib wrapper"
-			"deps": ["MODSCOPE", "MOD", ...]	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.blitz").
+			"name": "FORMAL NAME",		## e.g. "zlib wrapper"
+			"deps": ["MODSCOPE", "MOD", ...],	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.blitz").
 												## This array can be absent if there are no dependencies.
-			"ver": "VERSION"		## The module's current version (e.g. "1.01").
+			"version": "VERSION",	## The module's current version (e.g. "1.01").
 			"url": "URL"			## The get-line/url for the module's source (e.g. "http://github.com/Htbaa/process.mod/tarball/master").
-		}
-	}
+		},
+		## more MODs ...
+	},
+	## more MODSCOPEs ...
 }
 
