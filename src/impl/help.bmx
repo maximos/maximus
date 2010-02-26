@@ -62,7 +62,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 						"The most commonly used commands:~n" + ..
 						"~tget~tGet the given set modules~n" + ..
 						"~tremove~tRemove the given set of modules~n" + ..
-						"~tupdate~tUpdate the current set of modules~n" + ..
+						"~tupdate~tUpdate sources file~n" + ..
 						"~thelp~tGet help on a specific command~n" + ..
 						"Try 'maximus help <command>' for more information on a specific command."
 		End Select
