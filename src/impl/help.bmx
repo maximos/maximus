@@ -61,7 +61,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 				Return "maximus usage: maximus [-v|--version] [-h|--help] COMMAND [ARGS]~n" + ..
 						"The most commonly used commands:~n" + ..
 						"~tget~tGet the given set modules~n" + ..
-						"~tremove~tRemove the given set of modules" + ..
+						"~tremove~tRemove the given set of modules~n" + ..
 						"~tupdate~tUpdate the current set of modules~n" + ..
 						"~thelp~tGet help on a specific command~n" + ..
 						"Try 'maximus help <command>' for more information on a specific command."
