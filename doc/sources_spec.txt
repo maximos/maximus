@@ -1,25 +1,22 @@
-
 JSON sources specification.
 Strings in CAPS are all meant to replaced with the respective value.
 '##' denotes a comment.
 
-NOTE: Dependencies are expected to be non-official modids/mods (e.g., we don't need to know that "blah.blah" depends on
-	"brl.map", because we're only managing third-party modules.
+NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need to know that "blah.blah" depends on
+	"brl.map", because we're only managing third-party modules).
 
 {
-	"MODID": {									## e.g. "pub"
-		"name": "FORMAL NAME",					## e.g. "Public modules"
-		"depends": ["MODID", "MOD", ...]		## Contents can be either a modid (e.g. "brl") or a module (e.g. "brl.filesystem").
-												## This array can be skipped if there are no dependencies.
-												## NOTE: This may be removed, but the idea is that you can make /all/ modules under this
-												## modid depend upon a single module/modid.
+	"MODSCOPE": {					## e.g. "pub"
+		"name": "FORMAL NAME",		## e.g. "Public modules"
+		"deps": ["MODSCOPE", "MOD", ...]	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.filesystem").
+											## This array can be absent if there are no dependencies.
 		
-		"MOD": {								## e.g. "zlib"
-			"name": "FORMAL NAME"				## e.g. "zlib wrapper"
-			"depends": ["MODID", "MOD", ...]	## Contents can be either a modid (e.g. "brl") or a module (e.g. "brl.blitz").
-												## This array can be skipped if there are no dependencies.
-			"gtype": GETTYPE					## The get-type for the get-line (1 for Git, 2 for Subversion).
-			"gline": "GETLINE"					## The get-line/url for the module's source (e.g. "svn://blah.com/blah/trunk", "git://blah.com/blah/blah.git").
+		"MOD": {						## e.g. "zlib"
+			"name": "FORMAL NAME"		## e.g. "zlib wrapper"
+			"deps": ["MODSCOPE", "MOD", ...]	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.blitz").
+												## This array can be absent if there are no dependencies.
+			"ver": "VERSION"		## The module's current version (e.g. "1.01").
+			"url": "URL"			## The get-line/url for the module's source (e.g. "http://github.com/Htbaa/process.mod/tarball/master").
 		}
 	}
 }
