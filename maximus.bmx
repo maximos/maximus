@@ -26,8 +26,12 @@ SuperStrict
 Framework brl.blitz
 Import brl.standardio
 Import brl.maxutil
+
 Import cower.jonk
+
+Import duct.variables
 Import duct.objectmap
+Import duct.json
 
 Include "src/logger.bmx"
 Include "src/errors.bmx"
@@ -107,7 +111,7 @@ Type mxApp
 					argimpl.SetCallConvention(mxCallConvention.COMMAND)
 					ParseCommandArgs(argimpl, m_args[i + 1..])
 					argimpl.Execute()
-					Exit
+					Exit ' Commands take all the subsequent arguments
 				End If
 			Else
 				If isopt = True
@@ -127,6 +131,7 @@ Type mxApp
 	Method ParseCommandArgs(argimpl:mxArgumentImplementation, args:String[])
 		' This will need to be parsed eventually, but for now..
 		argimpl.SetArgs(args)
+		argimpl.CheckArgs()
 	End Method
 	
 	Rem

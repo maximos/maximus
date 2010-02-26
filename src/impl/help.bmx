@@ -64,7 +64,6 @@ Type mxHelpImpl Extends mxArgumentImplementation
 						"~tremove~tRemove the given set of modules" + ..
 						"~tupdate~tUpdate the current set of modules~n" + ..
 						"~thelp~tGet help on a specific command~n" + ..
-						"~n" + ..
 						"Try 'maximus help <command>' for more information on a specific command."
 		End Select
 	End Method
