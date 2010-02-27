@@ -38,6 +38,8 @@ Include "src/errors.bmx"
 Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
+Include "src/dependencies.bmx"
+Include "src/module.bmx"
 Include "src/sources.bmx"
 
 Global logger:mxLogger = New mxLogger
