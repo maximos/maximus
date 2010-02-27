@@ -7,18 +7,15 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 	"brl.map", because we're only managing third-party modules).
 
 {
-	"MODSCOPE": {					## e.g. "pub"
-		"name": "FORMAL NAME",		## e.g. "Public modules"
-		"deps": ["MODSCOPE", "MOD", ...],	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.filesystem").
-											## This array can be absent if there are no dependencies.
-											## NOTE: This value adds dependencies for /all/ of the modules in this scope.
+	"MODSCOPE": {					## e.g. "duct"
+		"name": "FORMAL NAME",		## e.g. "A set of assorted ductile modules for BlitzMax"
 		
-		"MOD": {						## e.g. "zlib"
-			"name": "FORMAL NAME",		## e.g. "zlib wrapper"
-			"deps": ["MODSCOPE", "MOD", ...],	## Contents can be either a modscope (e.g. "brl") or a module (e.g. "brl.blitz").
-												## This array can be absent if there are no dependencies.
-			"version": "VERSION",	## The module's current version (e.g. "1.01").
-			"url": "URL"			## The get-line/url for the module's source (e.g. "http://github.com/Htbaa/process.mod/tarball/master").
+		"MOD": {						## e.g. "logger"
+			"name": "FORMAL NAME",		## e.g. "Simple message logger"
+			"deps": ["MOD", "MOD", ...],	## Dependencies for the module (e.g. ["duct.etc", "duct.appendstream"])
+											## This array can be absent if there are no dependencies.
+			"version": "VERSION",	## The module's current version (e.g. "0.3").
+			"url": "URL"			## The get-line/url for the module's source (e.g. "http://github.com/komiga/duct/zipball/master").
 		},
 		## more MODs ...
 	},
