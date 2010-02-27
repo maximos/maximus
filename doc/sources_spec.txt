@@ -1,6 +1,7 @@
 JSON sources specification.
 Strings in CAPS are all meant to replaced with the respective value.
-'##' denotes a comment.
+'##' denotes a comment. These comments are simply for documentation purposes.
+Comments are not expected in the actual json data.
 
 NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need to know that "blah.blah" depends on
 	"brl.map", because we're only managing third-party modules).
