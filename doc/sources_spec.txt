@@ -12,10 +12,14 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 		
 		"MOD": {						## e.g. "logger"
 			"name": "FORMAL NAME",		## e.g. "Simple message logger"
-			"deps": ["MOD", "MOD", ...],	## Dependencies for the module (e.g. ["duct.etc", "duct.appendstream"])
-											## This array can be absent if there are no dependencies.
-			"version": "VERSION",	## The module's current version (e.g. "0.3").
-			"url": "URL"			## The get-line/url for the module's source (e.g. "http://github.com/komiga/duct/zipball/master").
+			"versions": {
+				"VERSION": {		## e.g. "0.3" ('dev' for the master/trunk in a repository-stored module)
+					"deps": ["MOD", "MOD", ...],	## Dependencies for this version (e.g. ["duct.etc", "duct.appendstream"])
+													## This array can be absent if there are no dependencies.
+					"url": "URL"	## The get-line/url for the module's source (e.g. "http://github.com/komiga/duct/zipball/master").
+				},
+				## more VERSIONs ...
+			},
 		},
 		## more MODs ...
 	},
