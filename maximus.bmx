@@ -37,6 +37,7 @@ Include "src/logger.bmx"
 Include "src/errors.bmx"
 Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
+Include "src/impl/update.bmx"
 Include "src/impl/version.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
@@ -84,6 +85,7 @@ Type mxApp
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
+		m_arghandler.AddArgImpl(New mxUpdateImpl)
 	End Method
 	
 	Rem

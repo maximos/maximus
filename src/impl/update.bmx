@@ -1,6 +1,6 @@
 
 Rem
-Copyright (c) 2010 Tim Howard
+Copyright (c) 2010 Christiaan Kras
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@ THE SOFTWARE.
 End Rem
 
 Rem
-	bbdoc: Maximus 'help' argument implementation.
+	bbdoc: Maximus 'update' argument implementation.
 End Rem
-Type mxHelpImpl Extends mxArgumentImplementation
+Type mxUpdateImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["help", "--help", "-h"])
+		init(["update", "--update", "-u"])
 	End Method
 	
 	Rem
@@ -37,13 +37,13 @@ Type mxHelpImpl Extends mxArgumentImplementation
 	End Rem
 	Method CheckArgs()
 		Select GetCallConvention()
-			Case mxCallConvention.COMMAND ' "help"
-				If m_args = Null
-					ThrowCommonError(mxCmdErrors.MISSINGPARAMS, "help")
-				End If
-			Case mxCallConvention.OPTION ' "--help" or "-h"
+			Case mxCallConvention.COMMAND ' "update"
 				If m_args <> Null
-					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-h|--help")
+					ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, "update")
+				End If
+			Case mxCallConvention.OPTION ' "-u" or "--update"
+				If m_args <> Null
+					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-u|--update")
 				End If
 		End Select
 	End Method
@@ -53,19 +53,8 @@ Type mxHelpImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Select GetCallConvention()
-			Case mxCallConvention.COMMAND
-				Return "usage: maximus help <command>~n" + ..
-						"e.g. maximus help get"
-			Case mxCallConvention.OPTION
-				Return "maximus usage: maximus [-v|--version] [-h|--help] COMMAND [ARGS]~n" + ..
-						"The most commonly used commands:~n" + ..
-						"~tget~tGet the given set modules~n" + ..
-						"~tremove~tRemove the given set of modules~n" + ..
-						"~tupdate~tUpdate sources file~n" + ..
-						"~thelp~tGet help on a specific command~n" + ..
-						"Try 'maximus help <command>' for more information on a specific command."
-		End Select
+		Return "description: Retrieve latest sources~n" + ..
+				"usage: maximus update (or maximus -u|--update)"
 	End Method
 	
 	Rem
@@ -73,24 +62,6 @@ Type mxHelpImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		Select GetCallConvention()
-			Case mxCallConvention.COMMAND
-				For Local command:String = EachIn m_args
-					If command.ToLower() = "help"
-						logger.LogMessage(command + ":~t" + "HELP HELP I'M BEING REPRESSED!")
-					Else
-						Local argimpl:mxArgumentImplementation = mainapp.m_arghandler.GetArgImplFromAlias(command)
-						If argimpl <> Null
-							logger.LogMessage(command + ":~t" + argimpl.GetUsage().Replace("~n", "~n~t~t"))
-						Else
-							logger.LogMessage(command + ":~tCommand not found")
-						End If
-					End If
-				Next
-			Case mxCallConvention.OPTION
-				logger.LogMessage(GetUsage())
-		End Select
+		logger.LogMessage("Retrieving sources...")
 	End Method
-	
 End Type
-
