@@ -27,7 +27,7 @@ End Rem
 Type mxUpdateImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["update", "--update", "-u"])
+		init(["update"])
 	End Method
 	
 	Rem
@@ -41,10 +41,6 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 				If m_args <> Null
 					ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, "update")
 				End If
-			Case mxCallConvention.OPTION ' "-u" or "--update"
-				If m_args <> Null
-					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-u|--update")
-				End If
 		End Select
 	End Method
 	
@@ -54,7 +50,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 	End Rem
 	Method GetUsage:String()
 		Return "description: Retrieve latest sources~n" + ..
-				"usage: maximus update (or maximus -u|--update)"
+				"usage: maximus update"
 	End Method
 	
 	Rem
@@ -64,4 +60,6 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 	Method Execute()
 		logger.LogMessage("Retrieving sources...")
 	End Method
+	
 End Type
+
