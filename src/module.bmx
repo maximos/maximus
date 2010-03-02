@@ -28,14 +28,7 @@ End Rem
 Type mxModuleBase Abstract
 	
 	Field m_parent:mxModuleBase
-	
 	Field m_name:String, m_formalname:String
-	Field m_version:String
-	Field m_dependencies:mxModuleDependencies
-	
-	Method New()
-		m_dependencies = New mxModuleDependencies
-	End Method
 	
 '#region Field accessors
 	
@@ -89,22 +82,6 @@ Type mxModuleBase Abstract
 		Return m_parent
 	End Method
 	
-	Rem
-		bbdoc: Set the base's dependencies.
-		returns: Nothing.
-	End Rem
-	Method SetDependencies(dependencies:mxModuleDependencies)
-		m_dependencies = dependencies
-	End Method
-	
-	Rem
-		bbdoc: Get the base's dependencies.
-		returns: The base's dependencies.
-	End Rem
-	Method GetDependencies:mxModuleDependencies()
-		Return m_dependencies
-	End Method
-	
 '#end region Field accessors
 	
 	Rem
@@ -115,9 +92,6 @@ Type mxModuleBase Abstract
 		Select variable.GetName().ToLower()
 			Case "name"
 				SetFormalName(variable.ValueAsString())
-				Return True
-			Case "deps"
-				SetDependencies(New mxModuleDependencies.FromJSON(dJArray(variable)))
 				Return True
 		End Select
 		Return False
@@ -165,18 +139,6 @@ Type mxModuleScope Extends mxModuleBase
 	End Method
 	
 	Rem
-		bbdoc: Propogate all dependencies for this scope to the scope's modules.
-		returns: Nothing.
-	End Rem
-	Method PropagateModuleDependencies()
-		If m_dependencies.Count() > 0
-			For Local modul:mxModule = EachIn m_modules.ValueEnumerator()
-				modul.GetDependencies().MergeDependencies(GetDependencies())
-			Next
-		End If
-	End Method
-	
-	Rem
 		bbdoc: Load the given dJObject into the scope.
 		returns: Itself, or Null if @root is Null.
 	End Rem
@@ -184,7 +146,7 @@ Type mxModuleScope Extends mxModuleBase
 		If root <> Null
 			SetName(root.GetName())
 			For Local variable:TVariable = EachIn root.GetValues()
-				If Not dJArray(variable) And dJObject(variable)
+				If dJObject(variable)
 					AddModule(New mxModule.FromJSON(dJObject(variable)))
 				Else
 					SetCommonFromVariable(variable)
@@ -202,44 +164,39 @@ Rem
 End Rem
 Type mxModule Extends mxModuleBase
 	
-	Field m_version:String
-	Field m_url:String
+	Field m_versions:TObjectMap
 	
-'#region Field accessors
-	
-	Rem
-		bbdoc: Set the module's version.
-		returns: Nothing.
-	End Rem
-	Method SetVersion(version:String)
-		m_version = version
+	Method New()
+		m_versions = New TObjectMap
 	End Method
 	
 	Rem
-		bbdoc: Get the module's version.
-		returns: The module's version.
+		bbdoc: Add the given version to the module.
+		returns: True if the version was added, or False if it was not (the version is Null).
 	End Rem
-	Method GetVersion:String()
-		Return m_version
+	Method AddVersion:Int(version:mxModuleVersion)
+		If version <> Null
+			m_versions._Insert(version.GetName(), version)
+			Return True
+		End If
+		Return False
 	End Method
 	
 	Rem
-		bbdoc: Set the module's url.
-		returns: Nothing.
+		bbdoc: Check if there is a version with the given name.
+		returns: True if the version was found, or False if it was not.
 	End Rem
-	Method SetUrl(url:String)
-		m_url = url
+	Method HasVersion:Int(name:String)
+		Return m_versions._Contains(name)
 	End Method
 	
 	Rem
-		bbdoc: Get the module's url.
-		returns: The module's url.
+		bbdoc: Get a version with the given name.
+		returns: The version with the given name, or Null if there is no version with the given name.
 	End Rem
-	Method GetUrl:String()
-		Return m_url
+	Method GetVersionWithName:mxModuleVersion(name:String)
+		Return mxModuleVersion(m_versions._ValueByKey(name))
 	End Method
-	
-'#end region Field accessors
 	
 	Rem
 		bbdoc: Set a common field from the given variable.
@@ -250,22 +207,135 @@ Type mxModule Extends mxModuleBase
 			Return True
 		Else
 			Select variable.GetName().ToLower()
-				Case "version"
-					SetVersion(variable.ValueAsString())
-					Return True
-				Case "url"
-					SetUrl(variable.ValueAsString())
-					Return True
+				Case "versions"
+					For Local jobj:dJObject = EachIn dJObject(variable).GetValues()
+						AddVersion(New mxModuleVersion.FromJSON(jobj))
+					Next
 			End Select
 			Return False
 		End If
 	End Method
 	
 	Rem
-		bbdoc: Load the given dJObject into the scope.
+		bbdoc: Load the given dJObject into the module.
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModule(root:dJObject)
+		If root <> Null
+			SetName(root.GetName())
+			For Local variable:TVariable = EachIn root.GetValues()
+				SetCommonFromVariable(variable)
+			Next
+			Return Self
+		End If
+		Return Null
+	End Method
+	
+End Type
+
+Rem
+	bbdoc: Maximus module version.
+End Rem
+Type mxModuleVersion
+	
+	Field m_parent:mxModule
+	Field m_name:String, m_url:String
+	Field m_dependencies:mxModuleDependencies
+	
+	Method New()
+		m_dependencies = New mxModuleDependencies
+	End Method
+	
+'#region Field accessors
+	
+	Rem
+		bbdoc: Set the version's parent.
+		returns: Nothing.
+	End Rem
+	Method SetParent(parent:mxModule)
+		m_parent = parent
+	End Method
+	
+	Rem
+		bbdoc: Get the version's parent.
+		returns: The version's parent.
+	End Rem
+	Method GetParent:mxModule()
+		Return m_parent
+	End Method
+	
+	Rem
+		bbdoc: Set the version's name.
+		returns: Nothing.
+	End Rem
+	Method SetName(name:String)
+		Assert name, "(mxModuleVersion.SetName) name cannot be Null!"
+		m_name = name
+	End Method
+	
+	Rem
+		bbdoc: Get the version's name.
+		returns: The version's name.
+	End Rem
+	Method GetName:String()
+		Return m_name
+	End Method
+	
+	Rem
+		bbdoc: Set the version's url.
+		returns: Nothing.
+	End Rem
+	Method SetUrl(url:String)
+		Assert url, "(mxModuleVersion.SetUrl) url cannot be Null!"
+		m_url = url
+	End Method
+	
+	Rem
+		bbdoc: Get the version's url.
+		returns: The version's url.
+	End Rem
+	Method GetUrl:String()
+		Return m_url
+	End Method
+	
+	Rem
+		bbdoc: Set the version's dependencies.
+		returns: Nothing.
+	End Rem
+	Method SetDependencies(dependencies:mxModuleDependencies)
+		m_dependencies = dependencies
+	End Method
+	
+	Rem
+		bbdoc: Get the version's dependencies.
+		returns: The version's dependencies.
+	End Rem
+	Method GetDependencies:mxModuleDependencies()
+		Return m_dependencies
+	End Method
+	
+'#end region Field accessors
+	
+	Rem
+		bbdoc: Set a common field from the given variable.
+		returns: True if the given variable was handled, or False if it was not.
+	End Rem
+	Method SetCommonFromVariable:Int(variable:TVariable)
+		Select variable.GetName().ToLower()
+			Case "url"
+				SetUrl(variable.ValueAsString())
+			Case "deps"
+				m_dependencies.FromJSON(dJArray(variable))
+				Return True
+		End Select
+		Return False
+	End Method
+	
+	Rem
+		bbdoc: Load the given dJObject into the version.
+		returns: Itself, or Null if @root is Null.
+	End Rem
+	Method FromJSON:mxModuleVersion(root:dJObject)
 		If root <> Null
 			SetName(root.GetName())
 			For Local variable:TVariable = EachIn root.GetValues()

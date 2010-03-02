@@ -32,7 +32,7 @@ Type mxModuleDependencies Extends TObjectMap
 	End Rem
 	Method AddNewDependency:Int(key:String)
 		If key <> Null
-			Local dep:mxModuleDependency = New mxModuleDependency.Create(key, True)
+			Local dep:mxModuleDependency = New mxModuleDependency.Create(key)
 			_Insert(key, dep)
 			Return True
 		End If
@@ -60,7 +60,7 @@ Type mxModuleDependencies Extends TObjectMap
 	End Method
 	
 	Rem
-		bbdoc: Add the dependencies from the given mxDependencies.
+		bbdoc: Add the dependencies from the given mxModuleDependencies.
 		returns: Nothing.
 	End Rem
 	Method MergeDependencies(dependencies:mxModuleDependencies)
@@ -70,13 +70,13 @@ Type mxModuleDependencies Extends TObjectMap
 	End Method
 	
 	Rem
-		bbdoc: Load the given dJObject into the scope.
+		bbdoc: Load the dependencies from the given dJArray.
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModuleDependencies(root:dJArray)
 		If root <> Null
 			For Local strvar:TStringVariable = EachIn root.GetValues()
-				AddDependency(New mxModuleDependency.FromVariable(strvar, True))
+				AddDependency(New mxModuleDependency.FromVariable(strvar))
 			Next
 			Return Self
 		End If
@@ -91,15 +91,13 @@ End Rem
 Type mxModuleDependency
 	
 	Field m_key:String
-	Field m_isscope:Int
 	
 	Rem
 		bbdoc: Create a new mxModuleDependency.
 		returns: Itself.
-		about: If @resolve is True, the dependency's type will be resolved.
 	End Rem
-	Method Create:mxModuleDependency(key:String, resolve:Int = True)
-		Set(key, resolve)
+	Method Create:mxModuleDependency(key:String)
+		Set(key)
 		Return Self
 	End Method
 	
@@ -107,14 +105,11 @@ Type mxModuleDependency
 	
 	Rem
 		bbdoc: Set the dependency.
-		returns: True if the dependency is a scope, or False if it is a module.
-		about: If @resolve is True, the dependency's type will be re-resolved.
+		returns: Nothing.
 	End Rem
-	Method Set:Int(key:String, resolve:Int = True)
+	Method Set(key:String)
 		Assert key, "(mxModuleDependency.Set) key cannot be Null"
 		m_key = key
-		If resolve = True Then ResolveType()
-		Return m_isscope
 	End Method
 	
 	Rem
@@ -125,37 +120,15 @@ Type mxModuleDependency
 		Return m_key
 	End Method
 	
-	Rem
-		bbdoc: Check if the dependency is a scope.
-		returns: True if the dependency is a scope, or False if it is a module.
-	End Rem
-	Method IsScope:Int()
-		Return m_isscope
-	End Method
-	
 '#end region Field accessors
-	
-	Rem
-		bbdoc: Resolve the dependency's type (scope or module).
-		returns: True if the dependency is a scope or False if it is a module.
-	End Rem
-	Method ResolveType:Int()
-		If m_key.Contains(".") = True
-			m_isscope = False
-		Else
-			m_isscope = True
-		End If
-		Return m_isscope
-	End Method
 	
 	Rem
 		bbdoc: Set the dependency from the given variable.
 		returns: Itself, or Null if the given variable is Null.
-		about: If @resolve is True, the dependency's type will be (re-)resolved.
 	End Rem
-	Method FromVariable:mxModuleDependency(strvar:TStringVariable, resolve:Int = True)
+	Method FromVariable:mxModuleDependency(strvar:TStringVariable)
 		If strvar <> Null
-			Set(strvar.Get(), resolve)
+			Set(strvar.Get())
 			Return Self
 		End If
 		Return Null
