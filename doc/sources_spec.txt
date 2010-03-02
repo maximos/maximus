@@ -11,7 +11,7 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 		"name": "FORMAL NAME",		## e.g. "A set of assorted ductile modules for BlitzMax"
 		
 		"MOD": {						## e.g. "logger"
-			"name": "FORMAL NAME",		## e.g. "Simple message logger"
+			"desc": "DESCRIPTION",		## e.g. "Simple message logger"
 			"versions": {
 				"VERSION": {		## e.g. "0.3" ('dev' for the master/trunk in a repository-stored module)
 					"deps": ["MOD", "MOD", ...],	## Dependencies for this version (e.g. ["duct.etc", "duct.appendstream"])
