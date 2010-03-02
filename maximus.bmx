@@ -110,6 +110,7 @@ Type mxApp
 				If isopt = True
 					argimpl.SetArgs(Null)
 					argimpl.SetCallConvention(mxCallConvention.OPTION)
+					argimpl.CheckArgs()
 					argimpl.Execute()
 				Else ' Must be a command (leaving out parameters for options, as that would get really complicated)
 					argimpl.SetCallConvention(mxCallConvention.COMMAND)
