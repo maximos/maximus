@@ -1,0 +1,14 @@
+{
+	"duct": {
+		"desc": "A set of assorted ductile modules for BlitzMax",
+		"logger": {
+			"desc": "Simple message logger",
+			"versions": {
+				"0.3": {
+					"deps": ["duct.etc", "duct.appendstream"],
+					"url": "test/duct.logger.zip"
+				}
+			}
+		}
+	}
+}

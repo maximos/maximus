@@ -55,6 +55,25 @@ Type mxSourcesHandler Extends TObjectMap
 	End Method
 	
 	Rem
+		bbdoc: Load the given file into the handler.
+		returns: Itself, or Null if the given file either could not be opened or does not exist.
+	End Rem
+	Method FromFile:mxSourcesHandler(file:String)
+		Local jreader:dJReader, root:dJObject
+		jreader = New dJReader.InitWithStream(file)
+		If jreader <> Null
+			Try
+				root = jreader.Parse()
+			Catch e:JException
+				ThrowError("Caught parser exception:~n" + e.ToString())
+			End Try
+			FromJSON(root)
+			Return Self
+		End If
+		Return Null
+	End Method
+	
+	Rem
 		bbdoc: Load the given dJObject into the handler.
 		returns: Itself, or Null if @root is Null.
 	End Rem

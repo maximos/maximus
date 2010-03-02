@@ -55,7 +55,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 	Method GetUsage:String()
 		Select GetCallConvention()
 			Case mxCallConvention.COMMAND
-				Return "usage: maximus help <command>~n" + ..
+				Return "usage: maximus help <commands>~n" + ..
 						"e.g. maximus help get"
 			Case mxCallConvention.OPTION
 				Return "maximus usage: maximus [-v|--version] [-h|--help] COMMAND [ARGS]~n" + ..
@@ -63,6 +63,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 						"~tget~tGet the given set modules~n" + ..
 						"~tremove~tRemove the given set of modules~n" + ..
 						"~tupdate~tUpdate sources file~n" + ..
+						"~tlist~tList the module scopes and modules~n" + ..
 						"~thelp~tGet help on a specific command~n" + ..
 						"Try 'maximus help <command>' for more information on a specific command."
 		End Select

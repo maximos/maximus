@@ -37,8 +37,9 @@ Include "src/logger.bmx"
 Include "src/errors.bmx"
 Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
-Include "src/impl/update.bmx"
 Include "src/impl/version.bmx"
+Include "src/impl/update.bmx"
+Include "src/impl/list.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
@@ -60,6 +61,7 @@ Type mxApp
 	
 	Field m_args:String[]
 	Field m_arghandler:mxArgumentHandler
+	Field m_sourceshandler:mxSourcesHandler
 	
 	Rem
 		bbdoc: Create a new mxApp.
@@ -86,6 +88,11 @@ Type mxApp
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
 		m_arghandler.AddArgImpl(New mxUpdateImpl)
+		m_arghandler.AddArgImpl(New mxListImpl)
+		m_sourceshandler = New mxSourcesHandler.FromFile("test/sources")
+		If m_sourceshandler = Null
+			ThrowError("Failed to load ~qtests/sources~q")
+		End If
 	End Method
 	
 	Rem

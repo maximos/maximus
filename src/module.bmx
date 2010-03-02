@@ -27,7 +27,6 @@ Rem
 End Rem
 Type mxModuleBase Abstract
 	
-	Field m_parent:mxModuleBase
 	Field m_name:String, m_description:String
 	
 '#region Field accessors
@@ -66,22 +65,6 @@ Type mxModuleBase Abstract
 		Return m_description
 	End Method
 	
-	Rem
-		bbdoc: Set the base's parent.
-		returns: Nothing.
-	End Rem
-	Method SetParent(parent:mxModuleBase)
-		m_parent = parent
-	End Method
-	
-	Rem
-		bbdoc: Get the base's parent.
-		returns: The base's parent.
-	End Rem
-	Method GetParent:mxModuleBase()
-		Return m_parent
-	End Method
-	
 '#end region Field accessors
 	
 	Rem
@@ -117,6 +100,7 @@ Type mxModuleScope Extends mxModuleBase
 	Method AddModule:Int(modul:mxModule)
 		If modul <> Null
 			m_modules._Insert(modul.GetName(), modul)
+			modul.SetParent(Self)
 			Return True
 		End If
 		Return False
@@ -157,6 +141,14 @@ Type mxModuleScope Extends mxModuleBase
 		Return Null
 	End Method
 	
+	Rem
+		bbdoc: Get the module enumerator for the scope.
+		returns: The module enumerator for the scope.
+	End Rem
+	Method ModuleEnumerator:TMapEnumerator()
+		Return m_modules.ValueEnumerator()
+	End Method
+	
 End Type
 
 Rem
@@ -164,11 +156,32 @@ Rem
 End Rem
 Type mxModule Extends mxModuleBase
 	
+	Field m_parent:mxModuleScope
 	Field m_versions:TObjectMap
 	
 	Method New()
 		m_versions = New TObjectMap
 	End Method
+	
+'#region Field accessors
+	
+	Rem
+		bbdoc: Set the module's parent.
+		returns: Nothing.
+	End Rem
+	Method SetParent(parent:mxModuleScope)
+		m_parent = parent
+	End Method
+	
+	Rem
+		bbdoc: Get the module's parent.
+		returns: The module's parent.
+	End Rem
+	Method GetParent:mxModuleScope()
+		Return m_parent
+	End Method
+	
+'#end region Field accessors
 	
 	Rem
 		bbdoc: Add the given version to the module.
@@ -177,6 +190,7 @@ Type mxModule Extends mxModuleBase
 	Method AddVersion:Int(version:mxModuleVersion)
 		If version <> Null
 			m_versions._Insert(version.GetName(), version)
+			version.SetParent(Self)
 			Return True
 		End If
 		Return False
@@ -229,6 +243,14 @@ Type mxModule Extends mxModuleBase
 			Return Self
 		End If
 		Return Null
+	End Method
+	
+	Rem
+		bbdoc: Get the version enumerator for the module.
+		returns: The version enumerator for the module.
+	End Rem
+	Method VersionEnumerator:TMapEnumerator()
+		Return m_versions.ValueEnumerator()
 	End Method
 	
 End Type

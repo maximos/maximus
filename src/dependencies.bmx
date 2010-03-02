@@ -83,6 +83,19 @@ Type mxModuleDependencies Extends TObjectMap
 		Return Null
 	End Method
 	
+	Rem
+		bbdoc: Get a string containing the list of dependencies, separated by @separator.
+		returns: A string containing the list of dependencies.
+	End Rem
+	Method DependencyList:String(separator:String = ", ")
+		Local a:String, dep:mxModuleDependency
+		For dep = EachIn ValueEnumerator()
+			a:+ dep.Get() + separator
+		Next
+		If a.Length > 0 Then a = a[..a.Length - separator.Length]
+		Return a
+	End Method
+	
 End Type
 
 Rem
