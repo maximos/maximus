@@ -28,7 +28,7 @@ End Rem
 Type mxModuleBase Abstract
 	
 	Field m_parent:mxModuleBase
-	Field m_name:String, m_formalname:String
+	Field m_name:String, m_description:String
 	
 '#region Field accessors
 	
@@ -50,20 +50,20 @@ Type mxModuleBase Abstract
 	End Method
 	
 	Rem
-		bbdoc: Set the base's formal name.
+		bbdoc: Set the base's description.
 		returns: Nothing.
 	End Rem
-	Method SetFormalName(formalname:String)
-		Assert formalname, "(mxModuleBase.SetFormalName) formalname cannot be Null!"
-		m_formalname = formalname
+	Method SetDescription(description:String)
+		Assert description, "(mxModuleBase.SetDescription) formalname cannot be Null!"
+		m_description = description
 	End Method
 	
 	Rem
-		bbdoc: Get the base's formal name.
-		returns: The base's formal name.
+		bbdoc: Get the base's description.
+		returns: The base's description.
 	End Rem
-	Method GetFormalName:String()
-		Return m_formalname
+	Method GetDescription:String()
+		Return m_description
 	End Method
 	
 	Rem
@@ -90,8 +90,8 @@ Type mxModuleBase Abstract
 	End Rem
 	Method SetCommonFromVariable:Int(variable:TVariable)
 		Select variable.GetName().ToLower()
-			Case "name"
-				SetFormalName(variable.ValueAsString())
+			Case "desc"
+				SetDescription(variable.ValueAsString())
 				Return True
 		End Select
 		Return False
