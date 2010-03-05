@@ -24,7 +24,7 @@ End Rem
 Rem
 	bbdoc: Maximus sources handler.
 End Rem
-Type mxSourcesHandler Extends TObjectMap
+Type mxSourcesHandler Extends dObjectMap
 	
 	Rem
 		bbdoc: Add the given scope to the handler.

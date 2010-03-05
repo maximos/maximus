@@ -71,7 +71,7 @@ Type mxModuleBase Abstract
 		bbdoc: Set a common field from the given variable.
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
-	Method SetCommonFromVariable:Int(variable:TVariable)
+	Method SetCommonFromVariable:Int(variable:dVariable)
 		Select variable.GetName().ToLower()
 			Case "desc"
 				SetDescription(variable.ValueAsString())
@@ -87,10 +87,10 @@ Rem
 End Rem
 Type mxModuleScope Extends mxModuleBase
 	
-	Field m_modules:TObjectMap
+	Field m_modules:dObjectMap
 	
 	Method New()
-		m_modules = New TObjectMap
+		m_modules = New dObjectMap
 	End Method
 	
 	Rem
@@ -129,7 +129,7 @@ Type mxModuleScope Extends mxModuleBase
 	Method FromJSON:mxModuleScope(root:dJObject)
 		If root <> Null
 			SetName(root.GetName())
-			For Local variable:TVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root.GetValues()
 				If dJObject(variable)
 					AddModule(New mxModule.FromJSON(dJObject(variable)))
 				Else
@@ -157,10 +157,10 @@ End Rem
 Type mxModule Extends mxModuleBase
 	
 	Field m_parent:mxModuleScope
-	Field m_versions:TObjectMap
+	Field m_versions:dObjectMap
 	
 	Method New()
-		m_versions = New TObjectMap
+		m_versions = New dObjectMap
 	End Method
 	
 '#region Field accessors
@@ -216,7 +216,7 @@ Type mxModule Extends mxModuleBase
 		bbdoc: Set a common field from the given variable.
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
-	Method SetCommonFromVariable:Int(variable:TVariable)
+	Method SetCommonFromVariable:Int(variable:dVariable)
 		If Super.SetCommonFromVariable(variable) = True
 			Return True
 		Else
@@ -237,7 +237,7 @@ Type mxModule Extends mxModuleBase
 	Method FromJSON:mxModule(root:dJObject)
 		If root <> Null
 			SetName(root.GetName())
-			For Local variable:TVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root.GetValues()
 				SetCommonFromVariable(variable)
 			Next
 			Return Self
@@ -342,7 +342,7 @@ Type mxModuleVersion
 		bbdoc: Set a common field from the given variable.
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
-	Method SetCommonFromVariable:Int(variable:TVariable)
+	Method SetCommonFromVariable:Int(variable:dVariable)
 		Select variable.GetName().ToLower()
 			Case "url"
 				SetUrl(variable.ValueAsString())
@@ -360,7 +360,7 @@ Type mxModuleVersion
 	Method FromJSON:mxModuleVersion(root:dJObject)
 		If root <> Null
 			SetName(root.GetName())
-			For Local variable:TVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root.GetValues()
 				SetCommonFromVariable(variable)
 			Next
 			Return Self

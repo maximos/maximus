@@ -24,7 +24,7 @@ End Rem
 Rem
 	bbdoc: Maximus module dependencies.
 End Rem
-Type mxModuleDependencies Extends TObjectMap
+Type mxModuleDependencies Extends dObjectMap
 	
 	Rem
 		bbdoc: Add a new dependency with the given key.
@@ -75,7 +75,7 @@ Type mxModuleDependencies Extends TObjectMap
 	End Rem
 	Method FromJSON:mxModuleDependencies(root:dJArray)
 		If root <> Null
-			For Local strvar:TStringVariable = EachIn root.GetValues()
+			For Local strvar:dStringVariable = EachIn root.GetValues()
 				AddDependency(New mxModuleDependency.FromVariable(strvar))
 			Next
 			Return Self
@@ -139,7 +139,7 @@ Type mxModuleDependency
 		bbdoc: Set the dependency from the given variable.
 		returns: Itself, or Null if the given variable is Null.
 	End Rem
-	Method FromVariable:mxModuleDependency(strvar:TStringVariable)
+	Method FromVariable:mxModuleDependency(strvar:dStringVariable)
 		If strvar <> Null
 			Set(strvar.Get())
 			Return Self

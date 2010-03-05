@@ -25,7 +25,7 @@ Rem
 	bbdoc: Maximus argument handler.
 	about: This ties in all of the types for each specific argument (e.g. 'get', 'help', 'version', etc.)
 End Rem
-Type mxArgumentHandler Extends TObjectMap
+Type mxArgumentHandler Extends dObjectMap
 	
 	Rem
 		bbdoc: Add an alias for the given argument implementation.
