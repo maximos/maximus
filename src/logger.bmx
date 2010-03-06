@@ -38,7 +38,7 @@ Type mxLogger
 		returns: Nothing.
 	End Rem
 	Method LogWarning(warning:String)
-		Print("[WARNING] " + warning)
+		Print(_s("message.warning", [warning]))
 	End Method
 	
 	Rem
@@ -46,7 +46,7 @@ Type mxLogger
 		returns: Nothing.
 	End Rem
 	Method LogError(error:String)
-		Print("[ERROR] " + error)
+		Print(_s("message.error", [error]))
 	End Method
 	
 End Type

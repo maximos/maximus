@@ -72,3 +72,8 @@ error {
 	}
 }
 
+message {
+	warning "[WARNING] {warning}"
+	error "[ERROR] {error}"
+}
+
