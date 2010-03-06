@@ -49,8 +49,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Return "description: Retrieve latest sources~n" + ..
-				"usage: maximus update"
+		Return _s("arg.update.usage")
 	End Method
 	
 	Rem
@@ -58,7 +57,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		logger.LogMessage("Retrieving sources...")
+		'logger.LogMessage("Retrieving sources...")
 	End Method
 	
 End Type

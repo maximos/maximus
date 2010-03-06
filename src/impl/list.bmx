@@ -43,8 +43,7 @@ Type mxListImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Return "description: List all module scopes and their modules~n" + ..
-				"usage: maximus list <modscopes|modules>"
+		Return _s("arg.list.usage")
 	End Method
 	
 	Rem
@@ -80,7 +79,7 @@ Type mxListImpl Extends mxArgumentImplementation
 				Next
 				If nfounds.Count() > 0
 					Local a:String
-					logger.LogWarning("~nThe following scopes/modules were not found:")
+					logger.LogWarning(_s("arg.list.unfound"))
 					For Local b:String = EachIn nfounds
 						a:+ b + " "
 					Next
@@ -93,7 +92,7 @@ Type mxListImpl Extends mxArgumentImplementation
 				Next
 			End If
 		Else
-			logger.LogMessage("The sources list contains no modules.")
+			logger.LogMessage(_s("arg.list.nosources"))
 		End If
 	End Method
 	

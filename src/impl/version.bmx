@@ -53,8 +53,7 @@ Type mxVersionImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Return "description: Report Maximus' version~n" + ..
-				"usage: maximus version (or maximus -v|--version)"
+		Return _s("arg.version.usage")
 	End Method
 	
 	Rem
@@ -62,7 +61,7 @@ Type mxVersionImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		logger.LogMessage("Maximus version " + mainapp.c_version)
+		logger.LogMessage(_s("arg.version.report", [mainapp.c_version]))
 	End Method
 	
 End Type

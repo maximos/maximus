@@ -1,0 +1,74 @@
+
+' English translation
+' Author: Tim Howard
+' Updated: March 6, 2010
+
+name		"English"
+nativename	"English"
+
+arg {
+	help {
+		usage {
+			command "usage: maximus help <commands>
+					e.g. maximus help get"
+			option "maximus usage: maximus [-h|--help] [-v|--version] COMMAND [ARGS]
+						The most commonly used commands:
+						~tget~tGet the given set modules
+						~tremove~tRemove the given set of modules
+						~tupdate~tUpdate sources file
+						~tlist~tList the module scopes and modules
+						~thelp~tGet help on a specific command
+						Try 'maximus help <command>' for more information on a specific command."
+		}
+		cmdnotfound "Command not found"
+	}
+	version {
+		usage "description: Report Maximus' version
+				usage: maximus version (or maximus -v|--version)"
+		report "Maximus version {version}"
+	}
+	list {
+		usage "description: List all module scopes and their modules
+				usage: maximus list <modscopes|modules>"
+		nosources "The sources list contains no modules."
+		unfound "~nThe following scopes/modules were not found:"
+	}
+	update {
+		usage "description: Retrieve latest sources
+				usage: maximus update"
+	}
+}
+
+error {
+	suggesthelp "See 'maximus --help'."
+	load {
+		sources {
+			file "Failed to load sources from '{file}'"
+			parse "Caught parser exception:~n{exception}"
+		}
+		config {
+			parse "Unable to parse configuration file: {file}"
+			unkiden "Unknown identifier in config: {name}"
+		}
+		locale {
+			file "Failed to open locale file: {file}"
+			parse "Failed to parse locale file: {file}
+					~tReason: {reason}"
+		}
+	}
+	notfound {
+		maxpath "Unable to determine the path to BlitzMax!
+				Have you set the 'BMXPATH' environment variable?"
+	}
+	option {
+		unknown "'{option}' is not a known option."
+		doesnottakeparams "The '{option}' option does not take parameters."
+		requiresparams "The '{option}' option requires parameters."
+	}
+	command {
+		unknown "'{command}' is not a known command."
+		doesnottakeparams "The '{command}' command does not take parameters."
+		requiresparams "The '{command}' command requires parameters."
+	}
+}
+

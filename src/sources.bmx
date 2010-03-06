@@ -65,7 +65,7 @@ Type mxSourcesHandler Extends dObjectMap
 			Try
 				root = jreader.Parse()
 			Catch e:JException
-				ThrowError("Caught parser exception:~n" + e.ToString())
+				ThrowError(_s("errors.load.sources.parse", [e.ToString()]))
 			End Try
 			FromJSON(root)
 			Return Self

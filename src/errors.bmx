@@ -36,7 +36,7 @@ Type mxOptErrors
 	Rem
 		bbdoc: Option is missing parameters.
 	End Rem
-	Const MISSINGPARAMS:Int = 102
+	Const REQUIRESPARAMS:Int = 102
 End Type
 
 Rem
@@ -54,7 +54,7 @@ Type mxCmdErrors
 	Rem
 		bbdoc: Command is missing parameters.
 	End Rem
-	Const MISSINGPARAMS:Int = 202
+	Const REQUIRESPARAMS:Int = 202
 End Type
 
 Rem
@@ -64,17 +64,21 @@ End Rem
 Function ThrowCommonError(errortype:Int, value:String = Null)
 	Select errortype
 		Case mxOptErrors.UNKNOWN
-			_HelpError("'" + value + "' is not a known option.")
+			_HelpError(_s("error.option.unknown", [value]))
 		Case mxCmdErrors.UNKNOWN
-			_HelpError("'" + value + "' is not a known command.")
-		Case mxOptErrors.DOESNOTTAKEPARAMS, mxCmdErrors.DOESNOTTAKEPARAMS
-			_HelpError("'" + value + "' does not take parameters.")
-		Case mxOptErrors.MISSINGPARAMS, mxCmdErrors.MISSINGPARAMS
-			_HelpError("'" + value + "' is missing parameters.")
+			_HelpError(_s("error.command.unknown", [value]))
+		Case mxOptErrors.DOESNOTTAKEPARAMS
+			_HelpError(_s("error.option.doesnottakeparams", [value]))
+		Case mxCmdErrors.DOESNOTTAKEPARAMS
+			_HelpError(_s("error.command.doesnottakeparams", [value]))
+		Case mxOptErrors.REQUIRESPARAMS
+			_HelpError(_s("error.option.requiresparams", [value]))
+		Case mxCmdErrors.REQUIRESPARAMS
+			_HelpError(_s("error.command.requiresparams", [value]))
 	End Select
 	
 	Function _HelpError(error:String)
-		ThrowError("maximus: " + error + " " + " See 'maximus --help'.")
+		ThrowError("maximus: " + error + " " + _s("error.suggesthelp"))
 	End Function
 End Function
 

@@ -39,7 +39,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 		Select GetCallConvention()
 			Case mxCallConvention.COMMAND ' "help"
 				If m_args = Null
-					ThrowCommonError(mxCmdErrors.MISSINGPARAMS, "help")
+					ThrowCommonError(mxCmdErrors.REQUIRESPARAMS, "help")
 				End If
 			Case mxCallConvention.OPTION ' "--help" or "-h"
 				If m_args <> Null
@@ -55,17 +55,9 @@ Type mxHelpImpl Extends mxArgumentImplementation
 	Method GetUsage:String()
 		Select GetCallConvention()
 			Case mxCallConvention.COMMAND
-				Return "usage: maximus help <commands>~n" + ..
-						"e.g. maximus help get"
+				Return _s("arg.help.usage.command")
 			Case mxCallConvention.OPTION
-				Return "maximus usage: maximus [-v|--version] [-h|--help] COMMAND [ARGS]~n" + ..
-						"The most commonly used commands:~n" + ..
-						"~tget~tGet the given set modules~n" + ..
-						"~tremove~tRemove the given set of modules~n" + ..
-						"~tupdate~tUpdate sources file~n" + ..
-						"~tlist~tList the module scopes and modules~n" + ..
-						"~thelp~tGet help on a specific command~n" + ..
-						"Try 'maximus help <command>' for more information on a specific command."
+				Return _s("arg.help.usage.option")
 		End Select
 	End Method
 	
@@ -84,7 +76,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 						If argimpl <> Null
 							logger.LogMessage(command + ":~t" + argimpl.GetUsage().Replace("~n", "~n~t~t"))
 						Else
-							logger.LogMessage(command + ":~tCommand not found")
+							logger.LogMessage(command + ":~t" + _s("arg.help.cmdnotfound"))
 						End If
 					End If
 				Next

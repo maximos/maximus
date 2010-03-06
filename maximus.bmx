@@ -26,15 +26,20 @@ SuperStrict
 Framework brl.blitz
 Import brl.standardio
 Import brl.maxutil
+Import brl.ramstream
 
 Import cower.jonk
 
 Import duct.variables
 Import duct.objectmap
 Import duct.json
+Import duct.locale
+
+Incbin "locales/en.loc"
 
 Include "src/logger.bmx"
 Include "src/errors.bmx"
+Include "src/config.bmx"
 Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
@@ -56,8 +61,11 @@ End Rem
 Type mxApp
 	
 	Const c_version:String = "0.01"
+	Const c_configfile:String = "maximus.config"
 	
-	Field m_maxpath:String
+	Field m_confighandler:mxConfigHandler
+	Field m_defaultlocale:dLocale, m_locale:dLocale
+	Field m_maxpath:String, m_sourcesfile:String = "test/sources"
 	
 	Field m_args:String[]
 	Field m_arghandler:mxArgumentHandler
@@ -79,19 +87,22 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method OnInit()
+		m_confighandler = New mxConfigHandler.Create(c_configfile)
+		m_confighandler.LoadDefaultLocale()
+		m_confighandler.Load()
 		Try
 			m_maxpath = BlitzMaxPath()
 		Catch e:Object
-			ThrowError("Unable to determine the path to BlitzMax!~nHave you set the 'BMXPATH' environment variable?")
+			ThrowError(_s("error.notfound.maxpath"))
 		End Try
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
 		m_arghandler.AddArgImpl(New mxUpdateImpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
-		m_sourceshandler = New mxSourcesHandler.FromFile("test/sources")
+		m_sourceshandler = New mxSourcesHandler.FromFile(m_sourcesfile)
 		If m_sourceshandler = Null
-			ThrowError("Failed to load ~qtests/sources~q")
+			ThrowError(_s("error.load.sources.file", [m_sourcesfile]))
 		End If
 	End Method
 	
@@ -168,5 +179,31 @@ Function ThrowError(error:String)
 	logger.LogError(error)
 	mainapp.OnExit()
 	End
+End Function
+
+Rem
+	bbdoc: Get the localized text for the given identifier.
+	returns: The translated text.
+End Rem
+Function _s:String(iden:String, extra:String[] = Null)
+	Global replacer:TTextReplacer = New TTextReplacer
+	Local ltext:dLocalizedText
+	If mainapp.m_locale <> Null Then ltext = mainapp.m_locale.TextFromStructureL(iden)
+	If ltext = Null Then ltext = mainapp.m_defaultlocale.TextFromStructureL(iden)
+	If ltext <> Null
+		replacer.SetString(ltext.GetValue())
+		replacer.AutoReplacements("{", "}")
+		If extra <> Null
+			Local i:Int
+			For Local rep:TTextReplacement = EachIn replacer.GetList()
+				If i > extra.Length Then Exit
+				rep.SetReplacement(extra[i])
+				i:+ 1
+			Next
+		End If
+		Return replacer.DoReplacements()
+	Else
+		DebugLog("Failed to find localized text from structure: ~q" + iden + "~q")
+	End If
 End Function
 
