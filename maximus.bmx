@@ -34,6 +34,7 @@ Import duct.variables
 Import duct.objectmap
 Import duct.json
 Import duct.locale
+Import duct.argparser
 
 Incbin "locales/en.loc"
 
@@ -67,7 +68,7 @@ Type mxApp
 	Field m_defaultlocale:dLocale, m_locale:dLocale
 	Field m_maxpath:String, m_sourcesfile:String = "test/sources"
 	
-	Field m_args:String[]
+	Field m_args:dIdentifier
 	Field m_arghandler:mxArgumentHandler
 	Field m_sourceshandler:mxSourcesHandler
 	
@@ -118,43 +119,32 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method Run()
-		Local argimpl:mxArgumentImplementation
-		Local i:Int, arg:String, isopt:Int
-		For i = 0 To m_args.Length - 1
-			arg = m_args[i]
-			argimpl = m_arghandler.GetArgImplFromAlias(arg)
-			isopt = arg.StartsWith("-")
+		Local argimpl:mxArgumentImplementation, isopt:Int
+		For Local arg:dIdentifier = EachIn m_args.GetValues()
+			argimpl = m_arghandler.GetArgImplFromAlias(arg.GetName())
+			isopt = (arg.GetName()[0] = 45)
 			If argimpl <> Null
 				If isopt = True
-					argimpl.SetArgs(Null)
 					argimpl.SetCallConvention(mxCallConvention.OPTION)
+					argimpl.SetArgs(arg)
 					argimpl.CheckArgs()
 					argimpl.Execute()
-				Else ' Must be a command (leaving out parameters for options, as that would get really complicated)
+				Else
 					argimpl.SetCallConvention(mxCallConvention.COMMAND)
-					ParseCommandArgs(argimpl, m_args[i + 1..])
+					argimpl.SetArgs(arg)
+					argimpl.CheckArgs()
 					argimpl.Execute()
-					Exit ' Commands take all the subsequent arguments
+					Exit
 				End If
 			Else
 				If isopt = True
-					ThrowCommonError(mxOptErrors.UNKNOWN, arg)
+					ThrowCommonError(mxOptErrors.UNKNOWN, arg.GetName())
 				Else
-					ThrowCommonError(mxCmdErrors.UNKNOWN, arg)
+					ThrowCommonError(mxCmdErrors.UNKNOWN, arg.GetName())
 				End If
 			End If
 		Next
 		OnExit()
-	End Method
-	
-	Rem
-		bbdoc: Parse command arguments.
-		returns: Nothing.
-	End Rem
-	Method ParseCommandArgs(argimpl:mxArgumentImplementation, args:String[])
-		' This will need to be parsed eventually, but for now..
-		argimpl.SetArgs(args)
-		argimpl.CheckArgs()
 	End Method
 	
 	Rem
@@ -166,7 +156,7 @@ Type mxApp
 		If args = Null
 			args = ["--help"]
 		End If
-		m_args = args
+		m_args = dArgParser.ParseArray(args, False, 1)
 	End Method
 	
 End Type

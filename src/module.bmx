@@ -53,7 +53,7 @@ Type mxModuleBase Abstract
 		returns: Nothing.
 	End Rem
 	Method SetDescription(description:String)
-		Assert description, "(mxModuleBase.SetDescription) formalname cannot be Null!"
+		Assert description, "(mxModuleBase.SetDescription) description cannot be Null!"
 		m_description = description
 	End Method
 	

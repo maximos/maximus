@@ -80,7 +80,7 @@ End Rem
 Type mxArgumentImplementation Abstract
 	
 	Field m_callconv:Int
-	Field m_args:String[]
+	Field m_args:dIdentifier, m_argcount:Int
 	Field m_aliases:String[]
 	
 	Rem
@@ -103,8 +103,17 @@ Type mxArgumentImplementation Abstract
 		bbdoc: Set the implementation's arguments.
 		returns: Nothing.
 	End Rem
-	Method SetArgs(args:String[])
+	Method SetArgs(args:dIdentifier)
 		m_args = args
+		m_argcount = m_args.GetValueCount()
+	End Method
+	
+	Rem
+		bbdoc: Get the argument's argument count (number of arguments passed to the command/option).
+		returns: The argument count.
+	End Rem
+	Method GetArgumentCount:Int()
+		Return m_argcount
 	End Method
 	
 	Rem
@@ -140,7 +149,7 @@ Type mxArgumentImplementation Abstract
 	Rem
 		bbdoc: Check the current arguments for errors (according to the specific implementation).
 		returns: Nothing.
-		about: This method will throw an error if the given arguments are invalid.<br>
+		about: This method will throw an error if the arguments are invalid.<br>
 		This method is abstract.
 	End Rem
 	Method CheckArgs() Abstract

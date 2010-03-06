@@ -33,16 +33,16 @@ Type mxVersionImpl Extends mxArgumentImplementation
 	Rem
 		bbdoc: Check the current arguments for errors (according to the specific implementation).
 		returns: Nothing.
-		about: This method will throw an error if the given arguments are invalid.
+		about: This method will throw an error if the arguments are invalid.
 	End Rem
 	Method CheckArgs()
 		Select GetCallConvention()
 			Case mxCallConvention.COMMAND ' "version"
-				If m_args <> Null
+				If GetArgumentCount() > 0
 					ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, "version")
 				End If
 			Case mxCallConvention.OPTION ' "--version" or "-v"
-				If m_args <> Null
+				If GetArgumentCount() > 0
 					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-v|--version")
 				End If
 		End Select

@@ -33,7 +33,7 @@ Type mxListImpl Extends mxArgumentImplementation
 	Rem
 		bbdoc: Check the current arguments for errors (according to the specific implementation).
 		returns: Nothing.
-		about: This method will throw an error if the given arguments are invalid.
+		about: This method will throw an error if the arguments are invalid.
 	End Rem
 	Method CheckArgs()
 	End Method
@@ -53,9 +53,10 @@ Type mxListImpl Extends mxArgumentImplementation
 	Method Execute()
 		Local sources:mxSourcesHandler = mainapp.m_sourceshandler
 		If sources.Count() > 0
-			If m_args <> Null
+			If GetArgumentCount() > 0
 				Local nfounds:TListEx = New TListEx, scope:mxModuleScope
-				For Local arg:String = EachIn m_args
+				For Local variable:dStringVariable = EachIn m_args.GetValues()
+					Local arg:String = variable.Get()
 					If arg.Contains(".") = True
 						scope = sources.GetScopeWithName(arg[..arg.Find(".")])
 						If scope <> Null

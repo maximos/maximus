@@ -8,18 +8,16 @@ nativename	"English"
 
 arg {
 	help {
-		usage {
-			command "usage: maximus help <commands>
-					e.g. maximus help get"
-			option "maximus usage: maximus [-h|--help] [-v|--version] COMMAND [ARGS]
-						The most commonly used commands:
-						~tget~tGet the given set modules
-						~tremove~tRemove the given set of modules
-						~tupdate~tUpdate sources file
-						~tlist~tList the module scopes and modules
-						~thelp~tGet help on a specific command
-						Try 'maximus help <command>' for more information on a specific command."
-		}
+		usage "usage: maximus help <commands>
+				e.g. maximus help get"
+		fullusage "maximus usage: maximus [-h|--help [command]] [-v|--version] COMMAND [ARGS]
+					The most commonly used commands:
+					~tget~tGet the given set modules
+					~tremove~tRemove the given set of modules
+					~tupdate~tUpdate sources file
+					~tlist~tList the module scopes and modules
+					~thelp~tGet help on a specific command
+					Try 'maximus help <command>' for more information on a specific command."
 		cmdnotfound "Command not found"
 	}
 	version {
@@ -31,7 +29,7 @@ arg {
 		usage "description: List all module scopes and their modules
 				usage: maximus list <modscopes|modules>"
 		nosources "The sources list contains no modules."
-		unfound "~nThe following scopes/modules were not found:"
+		unfound "The following scopes/modules were not found:"
 	}
 	update {
 		usage "description: Retrieve latest sources

@@ -33,19 +33,9 @@ Type mxHelpImpl Extends mxArgumentImplementation
 	Rem
 		bbdoc: Check the current arguments for errors (according to the specific implementation).
 		returns: Nothing.
-		about: This method will throw an error if the given arguments are invalid.
+		about: This method will throw an error if the arguments are invalid.
 	End Rem
 	Method CheckArgs()
-		Select GetCallConvention()
-			Case mxCallConvention.COMMAND ' "help"
-				If m_args = Null
-					ThrowCommonError(mxCmdErrors.REQUIRESPARAMS, "help")
-				End If
-			Case mxCallConvention.OPTION ' "--help" or "-h"
-				If m_args <> Null
-					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-h|--help")
-				End If
-		End Select
 	End Method
 	
 	Rem
@@ -53,12 +43,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Select GetCallConvention()
-			Case mxCallConvention.COMMAND
-				Return _s("arg.help.usage.command")
-			Case mxCallConvention.OPTION
-				Return _s("arg.help.usage.option")
-		End Select
+		Return _s("arg.help.usage")
 	End Method
 	
 	Rem
@@ -66,23 +51,23 @@ Type mxHelpImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		Select GetCallConvention()
-			Case mxCallConvention.COMMAND
-				For Local command:String = EachIn m_args
-					If command.ToLower() = "help"
-						logger.LogMessage(command + ":~t" + "HELP HELP I'M BEING REPRESSED!")
+		If GetArgumentCount() > 0
+			For Local variable:dVariable = EachIn m_args.GetValues()
+				Local command:String = variable.ValueAsString()
+				If command.ToLower() = "help"
+					logger.LogMessage(command + ":~t" + "HELP HELP I'M BEING REPRESSED!")
+				Else
+					Local argimpl:mxArgumentImplementation = mainapp.m_arghandler.GetArgImplFromAlias(command)
+					If argimpl <> Null
+						logger.LogMessage(command + ":~n~t" + argimpl.GetUsage().Replace("~n", "~n~t"))
 					Else
-						Local argimpl:mxArgumentImplementation = mainapp.m_arghandler.GetArgImplFromAlias(command)
-						If argimpl <> Null
-							logger.LogMessage(command + ":~t" + argimpl.GetUsage().Replace("~n", "~n~t~t"))
-						Else
-							logger.LogMessage(command + ":~t" + _s("arg.help.cmdnotfound"))
-						End If
+						logger.LogMessage(command + ":~t" + _s("arg.help.cmdnotfound"))
 					End If
-				Next
-			Case mxCallConvention.OPTION
-				logger.LogMessage(GetUsage())
-		End Select
+				End If
+			Next
+		Else
+			logger.LogMessage(_s("arg.help.fullusage"))
+		End If
 	End Method
 	
 End Type
