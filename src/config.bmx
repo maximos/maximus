@@ -27,6 +27,7 @@ End Rem
 Type mxConfigHandler
 	
 	Field tpl_language:dTemplate = New dTemplate.Create(["language"], [[TV_STRING]])
+	Field tpl_modpath:dTemplate = New dTemplate.Create(["modpath"], [[TV_STRING]])
 	Field m_configfile:String
 	
 	Rem
@@ -74,6 +75,8 @@ Type mxConfigHandler
 							If lang <> "en"
 								mainapp.m_locale = LoadLocale(lang, False, True)
 							End If
+						Else If tpl_modpath.ValidateIdentifier(iden)
+							mainapp.SetModPath(dStringVariable(iden.GetValueAtIndex(0)).Get(), True)
 						Else
 							logger.LogWarning(_s("error.load.config.unkiden", [iden.GetName()]))
 						End If

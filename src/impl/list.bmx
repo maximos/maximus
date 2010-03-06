@@ -119,7 +119,7 @@ Type mxListImpl Extends mxArgumentImplementation
 			logger.LogMessage(tab + dn + "." + modul.GetName() + " - " + modul.GetDescription())
 			For Local version:mxModuleVersion = EachIn modul.VersionEnumerator()
 				logger.LogMessage(tab + "~t/" + version.GetName() + " - " + version.GetUrl())
-				logger.LogMessage(tab + "~t~td:[" + version.GetDependencies().DependencyList() + "]")
+				logger.LogMessage(tab + "~t~tdeps:[" + version.GetDependencies().DependencyList() + "]")
 			Next
 		End If
 	End Method

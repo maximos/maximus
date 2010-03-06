@@ -46,6 +46,7 @@ Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
 Include "src/impl/update.bmx"
 Include "src/impl/list.bmx"
+Include "src/impl/modpath.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
@@ -66,7 +67,7 @@ Type mxApp
 	
 	Field m_confighandler:mxConfigHandler
 	Field m_defaultlocale:dLocale, m_locale:dLocale
-	Field m_maxpath:String, m_sourcesfile:String = "test/sources"
+	Field m_maxpath:String, m_modpath:String, m_sourcesfile:String = "test/sources"
 	
 	Field m_args:dIdentifier
 	Field m_arghandler:mxArgumentHandler
@@ -74,7 +75,7 @@ Type mxApp
 	
 	Rem
 		bbdoc: Create a new mxApp.
-		returns: The new mxApp.
+		returns: Itself.
 	End Rem
 	Method Create:mxApp(args:String[])
 		mainapp = Self
@@ -96,11 +97,13 @@ Type mxApp
 		Catch e:Object
 			ThrowError(_s("error.notfound.maxpath"))
 		End Try
+		SetModPath(m_maxpath + "/mod", False)
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
 		m_arghandler.AddArgImpl(New mxUpdateImpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
+		m_arghandler.AddArgImpl(New mxModPathImpl)
 		m_sourceshandler = New mxSourcesHandler.FromFile(m_sourcesfile)
 		If m_sourceshandler = Null
 			ThrowError(_s("error.load.sources.file", [m_sourcesfile]))
@@ -157,6 +160,20 @@ Type mxApp
 			args = ["--help"]
 		End If
 		m_args = dArgParser.ParseArray(args, False, 1)
+	End Method
+	
+	Rem
+		bbdoc: Set the module path.
+		returns: Nothing.
+		about: This will throw an error if the module path could not be found.
+	End Rem
+	Method SetModPath(modpath:String, logchange:Int = True)
+		m_modpath = modpath
+		If FileType(mainapp.m_modpath) = FILETYPE_DIR
+			If logchange = True Then logger.LogMessage(_s("message.setpath", [mainapp.m_modpath]))
+		Else
+			ThrowError(_s("error.notfound.modpath", [mainapp.m_modpath]))
+		End If
 	End Method
 	
 End Type

@@ -1,6 +1,6 @@
 
 Rem
-Copyright (c) 2010 Christiaan Kras
+Copyright (c) 2010 Tim Howard
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@ THE SOFTWARE.
 End Rem
 
 Rem
-	bbdoc: Maximus 'update' argument implementation.
+	bbdoc: Maximus 'modpath' option implementation.
 End Rem
-Type mxUpdateImpl Extends mxArgumentImplementation
+Type mxModPathImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["update"])
+		init(["-mp", "--modpath"])
 	End Method
 	
 	Rem
@@ -36,8 +36,8 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		about: This method will throw an error if the arguments are invalid.
 	End Rem
 	Method CheckArgs()
-		If GetArgumentCount() > 0
-			ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, m_args.GetName())
+		If GetArgumentCount() = 0
+			ThrowCommonError(mxOptErrors.REQUIRESPARAMS, m_args.GetName())
 		End If
 	End Method
 	
@@ -46,7 +46,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: A string describing the typical usage of the argument.
 	End Rem
 	Method GetUsage:String()
-		Return _s("arg.update.usage")
+		Return _s("arg.modpath.usage")
 	End Method
 	
 	Rem
@@ -54,7 +54,9 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		'logger.LogMessage("Retrieving sources...")
+		If GetArgumentCount() > 0
+			mainapp.SetModPath(m_args.GetValueAtIndex(0).ValueAsString(), True)
+		End If
 	End Method
 	
 End Type
