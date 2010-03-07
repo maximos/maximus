@@ -39,6 +39,10 @@ arg {
 		usage "description: Override the module path
 				usage: maximus --modpath ~q/path/to/mods~q"
 	}
+	install {
+		usage "description: Install the given set of modules
+				usage: maximus install [modscopes|modules]"
+	}
 }
 
 error {

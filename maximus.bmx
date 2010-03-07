@@ -41,15 +41,16 @@ Incbin "locales/en.loc"
 Include "src/logger.bmx"
 Include "src/errors.bmx"
 Include "src/config.bmx"
-Include "src/arghandler.bmx"
-Include "src/impl/help.bmx"
-Include "src/impl/version.bmx"
-Include "src/impl/update.bmx"
-Include "src/impl/list.bmx"
-Include "src/impl/modpath.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
+Include "src/arghandler.bmx"
+Include "src/impl/help.bmx"
+Include "src/impl/version.bmx"
+Include "src/impl/modpath.bmx"
+Include "src/impl/install.bmx"
+Include "src/impl/update.bmx"
+Include "src/impl/list.bmx"
 
 Global logger:mxLogger = New mxLogger
 Global mainapp:mxApp
@@ -101,9 +102,10 @@ Type mxApp
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
+		m_arghandler.AddArgImpl(New mxModPathImpl)
+		m_arghandler.AddArgImpl(New mxInstallImpl)
 		m_arghandler.AddArgImpl(New mxUpdateImpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
-		m_arghandler.AddArgImpl(New mxModPathImpl)
 		m_sourceshandler = New mxSourcesHandler.FromFile(m_sourcesfile)
 		If m_sourceshandler = Null
 			ThrowError(_s("error.load.sources.file", [m_sourcesfile]))
