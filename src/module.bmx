@@ -213,6 +213,22 @@ Type mxModule Extends mxModuleBase
 	End Method
 	
 	Rem
+		bbdoc: Get the latest (non-dev) version for this module.
+		returns: The latest version for this module.
+	End Rem
+	Method GetLatestVersion:mxModuleVersion()
+		Local hver:mxModuleVersion
+		For Local ver:mxModuleVersion = EachIn VersionEnumerator()
+			If ver.GetName() <> "dev"
+				If hver = Null Or hver.Compare(ver) = 1
+					hver = ver
+				End If
+			End If
+		Next
+		Return hver
+	End Method
+	
+	Rem
 		bbdoc: Set a common field from the given variable.
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
@@ -321,6 +337,14 @@ Type mxModuleVersion
 	End Method
 	
 	Rem
+		bbdoc: Get the temporary fetch path for the version's source archive.
+		returns: The temporary file path for the version's source archive.
+	End Rem
+	Method GetTemporaryFilePath:String()
+		Return "tmp/" + StripDir(GetUrl())
+	End Method
+	
+	Rem
 		bbdoc: Set the version's dependencies.
 		returns: Nothing.
 	End Rem
@@ -334,6 +358,24 @@ Type mxModuleVersion
 	End Rem
 	Method GetDependencies:mxModuleDependencies()
 		Return m_dependencies
+	End Method
+	
+	Rem
+		bbdoc: Get the version parts for the version.
+		returns: True if the version is development, in which case the parameters are both 0; or False, in which case the parameters are set accordingly.
+	End Rem
+	Method GetVersionParts:Int(vmajor:String Var, vminor:String Var)
+		If m_name <> "dev"
+			Local i:Int = m_name.Find(".")
+			If i > -1
+				vmajor = m_name[..i]
+				vminor = m_name[i + 1..]
+			Else
+				vmajor = m_name ' I'm not sure what other version formats would be used, so I'm just playing a random card here
+			End If
+			Return False
+		End If
+		Return True
 	End Method
 	
 '#end region Field accessors
@@ -367,6 +409,104 @@ Type mxModuleVersion
 		End If
 		Return Null
 	End Method
+	
+	Rem
+		bbdoc: Get the dependency enumerator for the version.
+		returns: The dependency enumerator for the version.
+	End Rem
+	Method DependencyEnumerator:TMapEnumerator()
+		Return m_dependencies.DependencyEnumerator()
+	End Method
+	
+	Rem
+		bbdoc: Compare the version with the given version.
+		returns: 0 if the two versions are the same (same in version number alone), 1 if this version is greater than the given, or -1 if the given version is greater than this version.
+	End Rem
+	Method Compare:Int(with:Object)
+		Local ver:mxModuleVersion = mxModuleVersion(with)
+		If ver <> Null
+			If m_name = ver.m_name
+				Return 0
+			Else
+				Local smajor:String, sminor:String, wmajor:String, wminor:String
+				Local sdev:Int = GetVersionParts(smajor, sminor), wdev:Int = ver.GetVersionParts(wmajor, wminor)
+				If (sdev = True And wdev = True) Or (smajor = wmajor And sminor = wminor)
+					Return 0
+				Else If smajor > wmajor
+					Return 1
+				Else If smajor = wmajor
+					If sminor > wminor
+						Return 1
+					Else
+						Return -1
+					End If
+				Else
+					Return -1
+				End If
+			End If
+		End If
+		Return 0
+	End Method
+	
+	Rem
+		bbdoc: Fetch the version's source archive.
+		returns: Nothing.
+	End Rem
+	Method FetchSourceArchive()
+		Local file:String = GetTemporaryFilePath()
+		logger.LogMessage("fetching: " + GetUrl() + " -> " + file + "~t", False)
+		If FileType(file) = FILETYPE_NONE
+			Local stream:TStream = WriteFileExplicitly(file)
+			If stream <> Null
+				Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
+				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
+				request.SetStream(stream)
+				Try
+					response = request.Call(GetUrl(), Null, "GET")
+				Catch e:Object
+					stream.Close()
+					DeleteFile(file)
+					logger.LogMessage("")
+					ThrowError(_s("error.fetch.error", [e.ToString()]))
+				End Try
+				stream.Close()
+				If response.responseCode = 200
+					logger.LogMessage(_s("message.fetch.done", [String(response.responseCode)]))
+				Else
+					DeleteFile(file)
+					logger.LogMessage("")
+					ThrowError(_s("error.fetch.error", ["Bad response code: " + String(response.responseCode)]))
+				End If
+			Else
+				ThrowError(_s("error.writeperms", [file]))
+			End If
+		Else
+			logger.LogMessage(_s("message.fetch.alreadyfetched"))
+		End If
+	End Method
+	
+	Rem
+		bbdoc: Progress callback for source archive fetching.
+		returns: Zero (no error).
+	End Rem
+	Function _ProgressCallback:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double)
+		Local store:_mxProgressStore = _mxProgressStore(data)
+		Local prog:Int = (dlnow / dltotal) * 100
+		If prog > store.m_progress + 5
+			store.m_progress = prog
+			WriteStdOut(".")
+		End If
+		Return 0
+	End Function
+	
+End Type
+
+Rem
+	bbdoc: Maximus temporary progress storage for archive fetching.
+End Rem
+Type _mxProgressStore
+	
+	Field m_progress:Int = 0
 	
 End Type
 
