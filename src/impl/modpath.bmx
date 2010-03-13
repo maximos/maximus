@@ -27,7 +27,7 @@ End Rem
 Type mxModPathImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["-mp", "--modpath"])
+		init(["--modpath"])
 	End Method
 	
 	Rem

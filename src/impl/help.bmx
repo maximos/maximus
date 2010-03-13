@@ -27,7 +27,7 @@ End Rem
 Type mxHelpImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["help", "--help", "-h"])
+		init(["help", "--help"])
 	End Method
 	
 	Rem
