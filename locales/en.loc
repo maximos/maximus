@@ -1,7 +1,7 @@
 
 ' English translation
 ' Author: Tim Howard
-' Updated: March 6, 2010
+' Updated: March 13, 2010
 
 name		"English"
 nativename	"English"
@@ -9,8 +9,8 @@ nativename	"English"
 arg {
 	help {
 		usage "description: List Maximus' usage, commands and options, or specific information on a single command
-				usage: maximus [-h|--help|help COMMAND(S)]"
-		fullusage "maximus usage: maximus [-mp|--modpath /module/path] [-h|--help [command]] [-v|--version] COMMAND [ARGS]
+				usage: maximus [--help|help [command(s)]]"
+		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
 					The most commonly used commands:
 					~tinstall~tInstall the given set modules
 					~tremove~tRemove the given set of modules
@@ -22,14 +22,14 @@ arg {
 	}
 	version {
 		usage "description: Report Maximus' version
-				usage: maximus [-v|--version|version]"
+				usage: maximus [-v|-version|version]"
 		report "Maximus version {version}"
 	}
 	list {
 		usage "description: List all module scopes and their modules
 				usage: maximus list [modscopes|modules]"
 		nosources "The sources list contains no modules."
-		unfound "The following scopes/modules were not found:"
+		unfound "The following scope(s)/module(s) were not found:"
 	}
 	update {
 		usage "description: Retrieve latest sources
@@ -41,12 +41,30 @@ arg {
 	}
 	install {
 		usage "description: Install the given set of modules
-				usage: maximus install [modscopes|modules]"
+				usage: maximus install [-nounpack] [-nobuild] [-keeptemp] modules
+				options: -nounpack (don't unpack archives), -nobuild (don't build modules), -keeptemp (don't remove 'tmp/' directory)"
+		modulestoinstall "The following module(s) will be installed:"
+		nomodulestoinstall "No modules to be installed"
+		continuewithinstall "Continue will install? [y/n]"
+		notfound {
+			instdeps "The following dependencies cannot be installed because they are neither in the sources list nor are they already installed:"
+			instmods "The following module(s) cannot be installed because they are not in the sources list:"
+			version "'{module}' does not have a version called '{version}'"
+		}
 	}
 }
 
 error {
 	suggesthelp "See 'maximus --help'."
+	writeperms "Unable to write '{file}'; do you have sufficient permissions?"
+	fetch {
+		error "Failed to fetch archive
+				~tReason: {reason}"
+	}
+	install {
+		openarchive "Failed to open archive '{archivepath}'"
+		build "Failed to build {scope}"
+	}
 	load {
 		sources {
 			file "Failed to load sources from '{file}'"
@@ -82,6 +100,15 @@ error {
 message {
 	warning "[WARNING] {warning}"
 	error "[ERROR] {error}"
-	setpath "Module path set to ~q{modpath}~q"
+	setmodpath "Module path set to ~q{modpath}~q"
+	fetch {
+		done "done [{responsecode}]"
+		alreadyfetched "already fetched."
+	}
+	unpacking "Unpacking {archivepath}..."
+	skipping {
+		unpack "Skipping unpack"
+		build "Skipping build"
+	}
 }
 

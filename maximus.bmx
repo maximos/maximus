@@ -28,7 +28,8 @@ Import brl.standardio
 Import brl.maxutil
 Import brl.ramstream
 
-Import cower.jonk
+Import gman.zipengine
+Import htbaapub.rest
 
 Import duct.variables
 Import duct.objectmap
@@ -44,6 +45,7 @@ Include "src/config.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
+Include "src/utils.bmx"
 Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
@@ -172,7 +174,7 @@ Type mxApp
 	Method SetModPath(modpath:String, logchange:Int = True)
 		m_modpath = modpath
 		If FileType(mainapp.m_modpath) = FILETYPE_DIR
-			If logchange = True Then logger.LogMessage(_s("message.setpath", [mainapp.m_modpath]))
+			If logchange = True Then logger.LogMessage(_s("message.setmodpath", [mainapp.m_modpath]))
 		Else
 			ThrowError(_s("error.notfound.modpath", [mainapp.m_modpath]))
 		End If
