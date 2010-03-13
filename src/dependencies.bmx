@@ -64,9 +64,24 @@ Type mxModuleDependencies Extends dObjectMap
 		returns: Nothing.
 	End Rem
 	Method MergeDependencies(dependencies:mxModuleDependencies)
-		For Local dep:mxModuleDependency = EachIn dependencies.ValueEnumerator()
+		For Local dep:mxModuleDependency = EachIn dependencies.DependencyEnumerator()
 			AddDependency(dep) ' No need to check if they're already in here, they'll just be overwritten with the same thing
 		Next
+	End Method
+	
+	Rem
+		bbdoc: Check the dependency compliance of the current module set.
+		returns: Null if all dependencies are matched by existing modules, or a list of module ids that are not yet installed.
+	End Rem
+	Method CheckCompliance:TListEx()
+		Local nocomp:TListEx = New TListEx
+		For Local dep:mxModuleDependency = EachIn DependencyEnumerator()
+			If mxModUtils.HasModule(dep.Get()) = False
+				nocomp.AddLast(dep.Get())
+			End If
+		Next
+		If nocomp.Count() > 0 Then Return nocomp
+		Return Null
 	End Method
 	
 	Rem
@@ -89,11 +104,19 @@ Type mxModuleDependencies Extends dObjectMap
 	End Rem
 	Method DependencyList:String(separator:String = ", ")
 		Local a:String, dep:mxModuleDependency
-		For dep = EachIn ValueEnumerator()
+		For dep = EachIn DependencyEnumerator()
 			a:+ dep.Get() + separator
 		Next
 		If a.Length > 0 Then a = a[..a.Length - separator.Length]
 		Return a
+	End Method
+	
+	Rem
+		bbdoc: Get the dependency enumerator.
+		returns: The dependency enumerator.
+	End Rem
+	Method DependencyEnumerator:TMapEnumerator()
+		Return ValueEnumerator()
 	End Method
 	
 End Type
