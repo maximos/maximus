@@ -1,12 +1,38 @@
 {
 	"duct": {
 		"desc": "A set of assorted ductile modules for BlitzMax",
-		"logger": {
-			"desc": "Simple message logger",
+		"logging": {
+			"desc": "Simple message logging",
 			"versions": {
-				"0.3": {
+				"dev": {
 					"deps": ["duct.etc", "duct.appendstream"],
-					"url": "test/duct.logger.zip"
+					"url": "http://www.komiga.com/maximus/duct.logging-dev.zip"
+				},
+				"0.4": {
+					"deps": ["duct.etc", "duct.appendstream"],
+					"url": "http://www.komiga.com/maximus/duct.logging-0.4.zip"
+				}
+			}
+		},
+		"etc" : {
+			"desc": "Miscellaneous",
+			"versions": {
+				"dev": {
+					"url": "http://www.komiga.com/maximus/duct.etc-dev.zip"
+				},
+				"0.21": {
+					"url": "http://www.komiga.com/maximus/duct.etc-0.21.zip"
+				}
+			}
+		},
+		"appendstream" : {
+			"desc": "Appendable streams",
+			"versions": {
+				"dev": {
+					"url": "http://www.komiga.com/maximus/duct.appendstream-dev.zip"
+				},
+				"1.1": {
+					"url": "http://www.komiga.com/maximus/duct.appendstream-1.1.zip"
 				}
 			}
 		}
