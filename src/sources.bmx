@@ -47,11 +47,47 @@ Type mxSourcesHandler Extends dObjectMap
 	End Method
 	
 	Rem
+		bbdoc: Check if the given module is in the sources.
+		returns: True if the sources contains the given module, or False if it does not.
+	End Rem
+	Method HasModule:Int(modid:String)
+		Local scope:mxModuleScope = GetScopeWithName(mxModUtils.GetScopeFromID(modid))
+		If scope <> Null
+			Return scope.HasModule(mxModUtils.GetNameFromID(modid))
+		End If
+		Return False
+	End Method
+	
+	Rem
 		bbdoc: Get the scope with the given name.
 		returns: The scope with the given name, or Null if there is no scope with the given name.
 	End Rem
 	Method GetScopeWithName:mxModuleScope(scopename:String)
 		Return mxModuleScope(_ValueByKey(scopename))
+	End Method
+	
+	Rem
+		bbdoc: Get the module with the given id.
+		returns: The module with the given id, or Null if there is no module with the given id.
+	End Rem
+	Method GetModuleWithID:mxModule(modid:String)
+		Local scope:mxModuleScope = GetScopeWithName(mxModUtils.GetScopeFromID(modid))
+		If scope <> Null
+			Return scope.GetModuleWithName(mxModUtils.GetNameFromID(modid))
+		End If
+		Return Null
+	End Method
+	
+	Rem
+		bbdoc: Get the module version with the given versioned-id.
+		returns: The module version with the given versioned-id, or Null if there is no module/version with the given versioned-id.
+	End Rem
+	Method GetVersionWithVerID:mxModuleVersion(verid:String)
+		Local modul:mxModule = GetModuleWithID(verid)
+		If modul <> Null
+			Return modul.GetVersionWithName(mxModUtils.GetVersionFromVerID(verid))
+		End If
+		Return Null
 	End Method
 	
 	Rem
