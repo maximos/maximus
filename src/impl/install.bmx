@@ -61,33 +61,37 @@ Type mxInstallImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		Local nfounds:dObjectMap = New dObjectMap
-		For Local svar:dStringVariable = EachIn m_args.GetValues()
-			Local verid:String = svar.Get(), modid:String = mxModUtils.GetIDFromVerID(verid)
-			Local modul:mxModule = mainapp.m_sourceshandler.GetModuleWithID(modid)
-			If modul <> Null
-				Local instmod:mxInstModule = New mxInstModule.Create(verid, modul)
-				If instmod.SetVersionFromVerID(verid) = True
-					m_instmap._Insert(modid, instmod)
+		If mainapp.m_sourceshandler
+			Local nfounds:dObjectMap = New dObjectMap
+			For Local svar:dStringVariable = EachIn m_args.GetValues()
+				Local verid:String = svar.Get(), modid:String = mxModUtils.GetIDFromVerID(verid)
+				Local modul:mxModule = mainapp.m_sourceshandler.GetModuleWithID(modid)
+				If modul <> Null
+					Local instmod:mxInstModule = New mxInstModule.Create(verid, modul)
+					If instmod.SetVersionFromVerID(verid) = True
+						m_instmap._Insert(modid, instmod)
+					Else
+						ThrowError(_s("arg.install.notfound.version", [modid, mxModUtils.GetVersionFromVerID(verid)]))
+					End If
 				Else
-					ThrowError(_s("arg.install.notfound.version", [modid, mxModUtils.GetVersionFromVerID(verid)]))
+					nfounds._Insert(modid, modid)
 				End If
-			Else
-				nfounds._Insert(modid, modid)
-			End If
-		Next
-		If nfounds.Count() > 0
-			logger.LogError(_s("arg.install.notfound.instmods"))
-			Local a:String
-			For Local b:String = EachIn nfounds.ValueEnumerator()
-				a:+ b + " "
 			Next
-			a = a[..a.Length - 1]
-			logger.LogMessage("~t" + a)
-			Return
-		End If
-		If CheckDependencies() = True
-			DoInstall()
+			If nfounds.Count() > 0
+				logger.LogError(_s("arg.install.notfound.instmods"))
+				Local a:String
+				For Local b:String = EachIn nfounds.ValueEnumerator()
+					a:+ b + " "
+				Next
+				a = a[..a.Length - 1]
+				logger.LogMessage("~t" + a)
+				Return
+			End If
+			If CheckDependencies() = True
+				DoInstall()
+			End If
+		Else
+			ThrowError(_s("error.install.nosources"))
 		End If
 	End Method
 	
@@ -367,6 +371,7 @@ Type mxInstModule
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
 				outputpath = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/" + filename
+				'DebugLog("Zip outputpath: ~q" + outputpath + "~q")
 				If filename[filename.Length - 1] = 47 ' "/"
 					CreateDir(outputpath, True)
 				Else

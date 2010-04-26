@@ -145,3 +145,12 @@ Type mxBMKUtils
 	
 End Type
 
+Rem
+	bbdoc: Maximus temporary progress storage for url fetching.
+End Rem
+Type _mxProgressStore
+	
+	Field m_progress:Int = 0
+	
+End Type
+

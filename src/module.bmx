@@ -181,6 +181,14 @@ Type mxModule Extends mxModuleBase
 		Return m_parent
 	End Method
 	
+	Rem
+		bbdoc: Get the full name of the module (e.g. "modscope.module").
+		returns: The full name of the module.
+	End Rem
+	Method GetFullName:String()
+		Return m_parent.m_name + "." + m_name
+	End Method
+	
 '#end region Field accessors
 	
 	Rem
@@ -341,7 +349,7 @@ Type mxModuleVersion
 		returns: The temporary file path for the version's source archive.
 	End Rem
 	Method GetTemporaryFilePath:String()
-		Return "tmp/" + StripDir(GetUrl())
+		Return "tmp/" + m_parent.GetFullName() + "-" + m_name + ".zip"
 	End Method
 	
 	Rem
@@ -462,24 +470,12 @@ Type mxModuleVersion
 				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
 				request.SetStream(stream)
 				Try
-					Local os:String
-					?Win32
-						os = "Windows"
-					?Linux
-						os = "Linux"
-					?MacOS
-						os = "MacOS"
-					?
-					
-					Local language:String
-					If mainapp.m_locale Then language = mainapp.m_locale.GetName()
-					
-					response = request.Call(GetUrl(), ["User-Agent: Maximus/" + mxApp.c_version + " (" + os + "; " + language + ")"], "GET")
+					response = request.Call(GetUrl(), ["User-Agent: " + mainapp.m_useragent], "GET")
 				Catch e:Object
 					stream.Close()
 					DeleteFile(file)
 					logger.LogMessage("")
-					ThrowError(_s("error.fetch.error", [e.ToString()]))
+					ThrowError(_s("error.fetch.archive", [e.ToString()]))
 				End Try
 				stream.Close()
 				If response.responseCode = 200
@@ -487,7 +483,7 @@ Type mxModuleVersion
 				Else
 					DeleteFile(file)
 					logger.LogMessage("")
-					ThrowError(_s("error.fetch.error", ["Bad response code: " + String(response.responseCode)]))
+					ThrowError(_s("error.fetch.archive", ["Bad response code: " + String(response.responseCode)]))
 				End If
 			Else
 				ThrowError(_s("error.writeperms", [file]))
@@ -510,15 +506,6 @@ Type mxModuleVersion
 		End If
 		Return 0
 	End Function
-	
-End Type
-
-Rem
-	bbdoc: Maximus temporary progress storage for archive fetching.
-End Rem
-Type _mxProgressStore
-	
-	Field m_progress:Int = 0
 	
 End Type
 

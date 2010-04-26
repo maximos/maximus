@@ -52,48 +52,52 @@ Type mxListImpl Extends mxArgumentImplementation
 	End Rem
 	Method Execute()
 		Local sources:mxSourcesHandler = mainapp.m_sourceshandler
-		If sources.Count() > 0
-			If GetArgumentCount() > 0
-				Local nfounds:TListEx = New TListEx, scope:mxModuleScope
-				For Local variable:dStringVariable = EachIn m_args.GetValues()
-					Local arg:String = variable.Get()
-					If arg.Contains(".") = True
-						scope = sources.GetScopeWithName(arg[..arg.Find(".")])
-						If scope <> Null
-							Local modul:mxModule = scope.GetModuleWithName(arg[arg.Find(".") + 1..])
-							If modul <> Null
-								ReportModule(modul, "", scope.GetName())
+		If sources
+			If sources.Count() > 0
+				If GetArgumentCount() > 0
+					Local nfounds:TListEx = New TListEx, scope:mxModuleScope
+					For Local variable:dStringVariable = EachIn m_args.GetValues()
+						Local arg:String = variable.Get()
+						If arg.Contains(".") = True
+							scope = sources.GetScopeWithName(arg[..arg.Find(".")])
+							If scope <> Null
+								Local modul:mxModule = scope.GetModuleWithName(arg[arg.Find(".") + 1..])
+								If modul <> Null
+									ReportModule(modul, "", scope.GetName())
+								Else
+									nfounds.AddLast(arg)
+								End If
 							Else
 								nfounds.AddLast(arg)
 							End If
 						Else
-							nfounds.AddLast(arg)
+							scope = sources.GetScopeWithName(arg)
+							If scope <> Null
+								ReportModuleScope(scope)
+							Else
+								nfounds.AddLast(arg)
+							End If
 						End If
-					Else
-						scope = sources.GetScopeWithName(arg)
-						If scope <> Null
-							ReportModuleScope(scope)
-						Else
-							nfounds.AddLast(arg)
-						End If
-					End If
-				Next
-				If nfounds.Count() > 0
-					Local a:String
-					logger.LogWarning(_s("arg.list.unfound"))
-					For Local b:String = EachIn nfounds
-						a:+ b + " "
 					Next
-					a = a[..a.Length - 1]
-					logger.LogMessage("~t" + a)
+					If nfounds.Count() > 0
+						Local a:String
+						logger.LogWarning(_s("arg.list.unfound"))
+						For Local b:String = EachIn nfounds
+							a:+ b + " "
+						Next
+						a = a[..a.Length - 1]
+						logger.LogMessage("~t" + a)
+					End If
+				Else
+					For Local modscope:mxModuleScope = EachIn sources.ValueEnumerator()
+						ReportModuleScope(modscope)
+					Next
 				End If
 			Else
-				For Local modscope:mxModuleScope = EachIn sources.ValueEnumerator()
-					ReportModuleScope(modscope)
-				Next
+				logger.LogMessage(_s("arg.list.nosources"))
 			End If
 		Else
-			logger.LogMessage(_s("arg.list.nosources"))
+			ThrowError(_s("error.list.nosources"))
 		End If
 	End Method
 	

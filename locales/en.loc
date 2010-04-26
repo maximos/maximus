@@ -10,7 +10,7 @@ arg {
 	help {
 		usage "description: List Maximus' usage, commands and options, or specific information on a single command
 				usage: maximus [--help|help [command(s)]]"
-		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|--version] COMMAND [ARGS]
+		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
 					The most commonly used commands:
 					~tinstall~tInstall the given set modules
 					~tremove~tRemove the given set of modules
@@ -22,7 +22,7 @@ arg {
 	}
 	version {
 		usage "description: Report Maximus' version
-				usage: maximus [-v|--version|version]"
+				usage: maximus [-v|-version|version]"
 		report "Maximus version {version}"
 	}
 	list {
@@ -33,7 +33,8 @@ arg {
 	}
 	update {
 		usage "description: Retrieve latest sources
-				usage: maximus update"
+				usage: maximus update [--url ~qhttp://some/url~q]
+				options: --url (override sources url)"
 	}
 	modpath {
 		usage "description: Override the module path
@@ -58,12 +59,18 @@ error {
 	suggesthelp "See 'maximus --help'."
 	writeperms "Unable to write '{file}'; do you have sufficient permissions?"
 	fetch {
-		error "Failed to fetch archive
+		archive "Failed to fetch archive
+				~tReason: {reason}"
+		sources "Failed to fetch sources
 				~tReason: {reason}"
 	}
 	install {
 		openarchive "Failed to open archive '{archivepath}'"
 		build "Failed to build {scope}"
+		nosources "Cannot install modules as there is no sources list (see maximus --help update)"
+	}
+	list {
+		nosources "Cannot list modules as there is no sources list  (see maximus --help update)"
 	}
 	load {
 		sources {
@@ -80,10 +87,16 @@ error {
 					~tReason: {reason}"
 		}
 	}
+	update {
+		nourl "No url set for sources list (try --url or see config/help)"
+	}
 	notfound {
 		maxpath "Unable to determine the path to BlitzMax!
 				Have you set the 'BMXPATH' environment variable?"
 		modpath "Module path not found: ~q{modpath}~q"
+	}
+	sources {
+		setfile "Sources file path cannot be empty!"
 	}
 	option {
 		unknown "'{option}' is not a known option."
@@ -109,6 +122,7 @@ message {
 	skipping {
 		unpack "Skipping unpack"
 		build "Skipping build"
+		install "Skipping install"
 	}
 }
 

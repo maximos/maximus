@@ -26,6 +26,8 @@ Rem
 End Rem
 Type mxUpdateImpl Extends mxArgumentImplementation
 	
+	Field m_sourcesurl:String
+	
 	Method New()
 		init(["update"])
 	End Method
@@ -36,9 +38,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		about: This method will throw an error if the arguments are invalid.
 	End Rem
 	Method CheckArgs()
-		If GetArgumentCount() > 0
-			ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, m_args.GetName())
-		End If
+		CheckOptions()
 	End Method
 	
 	Rem
@@ -54,8 +54,69 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		'logger.LogMessage("Retrieving sources...")
+		If m_sourcesurl = Null Then m_sourcesurl = mainapp.m_sourcesurl
+		If m_sourcesurl = Null
+			ThrowError(_s("error.update.nourl"))
+		End If
+		Local file:String = mainapp.m_sourcesfile
+		logger.LogMessage("fetching: " + m_sourcesurl + " -> " + file + "~t", False)
+		Local stream:TStream = WriteFileExplicitly(file)
+		If stream <> Null
+			Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
+			request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
+			request.SetStream(stream)
+			Try
+				response = request.Call(m_sourcesurl, ["User-Agent: " + mainapp.m_useragent], "GET")
+			Catch e:Object
+				stream.Close()
+				DeleteFile(file)
+				logger.LogMessage("")
+				ThrowError(_s("error.fetch.sources", [e.ToString()]))
+			End Try
+			stream.Close()
+			If response.responseCode = 200
+				logger.LogMessage(_s("message.fetch.done", [String(response.responseCode)]))
+			Else
+				DeleteFile(file)
+				logger.LogMessage("")
+				ThrowError(_s("error.fetch.sources", ["Bad response code: " + String(response.responseCode)]))
+			End If
+		Else
+			ThrowError(_s("error.writeperms", [file]))
+		End If
 	End Method
+	
+	Rem
+		bbdoc: Check the options given to the command.
+		returns: Nothing.
+	End Rem
+	Method CheckOptions()
+		For Local opt:dIdentifier = EachIn m_args.GetValues()
+			Select opt.GetName().ToLower()
+				Case "--url"
+					If opt.GetValueCount() = 1
+						m_sourcesurl = dStringVariable(opt.GetValueAtIndex(0)).Get()
+					Else
+						ThrowCommonError(mxOptErrors.REQUIRESPARAMS, opt.GetName())
+					End If
+				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
+			End Select
+		Next
+	End Method
+	
+	Rem
+		bbdoc: Progress callback for sources fetching.
+		returns: Zero (no error).
+	End Rem
+	Function _ProgressCallback:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double)
+		Local store:_mxProgressStore = _mxProgressStore(data)
+		Local prog:Int = (dlnow / dltotal) * 100
+		If prog > store.m_progress + 5
+			store.m_progress = prog
+			WriteStdOut(".")
+		End If
+		Return 0
+	End Function
 	
 End Type
 

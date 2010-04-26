@@ -70,7 +70,9 @@ Type mxApp
 	
 	Field m_confighandler:mxConfigHandler
 	Field m_defaultlocale:dLocale, m_locale:dLocale
-	Field m_maxpath:String, m_modpath:String, m_sourcesfile:String = "test/sources"
+	Field m_maxpath:String, m_modpath:String
+	Field m_sourcesfile:String = "sources", m_sourcesurl:String = "http://maximus.htbaa.com/module/sources/json"
+	Field m_useragent:String
 	
 	Field m_args:dIdentifier
 	Field m_arghandler:mxArgumentHandler
@@ -92,15 +94,15 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method OnInit()
-		m_confighandler = New mxConfigHandler.Create(c_configfile)
-		m_confighandler.LoadDefaultLocale()
-		m_confighandler.Load()
 		Try
 			m_maxpath = BlitzMaxPath()
 		Catch e:Object
 			ThrowError(_s("error.notfound.maxpath"))
 		End Try
 		SetModPath(m_maxpath + "/mod", False)
+		m_confighandler = New mxConfigHandler.Create(c_configfile)
+		m_confighandler.LoadDefaultLocale()
+		m_confighandler.Load()
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
@@ -110,8 +112,18 @@ Type mxApp
 		m_arghandler.AddArgImpl(New mxListImpl)
 		m_sourceshandler = New mxSourcesHandler.FromFile(m_sourcesfile)
 		If m_sourceshandler = Null
-			ThrowError(_s("error.load.sources.file", [m_sourcesfile]))
+			' Don't throw an error here, the user may be updating the sources (an error will occur otherwise)
+			logger.LogWarning(_s("error.load.sources.file", [m_sourcesfile]))
 		End If
+		Local os:String
+		?Win32
+			os = "Windows"
+		?Linux
+			os = "Linux"
+		?MacOS
+			os = "MacOS"
+		?
+		m_useragent = "Maximus/" + c_version + " (" + os + "; " + m_locale.GetName() + ")"
 	End Method
 	
 	Rem
@@ -172,12 +184,32 @@ Type mxApp
 		about: This will throw an error if the module path could not be found.
 	End Rem
 	Method SetModPath(modpath:String, logchange:Int = True)
-		m_modpath = modpath
+		m_modpath = FixPathEnding(modpath, True)
 		If FileType(mainapp.m_modpath) = FILETYPE_DIR
 			If logchange = True Then logger.LogMessage(_s("message.setmodpath", [mainapp.m_modpath]))
 		Else
 			ThrowError(_s("error.notfound.modpath", [mainapp.m_modpath]))
 		End If
+	End Method
+	
+	Rem
+		bbdoc: Set the sources url.
+		returns: Nothing.
+	End Rem
+	Method SetSourcesUrl(url:String)
+		m_sourcesurl = url
+	End Method
+	
+	Rem
+		bbdoc: Set the sources file.
+		returns: Nothing.
+		about: NOTE: This will throw an error if the path is Null (and, later, a warning will be logged if the path does not exist).
+	End Rem
+	Method SetSourcesFile(file:String)
+		If file = Null
+			ThrowError(_s("error.sources.setfile"))
+		End If
+		m_sourcesfile = file
 	End Method
 	
 End Type

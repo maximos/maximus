@@ -27,7 +27,7 @@ End Rem
 Type mxVersionImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["version", "--version", "-v"])
+		init(["version", "-version", "-v"])
 	End Method
 	
 	Rem
@@ -41,9 +41,9 @@ Type mxVersionImpl Extends mxArgumentImplementation
 				If GetArgumentCount() > 0
 					ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, "version")
 				End If
-			Case mxCallConvention.OPTION ' "--version" or "-v"
+			Case mxCallConvention.OPTION ' "-version" or "-v"
 				If GetArgumentCount() > 0
-					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-v|--version")
+					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-v|-version")
 				End If
 		End Select
 	End Method

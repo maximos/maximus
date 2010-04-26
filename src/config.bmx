@@ -28,6 +28,8 @@ Type mxConfigHandler
 	
 	Field tpl_language:dTemplate = New dTemplate.Create(["language"], [[TV_STRING]])
 	Field tpl_modpath:dTemplate = New dTemplate.Create(["modpath"], [[TV_STRING]])
+	Field tpl_sourcesurl:dTemplate = New dTemplate.Create(["sourcesurl"], [[TV_STRING]])
+	Field tpl_sourcesfile:dTemplate = New dTemplate.Create(["sourcesfile"], [[TV_STRING]])
 	Field m_configfile:String
 	
 	Rem
@@ -77,6 +79,10 @@ Type mxConfigHandler
 							End If
 						Else If tpl_modpath.ValidateIdentifier(iden)
 							mainapp.SetModPath(dStringVariable(iden.GetValueAtIndex(0)).Get(), True)
+						Else If tpl_sourcesurl.ValidateIdentifier(iden)
+							mainapp.SetSourcesUrl(dStringVariable(iden.GetValueAtIndex(0)).Get())
+						Else If tpl_sourcesfile.ValidateIdentifier(iden)
+							mainapp.SetSourcesFile(dStringVariable(iden.GetValueAtIndex(0)).Get())
 						Else
 							logger.LogWarning(_s("error.load.config.unkiden", [iden.GetName()]))
 						End If
@@ -147,6 +153,7 @@ Function PostProcessLocaleText:String(text:String)
 	text = text.Replace("~~n", "~n")
 	text = text.Replace("~~q", "~q")
 	text = text.Replace("~~t", "~t")
+	text = text.Replace("~~~~", "~~")
 	Return text
 End Function
 

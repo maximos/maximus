@@ -64,7 +64,7 @@ Rem
 End Rem
 Type mxCallConvention
 	Rem
-		bbdoc: For arguments as options (e.g. '--help', '--version').
+		bbdoc: For arguments as options (e.g. '--help', '-version').
 	End Rem
 	Const OPTION:Int = 1
 	Rem
@@ -119,7 +119,7 @@ Type mxArgumentImplementation Abstract
 	Rem
 		bbdoc: Set the call convention.
 		returns: Nothing.
-		about: Options (e.g. '--version') should be mxCallConvention.OPTION, and commands (e.g. 'help') should be mxCallConvention.COMMAND.
+		about: Options (e.g. '-version') should be mxCallConvention.OPTION, and commands (e.g. 'help') should be mxCallConvention.COMMAND.
 	End Rem
 	Method SetCallConvention(callconv:Int)
 		m_callconv = callconv
