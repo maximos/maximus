@@ -10,7 +10,7 @@ arg {
 	help {
 		usage "description: List Maximus' usage, commands and options, or specific information on a single command
 				usage: maximus [--help|help [command(s)]]"
-		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
+		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|--version] COMMAND [ARGS]
 					The most commonly used commands:
 					~tinstall~tInstall the given set modules
 					~tremove~tRemove the given set of modules
@@ -22,7 +22,7 @@ arg {
 	}
 	version {
 		usage "description: Report Maximus' version
-				usage: maximus [-v|-version|version]"
+				usage: maximus [-v|--version|version]"
 		report "Maximus version {version}"
 	}
 	list {

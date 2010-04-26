@@ -119,7 +119,7 @@ Type mxArgumentImplementation Abstract
 	Rem
 		bbdoc: Set the call convention.
 		returns: Nothing.
-		about: General arguments (e.g. '--version') should be ECallConvention.ARGUMENT, commands (e.g. 'help') should be ECallConvention.COMMAND.
+		about: Options (e.g. '--version') should be mxCallConvention.OPTION, and commands (e.g. 'help') should be mxCallConvention.COMMAND.
 	End Rem
 	Method SetCallConvention(callconv:Int)
 		m_callconv = callconv
@@ -127,7 +127,7 @@ Type mxArgumentImplementation Abstract
 	
 	Rem
 		bbdoc: Get the current call convention.
-		returns: Nothing.
+		returns: The call convention (mxCallConvention.OPTION for options, and mxCallConvention.COMMAND for commands).
 	End Rem
 	Method GetCallConvention:Int()
 		Return m_callconv

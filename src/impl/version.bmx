@@ -27,7 +27,7 @@ End Rem
 Type mxVersionImpl Extends mxArgumentImplementation
 	
 	Method New()
-		init(["version", "-version", "-v"])
+		init(["version", "--version", "-v"])
 	End Method
 	
 	Rem
