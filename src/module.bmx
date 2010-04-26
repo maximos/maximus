@@ -462,7 +462,19 @@ Type mxModuleVersion
 				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
 				request.SetStream(stream)
 				Try
-					response = request.Call(GetUrl(), Null, "GET")
+					Local os:String
+					?Win32
+						os = "Windows"
+					?Linux
+						os = "Linux"
+					?MacOS
+						os = "MacOS"
+					?
+					
+					Local language:String
+					If mainapp.m_locale Then language = mainapp.m_locale.GetName()
+					
+					response = request.Call(GetUrl(), ["User-Agent: Maximus/" + mxApp.c_version + " (" + os + "; " + language + ")"], "GET")
 				Catch e:Object
 					stream.Close()
 					DeleteFile(file)
