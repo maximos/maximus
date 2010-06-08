@@ -44,13 +44,14 @@ arg {
 		usage "description: Install the given set of modules
 				usage: maximus install [-nounpack] [-nobuild] [-keeptemp] [-nothreaded] [-makedocs] modules
 				options: -nounpack (don't unpack archives), -nobuild (don't build modules), -keeptemp (don't remove 'tmp/' directory)
-				-nothreaded (don't build threaded), -makedocs (build documentation)"
+				-nothreaded (don't build threaded), -makedocs (build documentation), -force (force install when dependencies are not met)"
 		modulestoinstall "The following module(s) will be installed:"
 		nomodulestoinstall "No modules to be installed"
-		continuewithinstall "Continue will install? [y/n]"
+		continuewithinstall "Continue with install? [y/n]"
+		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed) [y/n]"
 		notfound {
 			instdeps "The following dependencies cannot be installed because they are neither in the sources list nor are they already installed:"
-			instmods "The following module(s) cannot be installed because they are not in the sources list:"
+			instmods "The following modules cannot be installed because they are not in the sources list:"
 			version "'{module}' does not have a version called '{version}'"
 		}
 	}

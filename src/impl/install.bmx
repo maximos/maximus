@@ -7,7 +7,7 @@ Type mxInstallImpl Extends mxArgumentImplementation
 	Field m_instmap:dObjectMap
 	Field m_depcheckmap:dObjectMap
 	Field m_nobuild:Int = False, m_nounpack:Int = False, m_keeptemp:Int = False
-	Field m_nothreaded:Int = False, m_makedocs:Int = False
+	Field m_nothreaded:Int = False, m_makedocs:Int = False, m_forceinstall:Int = False
 	
 	Method New()
 		init(["install"])
@@ -90,6 +90,7 @@ Type mxInstallImpl Extends mxArgumentImplementation
 				Case "-keeptemp" m_keeptemp = True
 				Case "-nothreaded" m_nothreaded = True
 				Case "-makedocs" m_makedocs = True
+				Case "-force" m_forceinstall = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
 		Next
@@ -112,6 +113,13 @@ Type mxInstallImpl Extends mxArgumentImplementation
 			Next
 			a = a[..a.Length - 1]
 			logger.LogMessage("~t" + a)
+			If m_forceinstall = True
+				m_nobuild = True
+				Local resp:String = Input(_s("arg.install.missingdeps") + " ").ToLower()
+				If resp = "y" Or resp = "yes"
+					Return True
+				End If
+			End If
 			Return False
 		End If
 		Return True
