@@ -12,6 +12,7 @@ Import brl.ramstream
 Import brl.glgraphics
 ?
 
+Import bah.volumes
 Import gman.zipengine
 Import htbaapub.rest
 
@@ -52,6 +53,8 @@ Type mxApp
 	Const c_version:String = "0.01"
 	Const c_configfile:String = "maximus.config"
 	
+	Field m_apppath:String
+	
 	Field m_confighandler:mxConfigHandler
 	Field m_defaultlocale:dLocale, m_locale:dLocale
 	Field m_maxpath:String, m_modpath:String
@@ -78,13 +81,21 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method OnInit()
+		m_apppath = GetUserAppDir() + "/"
+		?Linux
+		m_apppath:+ ".maximus/"
+		?Not Linux
+		m_apppath:+ "maximus/"
+		?
+		If FileType(m_apppath) = FILETYPE_NONE Then CreateDir(m_apppath, False)
+		ChangeDir(m_apppath)
 		Try
 			m_maxpath = BlitzMaxPath()
 		Catch e:Object
 			ThrowError(_s("error.notfound.maxpath"))
 		End Try
 		SetModPath(m_maxpath + "/mod", False)
-		m_confighandler = New mxConfigHandler.Create(c_configfile)
+		m_confighandler = New mxConfigHandler.Create(m_apppath + c_configfile)
 		m_confighandler.LoadDefaultLocale()
 		m_confighandler.Load()
 		m_arghandler = New mxArgumentHandler
@@ -94,10 +105,10 @@ Type mxApp
 		m_arghandler.AddArgImpl(New mxInstallImpl)
 		m_arghandler.AddArgImpl(New mxUpdateImpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
-		m_sourceshandler = New mxSourcesHandler.FromFile(m_sourcesfile)
+		m_sourceshandler = New mxSourcesHandler.FromFile(m_apppath + m_sourcesfile)
 		If m_sourceshandler = Null
 			' Don't throw an error here, the user may be updating the sources (an error will occur otherwise)
-			logger.LogWarning(_s("error.load.sources.file", [m_sourcesfile]))
+			logger.LogWarning(_s("error.load.sources.file", [m_apppath + m_sourcesfile]))
 		End If
 		Local os:String
 		?Win32
