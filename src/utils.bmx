@@ -103,7 +103,7 @@ Type mxModUtils
 	Function DocMods:Int(args:String = Null)
 		args = "docmods " + args.Trim()
 		logger.LogMessage("run: " + args)
-		Return system_(args)
+		Return system_(mainapp.m_binpath + "/" + args)
 	End Function
 	
 End Type
@@ -120,7 +120,7 @@ Type mxBMKUtils
 	Function RunBMK:Int(args:String)
 		args = "bmk " + args.Trim()
 		logger.LogMessage("run: " + args)
-		Return system_(args)
+		Return system_(mainapp.m_binpath + "/" + args)
 	End Function
 	
 	Rem

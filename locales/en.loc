@@ -92,9 +92,11 @@ error {
 		nourl "No url set for sources list (try --url or see config/help)"
 	}
 	notfound {
-		maxpath "Unable to determine the path to BlitzMax!
+		maxenv "Unable to determine the path to BlitzMax!
 				Have you set the 'BMXPATH' environment variable?"
+		maxpath "BlitzMax path not found: ~q{maxpath}~q"
 		modpath "Module path not found: ~q{modpath}~q"
+		bmk "Path to bmk not found: ~q{bmkpath}~q"
 	}
 	sources {
 		setfile "Sources file path cannot be empty!"

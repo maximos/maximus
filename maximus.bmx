@@ -54,10 +54,10 @@ Type mxApp
 	Const c_configfile:String = "maximus.config"
 	
 	Field m_apppath:String
+	Field m_maxpath:String, m_binpath:String, m_modpath:String
 	
 	Field m_confighandler:mxConfigHandler
 	Field m_defaultlocale:dLocale, m_locale:dLocale
-	Field m_maxpath:String, m_modpath:String
 	Field m_sourcesfile:String = "sources", m_sourcesurl:String = "http://maximus.htbaa.com/module/sources/json"
 	Field m_useragent:String
 	
@@ -89,15 +89,17 @@ Type mxApp
 		?
 		If FileType(m_apppath) = FILETYPE_NONE Then CreateDir(m_apppath, False)
 		ChangeDir(m_apppath)
-		Try
-			m_maxpath = BlitzMaxPath()
-		Catch e:Object
-			ThrowError(_s("error.notfound.maxpath"))
-		End Try
-		SetModPath(m_maxpath + "/mod", False)
 		m_confighandler = New mxConfigHandler.Create(m_apppath + c_configfile)
 		m_confighandler.LoadDefaultLocale()
 		m_confighandler.Load()
+		If Not m_maxpath
+			Try
+				SetMaxPath(BlitzMaxPath())
+			Catch e:Object
+				ThrowError(_s("error.notfound.maxenv"))
+			End Try
+		End If
+		If Not m_modpath Then SetModPath(m_maxpath + "/mod", False)
 		m_arghandler = New mxArgumentHandler
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
@@ -180,10 +182,25 @@ Type mxApp
 	End Rem
 	Method SetModPath(modpath:String, logchange:Int = True)
 		m_modpath = FixPathEnding(modpath, True)
-		If FileType(mainapp.m_modpath) = FILETYPE_DIR
-			If logchange = True Then logger.LogMessage(_s("message.setmodpath", [mainapp.m_modpath]))
+		If FileType(m_modpath) = FILETYPE_DIR
+			If logchange = True Then logger.LogMessage(_s("message.setmodpath", [m_modpath]))
 		Else
-			ThrowError(_s("error.notfound.modpath", [mainapp.m_modpath]))
+			ThrowError(_s("error.notfound.modpath", [m_modpath]))
+		End If
+	End Method
+	
+	Rem
+		bbdoc: Set the path to the BlitzMax installation.
+		returns: Nothing.
+		about: This will throw an error if the path could not be found.
+	End Rem
+	Method SetMaxPath(maxpath:String)
+		m_maxpath = FixPathEnding(maxpath, True)
+		m_binpath = m_maxpath + "/bin"
+		If FileType(m_maxpath) = FILETYPE_NONE
+			ThrowError(_s("error.notfound.maxpath", [m_maxpath]))
+		Else If FileType(m_binpath + "/bmk") = FILETYPE_NONE
+			ThrowError(_s("error.notfound.bmk", [m_binpath + "/bmk"]))
 		End If
 	End Method
 	

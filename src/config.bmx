@@ -5,6 +5,7 @@ End Rem
 Type mxConfigHandler
 	
 	Field tpl_language:dTemplate = New dTemplate.Create(["language"], [[TV_STRING]])
+	Field tpl_maxpath:dTemplate = New dTemplate.Create(["maxpath"], [[TV_STRING]])
 	Field tpl_modpath:dTemplate = New dTemplate.Create(["modpath"], [[TV_STRING]])
 	Field tpl_sourcesurl:dTemplate = New dTemplate.Create(["sourcesurl"], [[TV_STRING]])
 	Field tpl_sourcesfile:dTemplate = New dTemplate.Create(["sourcesfile"], [[TV_STRING]])
@@ -55,8 +56,10 @@ Type mxConfigHandler
 							If lang <> "en"
 								mainapp.m_locale = LoadLocale(lang, False, True)
 							End If
+						Else If tpl_maxpath.ValidateIdentifier(iden) 
+							mainapp.SetMaxPath(dStringVariable(iden.GetValueAtIndex(0)).Get())
 						Else If tpl_modpath.ValidateIdentifier(iden)
-							mainapp.SetModPath(dStringVariable(iden.GetValueAtIndex(0)).Get(), True)
+							mainapp.SetModPath(dStringVariable(iden.GetValueAtIndex(0)).Get(), False)
 						Else If tpl_sourcesurl.ValidateIdentifier(iden)
 							mainapp.SetSourcesUrl(dStringVariable(iden.GetValueAtIndex(0)).Get())
 						Else If tpl_sourcesfile.ValidateIdentifier(iden)
