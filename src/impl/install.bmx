@@ -29,6 +29,7 @@ Type mxInstallImpl Extends mxArgumentImplementation
 	Field m_instmap:dObjectMap
 	Field m_depcheckmap:dObjectMap
 	Field m_nobuild:Int = False, m_nounpack:Int = False, m_keeptemp:Int = False
+	Field m_nothreaded:Int = False, m_makedocs:Int = False
 	
 	Method New()
 		init(["install"])
@@ -61,6 +62,8 @@ Type mxInstallImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
+		m_instmap.Clear()
+		m_depcheckmap.Clear()
 		If mainapp.m_sourceshandler
 			Local nfounds:dObjectMap = New dObjectMap
 			For Local svar:dStringVariable = EachIn m_args.GetValues()
@@ -100,11 +103,15 @@ Type mxInstallImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method CheckOptions()
+		m_nobuild = False; m_nounpack = False; m_keeptemp = False
+		m_nothreaded = False; m_makedocs = False
 		For Local opt:dIdentifier = EachIn m_args.GetValues()
 			Select opt.GetName().ToLower()
 				Case "-nobuild" m_nobuild = True
 				Case "-nounpack" m_nounpack = True
 				Case "-keeptemp" m_keeptemp = True
+				Case "-nothreaded" m_nothreaded = True
+				Case "-makedocs" m_makedocs = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
 		Next
@@ -191,10 +198,17 @@ Type mxInstallImpl Extends mxArgumentImplementation
 						scopes._Insert(instmod.GetModuleScope(), instmod.GetModuleScope())
 					Next
 					For Local scope:String = EachIn scopes.ValueEnumerator()
-						If mxBMKUtils.MakeMods(scope) <> 0
+						If mxBMKUtils.MakeMods(scope, m_nothreaded ~ 1) <> 0
 							ThrowError(_s("error.install.build", [scope]))
 						End If
 					Next
+					If m_makedocs = True
+						'For instmod = EachIn m_instmap.ValueEnumerator()
+						'	mxModUtils.DocMods(instmod.GetID())
+						'Next
+						' Can't build docs for individual modules yet
+						mxModUtils.DocMods()
+					End If
 				Else
 					logger.LogMessage(_s("message.skipping.install"))
 				End If

@@ -118,6 +118,16 @@ Type mxModUtils
 		Return mods
 	End Function
 	
+	Rem
+		bbdoc: Document all modules, or the modules given (doesn't work yet - all documentation will be built).
+		returns: The exit code from makedocs.
+	End Rem
+	Function DocMods:Int(args:String = Null)
+		args = "docmods " + args.Trim()
+		logger.LogMessage("run: " + args)
+		Return system_(args)
+	End Function
+	
 End Type
 
 Rem
@@ -139,8 +149,10 @@ Type mxBMKUtils
 		bbdoc: Make modules with the given arguments.
 		returns: The exit code from bmk (non-zero when an error occured).
 	End Rem
-	Function MakeMods:Int(args:String)
-		Return RunBMK("makemods " + args)
+	Function MakeMods:Int(args:String, threaded:Int)
+		Local opts:String
+		If threaded Then opts:+ " -h"
+		Return RunBMK("makemods" + opts + " " + args)
 	End Function
 	
 End Type
