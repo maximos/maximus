@@ -28,6 +28,12 @@ Import brl.standardio
 Import brl.maxutil
 Import brl.ramstream
 
+' We have to import this for BMax 1.39 on Linux because of a dependency issue in brl.system
+' http://blitzbasic.com/Community/posts.php?topic=90547
+?Linux
+Import brl.glgraphics
+?
+
 Import gman.zipengine
 Import htbaapub.rest
 
