@@ -9,6 +9,7 @@ Type mxConfigHandler
 	Field tpl_modpath:dTemplate = New dTemplate.Create(["modpath"], [[TV_STRING]])
 	Field tpl_sourcesurl:dTemplate = New dTemplate.Create(["sourcesurl"], [[TV_STRING]])
 	Field tpl_sourcesfile:dTemplate = New dTemplate.Create(["sourcesfile"], [[TV_STRING]])
+	Field tpl_autoupdate:dTemplate = New dTemplate.Create(["autoupdate"], [[TV_BOOL]])
 	Field m_configfile:String
 	
 	Rem
@@ -64,6 +65,8 @@ Type mxConfigHandler
 							mainapp.SetSourcesUrl(dStringVariable(iden.GetValueAtIndex(0)).Get())
 						Else If tpl_sourcesfile.ValidateIdentifier(iden)
 							mainapp.SetSourcesFile(dStringVariable(iden.GetValueAtIndex(0)).Get())
+						Else If tpl_autoupdate.ValidateIdentifier(iden)
+							mainapp.m_autoupdatesources = dBoolVariable(iden.GetValueAtIndex(0)).Get()
 						Else
 							logger.LogWarning(_s("error.load.config.unkiden", [iden.GetName()]))
 						End If

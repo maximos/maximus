@@ -199,8 +199,9 @@ Type mxModule Extends mxModuleBase
 	End Method
 	
 	Rem
-		bbdoc: Get the latest (non-dev) version for this module.
+		bbdoc: Get the latest (non-dev if available) version for this module.
 		returns: The latest version for this module.
+		about: The latest version will be returned, or the dev version if it is the only version.
 	End Rem
 	Method GetLatestVersion:mxModuleVersion()
 		Local hver:mxModuleVersion
@@ -211,6 +212,9 @@ Type mxModule Extends mxModuleBase
 				End If
 			End If
 		Next
+		If hver = Null
+			hver = GetVersionWithName("dev")
+		End If
 		Return hver
 	End Method
 	
