@@ -21,6 +21,7 @@ Import duct.objectmap
 Import duct.json
 Import duct.locale
 Import duct.argparser
+Import duct.time
 
 Incbin "locales/en.loc"
 
@@ -60,10 +61,14 @@ Type mxApp
 	Field m_defaultlocale:dLocale, m_locale:dLocale
 	Field m_sourcesfile:String = "sources", m_sourcesurl:String = "http://maximus.htbaa.com/module/sources/json"
 	Field m_useragent:String
+	Field m_autoupdatesources:Int = True
 	
 	Field m_args:dIdentifier
 	Field m_arghandler:mxArgumentHandler
 	Field m_sourceshandler:mxSourcesHandler
+	
+	Field m_updateimpl:mxUpdateImpl
+	Field m_sourcesupdated:Int
 	
 	Rem
 		bbdoc: Create a new mxApp.
@@ -87,7 +92,11 @@ Type mxApp
 		?Not Linux
 		m_apppath:+ "maximus/"
 		?
-		If FileType(m_apppath) = FILETYPE_NONE Then CreateDir(m_apppath, False)
+		If FileType(m_apppath) = FILETYPE_NONE
+			If Not CreateDir(m_apppath, False)
+				ThrowError(_s("error.createperms", [m_apppath]))
+			End If
+		End If
 		ChangeDir(m_apppath)
 		m_confighandler = New mxConfigHandler.Create(m_apppath + c_configfile)
 		m_confighandler.LoadDefaultLocale()
@@ -105,8 +114,10 @@ Type mxApp
 		m_arghandler.AddArgImpl(New mxVersionImpl)
 		m_arghandler.AddArgImpl(New mxModPathImpl)
 		m_arghandler.AddArgImpl(New mxInstallImpl)
-		m_arghandler.AddArgImpl(New mxUpdateImpl)
+		m_updateimpl = New mxUpdateImpl
+		m_arghandler.AddArgImpl(m_updateimpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
+		UpdateSources()
 		m_sourceshandler = New mxSourcesHandler.FromFile(m_apppath + m_sourcesfile)
 		If m_sourceshandler = Null
 			' Don't throw an error here, the user may be updating the sources (an error will occur otherwise)
@@ -161,6 +172,27 @@ Type mxApp
 			End If
 		Next
 		OnExit()
+	End Method
+	
+	Rem
+		bbdoc: Update the sources list.
+		returns: Nothing.
+		about: Updates when: the sources file is greater than 23 hours old; the sources file does not exist.
+	End Rem
+	Method UpdateSources()
+		If m_autoupdatesources And Not m_sourcesupdated
+			Local ctime:dTime, ftime:dTime
+			ctime = New dTime.CreateFromCurrent()
+			ftime = New dTime.CreateFromFile(m_apppath + m_sourcesfile)
+			'DebugLog("Auto-update file time: c" + ctime.Get() + " | " + ftime.Get() + ", hours: " + (ctime.Get() - ftime.Get()) / 3600)
+			If Not ftime Or (ctime.Get() - ftime.Get()) / 3600 > 23
+				logger.LogMessage(_s("arg.update.autoupdate"))
+				m_updateimpl.SetCallConvention(mxCallConvention.COMMAND)
+				m_updateimpl.SetArgs(New dIdentifier.Create())
+				m_updateimpl.CheckArgs()
+				m_updateimpl.Execute()
+			End If
+		End If
 	End Method
 	
 	Rem

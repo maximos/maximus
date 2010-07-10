@@ -35,6 +35,7 @@ arg {
 		usage "description: Retrieve latest sources
 				usage: maximus update [--url ~qhttp://some/url~q]
 				options: --url (override sources url)"
+		autoupdate "Automatically updating old sources..."
 	}
 	modpath {
 		usage "description: Override the module path
@@ -59,7 +60,8 @@ arg {
 
 error {
 	suggesthelp "See 'maximus --help'."
-	writeperms "Unable to write '{file}'; do you have sufficient permissions?"
+	createperms "Unable to create '{path}'; do you have sufficient permissions?"
+	writeperms "Unable to write '{path}'; do you have sufficient permissions?"
 	fetch {
 		archive "Failed to fetch archive
 				~tReason: {reason}"

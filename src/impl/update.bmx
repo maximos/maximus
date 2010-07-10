@@ -32,11 +32,13 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
+		If mainapp.m_sourcesupdated = True Then Return
 		If m_sourcesurl = Null Then m_sourcesurl = mainapp.m_sourcesurl
 		If m_sourcesurl = Null
 			ThrowError(_s("error.update.nourl"))
 		End If
-		Local file:String = mainapp.m_sourcesfile
+		mainapp.m_sourcesupdated = True
+		Local file:String = mainapp.m_sourcesfile + ".tmp"
 		logger.LogMessage("fetching: " + m_sourcesurl + " -> " + file + "~t", False)
 		Local stream:TStream = WriteFileExplicitly(file)
 		If stream <> Null
@@ -54,6 +56,8 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 			stream.Close()
 			If response.responseCode = 200
 				logger.LogMessage(_s("message.fetch.done", [String(response.responseCode)]))
+				CopyFile(file, mainapp.m_sourcesfile)
+				DeleteFile(file)
 			Else
 				DeleteFile(file)
 				logger.LogMessage("")
@@ -69,6 +73,7 @@ Type mxUpdateImpl Extends mxArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method CheckOptions()
+		m_sourcesurl = Null
 		For Local opt:dIdentifier = EachIn m_args.GetValues()
 			Select opt.GetName().ToLower()
 				Case "--url"
