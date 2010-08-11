@@ -53,9 +53,10 @@ Type mxModuleBase Abstract
 		Select variable.GetName().ToLower()
 			Case "desc"
 				SetDescription(variable.ValueAsString())
-				Return True
+			Default
+				Return False
 		End Select
-		Return False
+		Return True
 	End Method
 	
 End Type
@@ -231,8 +232,10 @@ Type mxModule Extends mxModuleBase
 					For Local jobj:dJObject = EachIn dJObject(variable).GetValues()
 						AddVersion(New mxModuleVersion.FromJSON(jobj))
 					Next
+				Default
+					Return False
 			End Select
-			Return False
+			Return True
 		End If
 	End Method
 	
@@ -272,6 +275,30 @@ Type mxModuleVersion
 	
 	Method New()
 		m_dependencies = New mxModuleDependencies
+	End Method
+	
+	Rem
+		bbdoc: Create a version.
+		returns: Itself.
+	End Rem
+	Method Create:mxModuleVersion(parent:mxModule, name:String, url:String)
+		SetParent(parent)
+		SetName(name)
+		SetUrl(url)
+		Return Self
+	End Method
+	
+	Rem
+		bbdoc: Clone the version.
+		returns: A clone of the version.
+		about: If @withdeps is True (default value), the dependencies will be added as well.
+	End Rem
+	Method Clone:mxModuleVersion(withdeps:Int = True)
+		Local v:mxModuleVersion = New mxModuleVersion.Create(m_parent, m_name, m_url)
+		For Local dep:mxModuleDependency = EachIn DependencyEnumerator()
+			v.m_dependencies.AddDependency(dep)
+		Next
+		Return v
 	End Method
 	
 '#region Field accessors
@@ -380,9 +407,10 @@ Type mxModuleVersion
 				SetUrl(variable.ValueAsString())
 			Case "deps"
 				m_dependencies.FromJSON(dJArray(variable))
-				Return True
+			Default
+				Return False
 		End Select
-		Return False
+		Return True
 	End Method
 	
 	Rem
@@ -435,7 +463,7 @@ Type mxModuleVersion
 				End If
 			End If
 		End If
-		Return 0
+		Return Super.Compare(with)
 	End Method
 	
 	Rem
