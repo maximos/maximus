@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'install' argument implementation.
 End Rem
-Type mxInstallImpl Extends mxArgumentImplementation
+Type mxInstallImpl Extends dArgumentImplementation
 	
 	Field m_instmap:dObjectMap
 	Field m_depcheckmap:dObjectMap

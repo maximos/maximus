@@ -21,6 +21,7 @@ Import duct.objectmap
 Import duct.json
 Import duct.locale
 Import duct.argparser
+Import duct.arghandling
 Import duct.time
 
 Incbin "locales/en.loc"
@@ -32,7 +33,7 @@ Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
 Include "src/utils.bmx"
-Include "src/arghandler.bmx"
+'Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
 Include "src/impl/modpath.bmx"
@@ -64,7 +65,7 @@ Type mxApp
 	Field m_autoupdatesources:Int = True
 	
 	Field m_args:dIdentifier
-	Field m_arghandler:mxArgumentHandler
+	Field m_arghandler:dArgumentHandler
 	Field m_sourceshandler:mxSourcesHandler
 	
 	Field m_updateimpl:mxUpdateImpl
@@ -109,7 +110,7 @@ Type mxApp
 			End Try
 		End If
 		If Not m_modpath Then SetModPath(m_maxpath + "/mod", False)
-		m_arghandler = New mxArgumentHandler
+		m_arghandler = New dArgumentHandler.Create()
 		m_arghandler.AddArgImpl(New mxHelpImpl)
 		m_arghandler.AddArgImpl(New mxVersionImpl)
 		m_arghandler.AddArgImpl(New mxModPathImpl)
@@ -146,18 +147,18 @@ Type mxApp
 		returns: Nothing.
 	End Rem
 	Method Run()
-		Local argimpl:mxArgumentImplementation, isopt:Int
+		Local argimpl:dArgumentImplementation, isopt:Int
 		For Local arg:dIdentifier = EachIn m_args.GetValues()
-			argimpl = m_arghandler.GetArgImplFromAlias(arg.GetName())
+			argimpl = m_arghandler.GetArgImplWithAlias(arg.GetName())
 			isopt = (arg.GetName()[0] = 45)
 			If argimpl <> Null
 				If isopt = True
-					argimpl.SetCallConvention(mxCallConvention.OPTION)
+					argimpl.SetCallConvention(dCallConvention.OPTION)
 					argimpl.SetArgs(arg)
 					argimpl.CheckArgs()
 					argimpl.Execute()
 				Else
-					argimpl.SetCallConvention(mxCallConvention.COMMAND)
+					argimpl.SetCallConvention(dCallConvention.COMMAND)
 					argimpl.SetArgs(arg)
 					argimpl.CheckArgs()
 					argimpl.Execute()
@@ -187,7 +188,7 @@ Type mxApp
 			'DebugLog("Auto-update file time: c" + ctime.Get() + " | " + ftime.Get() + ", hours: " + (ctime.Get() - ftime.Get()) / 3600)
 			If Not ftime Or (ctime.Get() - ftime.Get()) / 3600 > 23
 				logger.LogMessage(_s("arg.update.autoupdate"))
-				m_updateimpl.SetCallConvention(mxCallConvention.COMMAND)
+				m_updateimpl.SetCallConvention(dCallConvention.COMMAND)
 				m_updateimpl.SetArgs(New dIdentifier.Create())
 				m_updateimpl.CheckArgs()
 				m_updateimpl.Execute()

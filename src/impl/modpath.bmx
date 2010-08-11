@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'modpath' option implementation.
 End Rem
-Type mxModPathImpl Extends mxArgumentImplementation
+Type mxModPathImpl Extends dArgumentImplementation
 	
 	Method New()
 		init(["--modpath"])

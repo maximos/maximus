@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'list' argument implementation.
 End Rem
-Type mxListImpl Extends mxArgumentImplementation
+Type mxListImpl Extends dArgumentImplementation
 	
 	Field m_queuemap:dObjectMap = New dObjectMap
 	

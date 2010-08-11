@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'update' argument implementation.
 End Rem
-Type mxUpdateImpl Extends mxArgumentImplementation
+Type mxUpdateImpl Extends dArgumentImplementation
 	
 	Field m_sourcesurl:String
 	

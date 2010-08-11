@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'help' argument implementation.
 End Rem
-Type mxHelpImpl Extends mxArgumentImplementation
+Type mxHelpImpl Extends dArgumentImplementation
 	
 	Method New()
 		init(["help", "--help"])
@@ -35,7 +35,7 @@ Type mxHelpImpl Extends mxArgumentImplementation
 				If command.ToLower() = "help"
 					logger.LogMessage(command + ":~t" + "HELP HELP I'M BEING REPRESSED!")
 				Else
-					Local argimpl:mxArgumentImplementation = mainapp.m_arghandler.GetArgImplFromAlias(command)
+					Local argimpl:dArgumentImplementation = mainapp.m_arghandler.GetArgImplWithAlias(command)
 					If argimpl <> Null
 						logger.LogMessage(command + ":~n~t" + argimpl.GetUsage().Replace("~n", "~n~t"))
 					Else

@@ -2,7 +2,7 @@
 Rem
 	bbdoc: Maximus 'version' argument implementation.
 End Rem
-Type mxVersionImpl Extends mxArgumentImplementation
+Type mxVersionImpl Extends dArgumentImplementation
 	
 	Method New()
 		init(["version", "-version", "-v"])
@@ -15,11 +15,11 @@ Type mxVersionImpl Extends mxArgumentImplementation
 	End Rem
 	Method CheckArgs()
 		Select GetCallConvention()
-			Case mxCallConvention.COMMAND ' "version"
+			Case dCallConvention.COMMAND ' "version"
 				If GetArgumentCount() > 0
 					ThrowCommonError(mxCmdErrors.DOESNOTTAKEPARAMS, "version")
 				End If
-			Case mxCallConvention.OPTION ' "-version" or "-v"
+			Case dCallConvention.OPTION ' "-version" or "-v"
 				If GetArgumentCount() > 0
 					ThrowCommonError(mxOptErrors.DOESNOTTAKEPARAMS, "-v|-version")
 				End If
