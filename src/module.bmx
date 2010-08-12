@@ -31,7 +31,7 @@ Type mxModuleBase Abstract
 		returns: Nothing.
 	End Rem
 	Method SetDescription(description:String)
-		Assert description, "(mxModuleBase.SetDescription) description cannot be Null!"
+		'Assert description, "(mxModuleBase.SetDescription) description cannot be Null!"
 		m_description = description
 	End Method
 	
@@ -169,6 +169,18 @@ Type mxModule Extends mxModuleBase
 	End Method
 	
 '#end region Field accessors
+	
+	Rem
+		bbdoc: Get the installed version of the module (if it is installed).
+		returns: The version of the module that is installed, or Null if the module is not installed.
+	End Rem
+	Method GetInstalledVersion:mxModuleVersion()
+		Local version:String = mxModUtils.GetInstalledVersionFromVerID(GetFullName())
+		If version
+			Return New mxModuleVersion.Create(Self, version, Null)
+		End If
+		Return Null
+	End Method
 	
 	Rem
 		bbdoc: Add the given version to the module.
@@ -341,7 +353,7 @@ Type mxModuleVersion
 		returns: Nothing.
 	End Rem
 	Method SetUrl(url:String)
-		Assert url, "(mxModuleVersion.SetUrl) url cannot be Null!"
+		'Assert url, "(mxModuleVersion.SetUrl) url cannot be Null!"
 		m_url = url
 	End Method
 	

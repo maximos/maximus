@@ -6,12 +6,6 @@ Import brl.standardio
 Import brl.maxutil
 Import brl.ramstream
 
-' We have to import this for BMax 1.39 on Linux because of a dependency issue in brl.system
-' http://blitzbasic.com/Community/posts.php?topic=90547
-?Linux
-Import brl.glgraphics
-?
-
 Import bah.volumes
 Import gman.zipengine
 Import htbaapub.rest
@@ -33,7 +27,6 @@ Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
 Include "src/utils.bmx"
-'Include "src/arghandler.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
 Include "src/impl/modpath.bmx"
@@ -172,6 +165,19 @@ Type mxApp
 				End If
 			End If
 		Next
+		Rem
+		' Test version snatching
+		Local time:Int = MilliSecs(), ver:String
+		For Local modid:String = EachIn mxModUtils.GetModules().KeyEnumerator()
+			ver = mxModUtils.GetInstalledVersionFromVerID(modid)
+			If ver And Not (ver = "dev")
+				DebugLog("versioned-id: ~q" + modid + "/" + ver + "~q")
+			Else If Not ver
+				DebugLog("Failed to get version from " + modid)
+			End If
+		Next
+		DebugLog("timed: " + mxModUtils.GetModules().Count() + " modules in " + (MilliSecs() - time) + "ms")
+		End Rem
 		OnExit()
 	End Method
 	
