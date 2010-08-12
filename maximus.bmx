@@ -236,10 +236,16 @@ Type mxApp
 	Method SetMaxPath(maxpath:String)
 		m_maxpath = FixPathEnding(maxpath, True)
 		m_binpath = m_maxpath + "/bin"
+		Local bmk:String
+		?Win32
+			bmk = "/bmk.exe"
+		?Not Win32
+			bmk = "/bmk"
+		?
 		If FileType(m_maxpath) = FILETYPE_NONE
 			ThrowError(_s("error.notfound.maxpath", [m_maxpath]))
-		Else If FileType(m_binpath + "/bmk") = FILETYPE_NONE
-			ThrowError(_s("error.notfound.bmk", [m_binpath + "/bmk"]))
+		Else If FileType(m_binpath + bmk) = FILETYPE_NONE
+			ThrowError(_s("error.notfound.bmk", [m_binpath + bmk]))
 		End If
 	End Method
 	
