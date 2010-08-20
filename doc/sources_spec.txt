@@ -8,8 +8,6 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 
 {
 	"MODSCOPE": {					## e.g. "duct"
-		"desc": "DESCRIPTION",		## e.g. "A set of assorted ductile modules for BlitzMax"
-		
 		"MOD": {						## e.g. "logger"
 			"desc": "DESCRIPTION",		## e.g. "Simple message logger"
 			"versions": {

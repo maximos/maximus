@@ -5,7 +5,7 @@ Rem
 End Rem
 Type mxModuleBase Abstract
 	
-	Field m_name:String, m_description:String
+	Field m_name:String
 	
 '#region Field accessors
 	
@@ -26,23 +26,6 @@ Type mxModuleBase Abstract
 		Return m_name
 	End Method
 	
-	Rem
-		bbdoc: Set the base's description.
-		returns: Nothing.
-	End Rem
-	Method SetDescription(description:String)
-		'Assert description, "(mxModuleBase.SetDescription) description cannot be Null!"
-		m_description = description
-	End Method
-	
-	Rem
-		bbdoc: Get the base's description.
-		returns: The base's description.
-	End Rem
-	Method GetDescription:String()
-		Return m_description
-	End Method
-	
 '#end region Field accessors
 	
 	Rem
@@ -50,13 +33,7 @@ Type mxModuleBase Abstract
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
 	Method SetCommonFromVariable:Int(variable:dVariable)
-		Select variable.GetName().ToLower()
-			Case "desc"
-				SetDescription(variable.ValueAsString())
-			Default
-				Return False
-		End Select
-		Return True
+		Return False
 	End Method
 	
 End Type
@@ -111,8 +88,8 @@ Type mxModuleScope Extends mxModuleBase
 			For Local variable:dVariable = EachIn root.GetValues()
 				If dJObject(variable)
 					AddModule(New mxModule.FromJSON(dJObject(variable)))
-				Else
-					SetCommonFromVariable(variable)
+				'Else
+				'	SetCommonFromVariable(variable)
 				End If
 			Next
 			Return Self
@@ -136,6 +113,7 @@ End Rem
 Type mxModule Extends mxModuleBase
 	
 	Field m_parent:mxModuleScope
+	Field m_description:String
 	Field m_versions:dObjectMap
 	
 	Method New()
@@ -166,6 +144,22 @@ Type mxModule Extends mxModuleBase
 	End Rem
 	Method GetFullName:String()
 		Return m_parent.m_name + "." + m_name
+	End Method
+	
+	Rem
+		bbdoc: Set the module's description.
+		returns: Nothing.
+	End Rem
+	Method SetDescription(description:String)
+		m_description = description
+	End Method
+	
+	Rem
+		bbdoc: Get the module's description.
+		returns: The module's description.
+	End Rem
+	Method GetDescription:String()
+		Return m_description
 	End Method
 	
 '#end region Field accessors
@@ -240,6 +234,8 @@ Type mxModule Extends mxModuleBase
 			Return True
 		Else
 			Select variable.GetName().ToLower()
+				Case "desc"
+					SetDescription(variable.ValueAsString())
 				Case "versions"
 					For Local jobj:dJObject = EachIn dJObject(variable).GetValues()
 						AddVersion(New mxModuleVersion.FromJSON(jobj))
