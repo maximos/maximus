@@ -14,8 +14,7 @@ Import duct.variables
 Import duct.objectmap
 Import duct.json
 Import duct.locale
-Import duct.argparser
-Import duct.arghandling
+Import duct.clapp
 Import duct.time
 
 Incbin "locales/en.loc"
@@ -36,14 +35,15 @@ Include "src/impl/list.bmx"
 
 Global logger:mxLogger = New mxLogger
 Global mainapp:mxApp
-New mxApp.Create(AppArgs[1..]) ' Skip the first element because it is the program's location
+New mxApp.Create() ' Skip the first element because it is the program's location
+mainapp.SetArgs(AppArgs[1..])
 mainapp.Run()
 
 Rem
 	bbdoc: Maximus app.
 	about: This handles the basic flow of the program (initiation, parsing, command calling, exiting..)
 End Rem
-Type mxApp
+Type mxApp Extends dCLApp
 	
 	Const c_version:String = "0.01"
 	Const c_configfile:String = "maximus.config"
@@ -57,8 +57,6 @@ Type mxApp
 	Field m_useragent:String
 	Field m_autoupdatesources:Int = True
 	
-	Field m_args:dIdentifier
-	Field m_arghandler:dArgumentHandler
 	Field m_sourceshandler:mxSourcesHandler
 	
 	Field m_updateimpl:mxUpdateImpl
@@ -68,10 +66,9 @@ Type mxApp
 		bbdoc: Create a new mxApp.
 		returns: Itself.
 	End Rem
-	Method Create:mxApp(args:String[])
+	Method Create:mxApp()
 		mainapp = Self
-		SetArgs(args)
-		OnInit()
+		Super.Create()
 		Return Self
 	End Method
 	
@@ -113,7 +110,7 @@ Type mxApp
 		m_arghandler.AddArgImpl(New mxListImpl)
 		UpdateSources()
 		m_sourceshandler = New mxSourcesHandler.FromFile(m_apppath + m_sourcesfile)
-		If m_sourceshandler = Null
+		If Not m_sourceshandler
 			' Don't throw an error here, the user may be updating the sources (an error will occur otherwise)
 			logger.LogWarning(_s("error.load.sources.file", [m_apppath + m_sourcesfile]))
 		End If
@@ -141,11 +138,11 @@ Type mxApp
 	End Rem
 	Method Run()
 		Local argimpl:dArgumentImplementation, isopt:Int
-		For Local arg:dIdentifier = EachIn m_args.GetValues()
+		For Local arg:dIdentifier = EachIn m_arguments
 			argimpl = m_arghandler.GetArgImplWithAlias(arg.GetName())
 			isopt = (arg.GetName()[0] = 45)
-			If argimpl <> Null
-				If isopt = True
+			If argimpl
+				If isopt
 					argimpl.SetCallConvention(dCallConvention.OPTION)
 					argimpl.SetArgs(arg)
 					argimpl.CheckArgs()
@@ -158,7 +155,7 @@ Type mxApp
 					Exit
 				End If
 			Else
-				If isopt = True
+				If isopt
 					ThrowCommonError(mxOptErrors.UNKNOWN, arg.GetName())
 				Else
 					ThrowCommonError(mxCmdErrors.UNKNOWN, arg.GetName())
@@ -208,10 +205,10 @@ Type mxApp
 		about: NOTE: This will resolve to '--help' if the given args are Null.
 	End Rem
 	Method SetArgs(args:String[])
-		If args = Null
+		If Not args
 			args = ["--help"]
 		End If
-		m_args = dArgParser.ParseArray(args, False, 1)
+		ParseArguments(args, False, 1)
 	End Method
 	
 	Rem
@@ -222,7 +219,7 @@ Type mxApp
 	Method SetModPath(modpath:String, logchange:Int = True)
 		m_modpath = FixPathEnding(modpath, True)
 		If FileType(m_modpath) = FILETYPE_DIR
-			If logchange = True Then logger.LogMessage(_s("message.setmodpath", [m_modpath]))
+			If logchange Then logger.LogMessage(_s("message.setmodpath", [m_modpath]))
 		Else
 			ThrowError(_s("error.notfound.modpath", [m_modpath]))
 		End If
@@ -263,7 +260,7 @@ Type mxApp
 		about: NOTE: This will throw an error if the path is Null (and, later, a warning will be logged if the path does not exist).
 	End Rem
 	Method SetSourcesFile(file:String)
-		If file = Null
+		If Not file
 			ThrowError(_s("error.sources.setfile"))
 		End If
 		m_sourcesfile = file
@@ -286,16 +283,16 @@ Rem
 	returns: The translated text.
 End Rem
 Function _s:String(iden:String, extra:String[] = Null)
-	Global replacer:TTextReplacer = New TTextReplacer
+	Global replacer:dTextReplacer = New dTextReplacer
 	Local ltext:dLocalizedText
-	If mainapp.m_locale <> Null Then ltext = mainapp.m_locale.TextFromStructureL(iden)
-	If ltext = Null Then ltext = mainapp.m_defaultlocale.TextFromStructureL(iden)
-	If ltext <> Null
+	If mainapp.m_locale Then ltext = mainapp.m_locale.TextFromStructureL(iden)
+	If ltext Then ltext = mainapp.m_defaultlocale.TextFromStructureL(iden)
+	If ltext
 		replacer.SetString(ltext.GetValue())
 		replacer.AutoReplacements("{", "}")
-		If extra <> Null
+		If extra
 			Local i:Int
-			For Local rep:TTextReplacement = EachIn replacer.GetList()
+			For Local rep:dTextReplacement = EachIn replacer.GetList()
 				If i > extra.Length Then Exit
 				rep.SetReplacement(extra[i])
 				i:+ 1
@@ -305,5 +302,6 @@ Function _s:String(iden:String, extra:String[] = Null)
 	Else
 		DebugLog("Failed to find localized text from structure: ~q" + iden + "~q")
 	End If
+	Return Null
 End Function
 

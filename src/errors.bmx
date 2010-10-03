@@ -54,9 +54,9 @@ Function ThrowCommonError(errortype:Int, value:String = Null)
 		Case mxCmdErrors.REQUIRESPARAMS
 			_HelpError(_s("error.command.requiresparams", [value]))
 	End Select
-	
-	Function _HelpError(error:String)
-		ThrowError("maximus: " + error + " " + _s("error.suggesthelp"))
-	End Function
+End Function
+
+Function _HelpError(error:String)
+	ThrowError("maximus: " + error + " " + _s("error.suggesthelp"))
 End Function
 

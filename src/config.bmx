@@ -13,7 +13,7 @@ Type mxConfigHandler
 	Field m_configfile:String
 	
 	Rem
-		bbdoc: Create a new handler.
+		bbdoc: Create a config handler.
 		returns: Itself.
 	End Rem
 	Method Create:mxConfigHandler(configfile:String)
@@ -49,9 +49,9 @@ Type mxConfigHandler
 	Method Load()
 		If FileType(GetConfigFile()) = FILETYPE_FILE
 			Try
-				Local root:dSNode = dSNode.LoadScriptFromObject(GetConfigFile())
-				If root <> Null
-					For Local iden:dIdentifier = EachIn root.GetChildren()
+				Local root:dNode = dScriptFormatter.LoadFromFile(GetConfigFile())
+				If root
+					For Local iden:dIdentifier = EachIn root
 						If tpl_language.ValidateIdentifier(iden)
 							Local lang:String = dStringVariable(iden.GetValueAtIndex(0)).Get()
 							If lang <> "en"
@@ -86,7 +86,7 @@ Type mxConfigHandler
 	End Rem
 	Method LoadDefaultLocale()
 		Local locale:dLocale = LoadLocale("en", False, False)
-		If locale = Null
+		If Not locale
 			locale = LoadLocale("en", True, False)
 		End If
 		mainapp.m_defaultlocale = locale
@@ -101,14 +101,14 @@ Type mxConfigHandler
 		Local file:String = "locales/" + locale + ".loc"
 		If bin = True Then file = "incbin::" + file
 		Local stream:TStream = ReadStream(file)
-		If stream <> Null
+		If stream
 			Local locale:dLocale
 			Try
-				Local node:dSNode = dSNode.LoadScriptFromObject(stream)
+				Local node:dNode = dScriptFormatter.LoadFromStream(stream)
 				locale = New dLocale.FromNode(node)
 				dLocaleManager.AddLocale(locale)
 			Catch e:Object
-				If err = True
+				If err
 					logger.LogWarning(_s("error.load.locale.parse", [file, e.ToString()]))
 				?Debug
 				Else
@@ -119,7 +119,7 @@ Type mxConfigHandler
 			stream.Close()
 			Return locale
 		Else
-			If err = True
+			If err
 				logger.LogWarning(_s("error.load.locale.file", [file]))
 			End If
 		End If

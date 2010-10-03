@@ -14,7 +14,7 @@ Type mxModuleBase Abstract
 		returns: Nothing.
 	End Rem
 	Method SetName(name:String)
-		Assert name, "(mxModuleBase.SetName) name cannot be Null!"
+		Assert name, "(mxModuleBase.SetName) name cannot be Null"
 		m_name = name
 	End Method
 	
@@ -54,7 +54,7 @@ Type mxModuleScope Extends mxModuleBase
 		returns: True if the module was added, or False if it was not (the module is Null).
 	End Rem
 	Method AddModule:Int(modul:mxModule)
-		If modul <> Null
+		If modul
 			m_modules._Insert(modul.GetName(), modul)
 			modul.SetParent(Self)
 			Return True
@@ -75,7 +75,7 @@ Type mxModuleScope Extends mxModuleBase
 		returns: The module with the given name, or Null if there is no module with the given name.
 	End Rem
 	Method GetModuleWithName:mxModule(modname:String)
-		Return mxModule(m_modules._ValueByKey(modname))
+		Return mxModule(m_modules._ObjectWithKey(modname))
 	End Method
 	
 	Rem
@@ -83,9 +83,9 @@ Type mxModuleScope Extends mxModuleBase
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModuleScope(root:dJObject)
-		If root <> Null
+		If root
 			SetName(root.GetName())
-			For Local variable:dVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root
 				If dJObject(variable)
 					AddModule(New mxModule.FromJSON(dJObject(variable)))
 				'Else
@@ -181,7 +181,7 @@ Type mxModule Extends mxModuleBase
 		returns: True if the version was added, or False if it was not (the version is Null).
 	End Rem
 	Method AddVersion:Int(version:mxModuleVersion)
-		If version <> Null
+		If version
 			m_versions._Insert(version.GetName(), version)
 			version.SetParent(Self)
 			Return True
@@ -202,7 +202,7 @@ Type mxModule Extends mxModuleBase
 		returns: The version with the given name, or Null if there is no version with the given name.
 	End Rem
 	Method GetVersionWithName:mxModuleVersion(name:String)
-		Return mxModuleVersion(m_versions._ValueByKey(name))
+		Return mxModuleVersion(m_versions._ObjectWithKey(name))
 	End Method
 	
 	Rem
@@ -214,12 +214,12 @@ Type mxModule Extends mxModuleBase
 		Local hver:mxModuleVersion
 		For Local ver:mxModuleVersion = EachIn VersionEnumerator()
 			If ver.GetName() <> "dev"
-				If hver = Null Or hver.Compare(ver) = 1
+				If Not hver Or hver.Compare(ver) = 1
 					hver = ver
 				End If
 			End If
 		Next
-		If hver = Null
+		If Not hver
 			hver = GetVersionWithName("dev")
 		End If
 		Return hver
@@ -230,14 +230,14 @@ Type mxModule Extends mxModuleBase
 		returns: True if the given variable was handled, or False if it was not.
 	End Rem
 	Method SetCommonFromVariable:Int(variable:dVariable)
-		If Super.SetCommonFromVariable(variable) = True
+		If Super.SetCommonFromVariable(variable)
 			Return True
 		Else
 			Select variable.GetName().ToLower()
 				Case "desc"
-					SetDescription(variable.ValueAsString())
+					SetDescription(dValueVariable(variable).ValueAsString())
 				Case "versions"
-					For Local jobj:dJObject = EachIn dJObject(variable).GetValues()
+					For Local jobj:dJObject = EachIn dJObject(variable)
 						AddVersion(New mxModuleVersion.FromJSON(jobj))
 					Next
 				Default
@@ -252,9 +252,9 @@ Type mxModule Extends mxModuleBase
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModule(root:dJObject)
-		If root <> Null
+		If root
 			SetName(root.GetName())
-			For Local variable:dVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root
 				SetCommonFromVariable(variable)
 			Next
 			Return Self
@@ -286,7 +286,7 @@ Type mxModuleVersion
 	End Method
 	
 	Rem
-		bbdoc: Create a version.
+		bbdoc: Create a module version.
 		returns: Itself.
 	End Rem
 	Method Create:mxModuleVersion(parent:mxModule, name:String, url:String)
@@ -412,7 +412,7 @@ Type mxModuleVersion
 	Method SetCommonFromVariable:Int(variable:dVariable)
 		Select variable.GetName().ToLower()
 			Case "url"
-				SetUrl(variable.ValueAsString())
+				SetUrl(dValueVariable(variable).ValueAsString())
 			Case "deps"
 				m_dependencies.FromJSON(dJArray(variable))
 			Default
@@ -426,9 +426,9 @@ Type mxModuleVersion
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModuleVersion(root:dJObject)
-		If root <> Null
+		If root
 			SetName(root.GetName())
-			For Local variable:dVariable = EachIn root.GetValues()
+			For Local variable:dVariable = EachIn root
 				SetCommonFromVariable(variable)
 			Next
 			Return Self
@@ -450,13 +450,13 @@ Type mxModuleVersion
 	End Rem
 	Method Compare:Int(with:Object)
 		Local ver:mxModuleVersion = mxModuleVersion(with)
-		If ver <> Null
+		If ver
 			If m_name = ver.m_name
 				Return 0
 			Else
 				Local smajor:String, sminor:String, wmajor:String, wminor:String
 				Local sdev:Int = GetVersionParts(smajor, sminor), wdev:Int = ver.GetVersionParts(wmajor, wminor)
-				If (sdev = True And wdev = True) Or (smajor = wmajor And sminor = wminor)
+				If (sdev And wdev) Or (smajor = wmajor And sminor = wminor)
 					Return 0
 				Else If smajor > wmajor
 					Return 1
@@ -483,7 +483,7 @@ Type mxModuleVersion
 		logger.LogMessage("fetching: " + GetUrl() + " -> " + file + "~t", False)
 		If FileType(file) = FILETYPE_NONE
 			Local stream:TStream = WriteFileExplicitly(file)
-			If stream <> Null
+			If stream
 				Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
 				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
 				request.SetStream(stream)

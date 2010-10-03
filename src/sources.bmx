@@ -9,7 +9,7 @@ Type mxSourcesHandler Extends dObjectMap
 		returns: True if the scope was added, or False if it was not (scope is Null).
 	End Rem
 	Method AddScope:Int(modscope:mxModuleScope)
-		If modscope <> Null
+		If modscope
 			_Insert(modscope.GetName(), modscope)
 			Return True
 		End If
@@ -30,7 +30,7 @@ Type mxSourcesHandler Extends dObjectMap
 	End Rem
 	Method HasModule:Int(modid:String)
 		Local scope:mxModuleScope = GetScopeWithName(mxModUtils.GetScopeFromID(modid))
-		If scope <> Null
+		If scope
 			Return scope.HasModule(mxModUtils.GetNameFromID(modid))
 		End If
 		Return False
@@ -41,7 +41,7 @@ Type mxSourcesHandler Extends dObjectMap
 		returns: The scope with the given name, or Null if there is no scope with the given name.
 	End Rem
 	Method GetScopeWithName:mxModuleScope(scopename:String)
-		Return mxModuleScope(_ValueByKey(scopename))
+		Return mxModuleScope(_ObjectWithKey(scopename))
 	End Method
 	
 	Rem
@@ -50,7 +50,7 @@ Type mxSourcesHandler Extends dObjectMap
 	End Rem
 	Method GetModuleWithID:mxModule(modid:String)
 		Local scope:mxModuleScope = GetScopeWithName(mxModUtils.GetScopeFromID(modid))
-		If scope <> Null
+		If scope
 			Return scope.GetModuleWithName(mxModUtils.GetNameFromID(modid))
 		End If
 		Return Null
@@ -62,25 +62,24 @@ Type mxSourcesHandler Extends dObjectMap
 	End Rem
 	Method GetVersionWithVerID:mxModuleVersion(verid:String)
 		Local modul:mxModule = GetModuleWithID(verid)
-		If modul <> Null
+		If modul
 			Return modul.GetVersionWithName(mxModUtils.GetVersionFromVerID(verid))
 		End If
 		Return Null
 	End Method
 	
 	Rem
-		bbdoc: Load the given file into the handler.
+		bbdoc: Load the given JSON file into the handler.
 		returns: Itself, or Null if the given file either could not be opened or does not exist.
 	End Rem
 	Method FromFile:mxSourcesHandler(file:String)
-		Local jreader:dJReader, root:dJObject
-		jreader = New dJReader.InitWithStream(file)
-		If jreader <> Null
-			Try
-				root = jreader.Parse()
-			Catch e:JException
-				ThrowError(_s("errors.load.sources.parse", [e.ToString()]))
-			End Try
+		Local root:dJObject
+		Try
+			root = dJReader.LoadFromFile(file, ENC_UTF8)
+		Catch e:JException
+			ThrowError(_s("errors.load.sources.parse", [e.ToString()]))
+		End Try
+		If root
 			FromJSON(root)
 			Return Self
 		End If
@@ -88,12 +87,12 @@ Type mxSourcesHandler Extends dObjectMap
 	End Method
 	
 	Rem
-		bbdoc: Load the given dJObject into the handler.
+		bbdoc: Load the given JSON object into the handler.
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxSourcesHandler(root:dJObject)
-		If root <> Null
-			For Local obj:dJObject = EachIn root.GetValues()
+		If root
+			For Local obj:dJObject = EachIn root
 				AddScope(New mxModuleScope.FromJSON(obj))
 			Next
 			Return Self

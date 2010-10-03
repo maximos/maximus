@@ -32,16 +32,16 @@ Type mxUpdateImpl Extends dArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method Execute()
-		If mainapp.m_sourcesupdated = True Then Return
-		If m_sourcesurl = Null Then m_sourcesurl = mainapp.m_sourcesurl
-		If m_sourcesurl = Null
+		If mainapp.m_sourcesupdated Then Return
+		If m_sourcesurl Then m_sourcesurl = mainapp.m_sourcesurl
+		If m_sourcesurl
 			ThrowError(_s("error.update.nourl"))
 		End If
 		mainapp.m_sourcesupdated = True
 		Local file:String = mainapp.m_sourcesfile + ".tmp"
 		logger.LogMessage("fetching: " + m_sourcesurl + " -> " + file + "~t", False)
 		Local stream:TStream = WriteFileExplicitly(file)
-		If stream <> Null
+		If stream
 			Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
 			request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
 			request.SetStream(stream)
@@ -74,10 +74,10 @@ Type mxUpdateImpl Extends dArgumentImplementation
 	End Rem
 	Method CheckOptions()
 		m_sourcesurl = Null
-		For Local opt:dIdentifier = EachIn m_args.GetValues()
+		For Local opt:dIdentifier = EachIn m_args
 			Select opt.GetName().ToLower()
 				Case "--url"
-					If opt.GetValueCount() = 1
+					If opt.GetChildCount() = 1
 						m_sourcesurl = dStringVariable(opt.GetValueAtIndex(0)).Get()
 					Else
 						ThrowCommonError(mxOptErrors.REQUIRESPARAMS, opt.GetName())

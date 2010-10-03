@@ -30,13 +30,13 @@ Type mxHelpImpl Extends dArgumentImplementation
 	End Rem
 	Method Execute()
 		If GetArgumentCount() > 0
-			For Local variable:dVariable = EachIn m_args.GetValues()
+			For Local variable:dValueVariable = EachIn m_args
 				Local command:String = variable.ValueAsString()
 				If command.ToLower() = "help"
 					logger.LogMessage(command + ":~t" + "HELP HELP I'M BEING REPRESSED!")
 				Else
 					Local argimpl:dArgumentImplementation = mainapp.m_arghandler.GetArgImplWithAlias(command)
-					If argimpl <> Null
+					If argimpl
 						logger.LogMessage(command + ":~n~t" + argimpl.GetUsage().Replace("~n", "~n~t"))
 					Else
 						logger.LogMessage(command + ":~t" + _s("arg.help.cmdnotfound"))

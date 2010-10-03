@@ -37,14 +37,14 @@ Type mxListImpl Extends dArgumentImplementation
 		If sources
 			If sources.Count() > 0
 				If GetArgumentCount() > 0
-					For Local variable:dStringVariable = EachIn m_args.GetValues()
+					For Local variable:dStringVariable = EachIn m_args
 						Local scope:mxModuleScope
 						Local arg:String = variable.Get()
-						If arg.Contains(".") = True
+						If arg.Contains(".")
 							scope = sources.GetScopeWithName(mxModUtils.GetScopeFromID(arg))
-							If scope <> Null
+							If scope
 								Local modul:mxModule = scope.GetModuleWithName(mxModUtils.GetNameFromID(arg))
-								If modul <> Null
+								If modul
 									QueueModule(modul)
 								Else
 									nfounds.AddLast(arg)
@@ -54,7 +54,7 @@ Type mxListImpl Extends dArgumentImplementation
 							End If
 						Else
 							scope = sources.GetScopeWithName(arg)
-							If scope <> Null
+							If scope
 								QueueScope(scope)
 							Else
 								nfounds.AddLast(arg)
@@ -89,7 +89,7 @@ Type mxListImpl Extends dArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method QueueScope(modscope:mxModuleScope)
-		If modscope <> Null
+		If modscope
 			For Local modul:mxModule = EachIn modscope.ModuleEnumerator()
 				QueueModule(modul)
 			Next
@@ -101,7 +101,7 @@ Type mxListImpl Extends dArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method QueueModule(modul:mxModule)
-		If modul <> Null
+		If modul
 			m_queuemap._Insert(modul.GetName(), modul)
 		End If
 	End Method

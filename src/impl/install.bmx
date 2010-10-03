@@ -44,12 +44,12 @@ Type mxInstallImpl Extends dArgumentImplementation
 		m_depcheckmap.Clear()
 		If mainapp.m_sourceshandler
 			Local nfounds:dObjectMap = New dObjectMap
-			For Local svar:dStringVariable = EachIn m_args.GetValues()
+			For Local svar:dStringVariable = EachIn m_args
 				Local verid:String = svar.Get(), modid:String = mxModUtils.GetIDFromVerID(verid)
 				Local modul:mxModule = mainapp.m_sourceshandler.GetModuleWithID(modid)
-				If modul <> Null
+				If modul
 					Local instmod:mxInstModule = New mxInstModule.Create(verid, modul)
-					If instmod.SetVersionFromVerID(verid) = True
+					If instmod.SetVersionFromVerID(verid)
 						m_instmap._Insert(modid, instmod)
 					Else
 						ThrowError(_s("arg.install.notfound.version", [modid, mxModUtils.GetVersionFromVerID(verid)]))
@@ -68,8 +68,10 @@ Type mxInstallImpl Extends dArgumentImplementation
 				logger.LogMessage("~t" + a)
 				Return
 			End If
-			If CheckDependencies() = True
-				DoInstall()
+			If CheckDependencies()
+				If CheckVersions()
+					DoInstall()
+				End If
 			End If
 		Else
 			ThrowError(_s("error.install.nosources"))
@@ -83,7 +85,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	Method CheckOptions()
 		m_nobuild = False; m_nounpack = False; m_keeptemp = False
 		m_nothreaded = False; m_makedocs = False
-		For Local opt:dIdentifier = EachIn m_args.GetValues()
+		For Local opt:dIdentifier = EachIn m_args
 			Select opt.GetName().ToLower()
 				Case "-nobuild" m_nobuild = True
 				Case "-nounpack" m_nounpack = True
@@ -93,6 +95,16 @@ Type mxInstallImpl Extends dArgumentImplementation
 				Case "-force" m_forceinstall = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
+		Next
+	End Method
+	
+	Rem
+		bbdoc: Check for version conflictions and warn the user.
+		returns: Nothing.
+	End Rem
+	Method CheckVersions:Int()
+		For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
+			' TODO
 		Next
 	End Method
 	
@@ -113,7 +125,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Next
 			a = a[..a.Length - 1]
 			logger.LogMessage("~t" + a)
-			If m_forceinstall = True
+			If m_forceinstall
 				m_nobuild = True
 				Local resp:String = Input(_s("arg.install.missingdeps") + " ").ToLower()
 				If resp = "y" Or resp = "yes"
@@ -131,16 +143,19 @@ Type mxInstallImpl Extends dArgumentImplementation
 	End Rem
 	Method CheckModuleDependencies(instmod:mxInstModule, nfounds:dObjectMap)
 		Local addlist:TListEx = instmod.CheckCompliance()
-		If addlist <> Null
+		If addlist
 			For Local modid:String = EachIn addlist
-				If m_depcheckmap._Contains(modid) = False
+				If Not m_depcheckmap._Contains(modid)
 					Local dmodul:mxModule = mainapp.m_sourceshandler.GetModuleWithID(modid)
 					m_depcheckmap._Insert(modid, modid)
-					If dmodul <> Null
-						If m_instmap._Contains(modid) = False
+					If dmodul
+						If Not m_instmap._Contains(modid)
 							Local dinstmod:mxInstModule = New mxInstModule.Create(modid, dmodul)
-							If instmod.GetVersionName().ToLower() = "dev" Then dinstmod.SetVersionFromName("dev")
-							If dinstmod.GetVersion() = Null Then dinstmod.SetVersion(Null)
+							If instmod.GetVersionName().ToLower() = "dev"
+								dinstmod.SetVersionFromName("dev")
+							Else
+								dinstmod.SetVersion(Null)
+							End If
 							m_instmap._Insert(modid, dinstmod)
 							CheckModuleDependencies(dinstmod, nfounds)
 						End If
@@ -170,15 +185,15 @@ Type mxInstallImpl Extends dArgumentImplementation
 				For instmod = EachIn m_instmap.ValueEnumerator()
 					instmod.FetchSourceArchive()
 				Next
-				If m_nounpack = False
+				If Not m_nounpack
 					For instmod = EachIn m_instmap.ValueEnumerator()
 						instmod.Unpack()
 					Next
 				Else
 					logger.LogMessage(_s("message.skipping.unpack"))
 				End If
-				If m_keeptemp = False Then DeleteDir("tmp/", True)
-				If m_nobuild = False
+				If Not m_keeptemp Then DeleteDir("tmp/", True)
+				If Not m_nobuild
 					Local scopes:dObjectMap = New dObjectMap
 					For instmod = EachIn m_instmap.ValueEnumerator()
 						scopes._Insert(instmod.GetModuleScope(), instmod.GetModuleScope())
@@ -188,7 +203,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 							ThrowError(_s("error.install.build", [scope]))
 						End If
 					Next
-					If m_makedocs = True
+					If m_makedocs
 						'For instmod = EachIn m_instmap.ValueEnumerator()
 						'	mxModUtils.DocMods(instmod.GetID())
 						'Next
@@ -259,12 +274,12 @@ Type mxInstModule
 		about: The latest version will be set if the given name is Null.
 	End Rem
 	Method SetVersionFromName:Int(name:String)
-		If name = Null
+		If Not name
 			SetVersion(Null) ' Set the latest version (the version wasn't forced)
 			Return True
 		Else
 			Local ver:mxModuleVersion = m_module.GetVersionWithName(name)
-			If ver <> Null
+			If ver
 				SetVersion(ver)
 				Return True
 			End If
@@ -279,7 +294,7 @@ Type mxInstModule
 	End Rem
 	Method SetVersion(version:mxModuleVersion)
 		m_version = version
-		If m_version = Null
+		If Not m_version
 			m_version = m_module.GetLatestVersion()
 		End If
 	End Method
@@ -366,7 +381,7 @@ Type mxInstModule
 		Local archivepath:String = m_version.GetTemporaryFilePath()
 		Local zreader:ZipReader = New ZipReader
 		logger.LogMessage(_s("message.unpacking", [archivepath]))
-		If zreader.OpenZip(archivepath) = True
+		If zreader.OpenZip(archivepath)
 			Local filename:String, outputpath:String
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
@@ -375,7 +390,7 @@ Type mxInstModule
 				If filename[filename.Length - 1] = 47 ' "/"
 					CreateDir(outputpath, True)
 				Else
-					If CreateFileExplicitly(outputpath) = True
+					If CreateFileExplicitly(outputpath)
 						zreader.ExtractFileToDisk(filename, outputpath, False)
 					Else
 						zreader.CloseZip()

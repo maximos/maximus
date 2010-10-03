@@ -1,7 +1,7 @@
 
 ' English translation
 ' Author: Tim Howard
-' Updated: July 10th, 2010
+' Updated: September 2nd, 2010
 
 name		"English"
 nativename	"English"
@@ -11,7 +11,7 @@ arg {
 		usage "description: List Maximus' usage, commands and options, or specific information on a single command
 				usage: maximus [--help|help [command(s)]]"
 		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
-					The most commonly used commands:
+					List of commands:
 					~tinstall~tInstall the given set modules
 					~tremove~tRemove the given set of modules
 					~tupdate~tUpdate sources file
@@ -50,6 +50,8 @@ arg {
 		nomodulestoinstall "No modules to be installed"
 		continuewithinstall "Continue with install? [y/n]"
 		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed) [y/n]"
+		newerinstalled "The following modules are already at newer or development versions.
+						If you choose to continue installing, the entire module folders will be destroyed and replaced."
 		notfound {
 			instdeps "The following dependencies cannot be installed because they are neither in the sources list nor are they already installed:"
 			instmods "The following modules cannot be installed because they are not in the sources list:"

@@ -12,7 +12,7 @@ Type mxModUtils
 		about: @force can be used to force re-enumeration of the modules.
 	End Rem
 	Function GetModules:dObjectMap(force:Int = False)
-		If g_modules = Null Or force = True
+		If Not g_modules Or force
 			g_modules = EnumModules(Null, Null)
 		End If
 		Return g_modules
@@ -168,7 +168,7 @@ Type mxModUtils
 		returns: An object map containing the current modules.
 	End Rem
 	Function EnumModules:dObjectMap(modid:String = Null, mods:dObjectMap = Null)
-		If mods = Null Then mods = New dObjectMap
+		If Not mods Then mods = New dObjectMap
 		Local dir:String = ModulePath(modid)
 		Local files:String[] = LoadDir(dir)
 		For Local file:String = EachIn files

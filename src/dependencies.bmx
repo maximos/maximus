@@ -9,7 +9,7 @@ Type mxModuleDependencies Extends dObjectMap
 		returns: True if the dependency was added, or False if it was not (given string is Null).
 	End Rem
 	Method AddNewDependency:Int(key:String)
-		If key <> Null
+		If key
 			Local dep:mxModuleDependency = New mxModuleDependency.Create(key)
 			_Insert(key, dep)
 			Return True
@@ -22,7 +22,7 @@ Type mxModuleDependencies Extends dObjectMap
 		returns: True if the dependency was added, or False if it was not (given string is Null).
 	End Rem
 	Method AddDependency:Int(dep:mxModuleDependency)
-		If dep <> Null
+		If dep
 			_Insert(dep.Get(), dep)
 			Return True
 		End If
@@ -67,8 +67,8 @@ Type mxModuleDependencies Extends dObjectMap
 		returns: Itself, or Null if @root is Null.
 	End Rem
 	Method FromJSON:mxModuleDependencies(root:dJArray)
-		If root <> Null
-			For Local strvar:dStringVariable = EachIn root.GetValues()
+		If root
+			For Local strvar:dStringVariable = EachIn root
 				AddDependency(New mxModuleDependency.FromVariable(strvar))
 			Next
 			Return Self
@@ -107,7 +107,7 @@ Type mxModuleDependency
 	Field m_key:String
 	
 	Rem
-		bbdoc: Create a new mxModuleDependency.
+		bbdoc: Create a module dependency.
 		returns: Itself.
 	End Rem
 	Method Create:mxModuleDependency(key:String)
@@ -141,7 +141,7 @@ Type mxModuleDependency
 		returns: Itself, or Null if the given variable is Null.
 	End Rem
 	Method FromVariable:mxModuleDependency(strvar:dStringVariable)
-		If strvar <> Null
+		If strvar
 			Set(strvar.Get())
 			Return Self
 		End If

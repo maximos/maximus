@@ -10,11 +10,8 @@ Type mxLogger
 		about: If @newline is True, a new line will be started, if it is False, a new line will not be started.
 	End Rem
 	Method LogMessage(message:String, newline:Int = True)
-		If newline = True
-			Print(message)
-		Else
-			WriteStdOut(message)
-		End If
+		If newline Then message:+ "~n"
+		StandardIOStream.WriteString(message)
 	End Method
 	
 	Rem
@@ -23,11 +20,9 @@ Type mxLogger
 		about: If @newline is True, a new line will be started, if it is False, a new line will not be started.
 	End Rem
 	Method LogWarning(warning:String, newline:Int = True)
-		If newline = True
-			Print(_s("message.warning", [warning]))
-		Else
-			WriteStdOut(_s("message.warning", [warning]))
-		End If
+		warning = _s("message.warning", [warning])
+		If newline Then warning:+ "~n"
+		StandardIOStream.WriteString(warning)
 	End Method
 	
 	Rem
@@ -36,11 +31,9 @@ Type mxLogger
 		about: If @newline is True, a new line will be started, if it is False, a new line will not be started.
 	End Rem
 	Method LogError(error:String, newline:Int = True)
-		If newline = True
-			Print(_s("message.error", [error]))
-		Else
-			WriteStdOut(_s("message.error", [error]))
-		End If
+		error = _s("message.error", [error])
+		If newline Then error:+ "~n"
+		StandardIOStream.WriteString(error)
 	End Method
 	
 End Type
