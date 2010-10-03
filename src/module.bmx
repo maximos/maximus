@@ -480,7 +480,7 @@ Type mxModuleVersion
 	End Rem
 	Method FetchSourceArchive()
 		Local file:String = GetTemporaryFilePath()
-		logger.LogMessage("fetching: " + GetUrl() + " -> " + file + "~t", False)
+		logger.LogMessage("fetching: " + GetUrl() + " -> " + file + "    ", False)
 		If FileType(file) = FILETYPE_NONE
 			Local stream:TStream = WriteFileExplicitly(file)
 			If stream

@@ -100,12 +100,13 @@ Type mxInstallImpl Extends dArgumentImplementation
 	
 	Rem
 		bbdoc: Check for version conflictions and warn the user.
-		returns: Nothing.
+		returns: True if the installtion should continue, or False if the user halted the operation.
 	End Rem
 	Method CheckVersions:Int()
-		For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
-			' TODO
-		Next
+		'For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
+		'	' TODO
+		'Next
+		Return True
 	End Method
 	
 	Rem
