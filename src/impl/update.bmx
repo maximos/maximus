@@ -54,7 +54,7 @@ Type mxUpdateImpl Extends dArgumentImplementation
 				ThrowError(_s("error.fetch.sources", [e.ToString()]))
 			End Try
 			stream.Close()
-			If response.responseCode = 200
+			If response.IsSuccess()
 				logger.LogMessage(_s("message.fetch.done", [String(response.responseCode)]))
 				CopyFile(file, mainapp.m_sourcesfile)
 				DeleteFile(file)
