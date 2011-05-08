@@ -33,8 +33,8 @@ Type mxUpdateImpl Extends dArgumentImplementation
 	End Rem
 	Method Execute()
 		If mainapp.m_sourcesupdated Then Return
-		If m_sourcesurl Then m_sourcesurl = mainapp.m_sourcesurl
-		If m_sourcesurl
+		If Not m_sourcesurl Then m_sourcesurl = mainapp.m_sourcesurl
+		If Not m_sourcesurl
 			ThrowError(_s("error.update.nourl"))
 		End If
 		mainapp.m_sourcesupdated = True
