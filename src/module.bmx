@@ -214,7 +214,7 @@ Type mxModule Extends mxModuleBase
 		Local hver:mxModuleVersion
 		For Local ver:mxModuleVersion = EachIn VersionEnumerator()
 			If ver.GetName() <> "dev"
-				If Not hver Or hver.Compare(ver) = 1
+				If Not hver Or ver.Compare(hver) = 1
 					hver = ver
 				End If
 			End If
