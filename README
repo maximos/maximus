@@ -1,0 +1,8 @@
+This is the Maximus client. Maximus is a BlitzMax module manager.
+
+The development process of the client uses git-flow. You can find more
+information about it at the following places:
+
+    * http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
+    * https://github.com/nvie/gitflow
+
