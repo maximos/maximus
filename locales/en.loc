@@ -92,6 +92,11 @@ error {
 			parse "Failed to parse locale file: {file}
 					~tReason: {reason}"
 		}
+		metafile {
+			parse "Unable to parse metafile: {file}"
+			unkiden "Unknown identifier in metafile: {name}"
+			notfound "Metafile not found: {file}"
+		}
 	}
 	update {
 		nourl "No url set for sources list (try --url or see config/help)"

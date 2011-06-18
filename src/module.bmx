@@ -527,3 +527,75 @@ Type mxModuleVersion
 	
 End Type
 
+rem
+	bbdoc: Maximus metafile handler
+end rem
+Type mxMetaFile
+
+	Field tpl_scope:dTemplate = New dTemplate.Create(["scope"], [[TV_STRING]])
+	Field tpl_name:dTemplate = New dTemplate.Create(["name"], [[TV_STRING]])
+	Field tpl_version:dTemplate = New dTemplate.Create(["version"], [[TV_STRING]])
+	Field m_metafile:String
+	
+	Field m_scope:String
+	Field m_name:String
+	Field m_version:String
+	
+	Rem
+		bbdoc: Create a metafile handler.
+		returns: Itself.
+	End Rem
+	Method Create:mxMetaFile(metafile:String)
+		SetMetaFile(metafile)
+		Return Self
+	End Method
+	
+'#region Field accessors
+	
+	Rem
+		bbdoc: Set the metafile file path.
+		returns: Nothing.
+	End Rem
+	Method SetMetaFile(metafile:String)
+		m_metafile = metafile
+	End Method
+	
+	Rem
+		bbdoc: Get the metafile path.
+		returns: The metafile path.
+	End Rem
+	Method GetMetaFile:String()
+		Return m_metafile
+	End Method
+	
+'#end region Field accessors
+	
+	Rem
+		bbdoc: Load the configuration.
+		returns: Nothing.
+	End Rem
+	Method Load()
+		If FileType(GetMetaFile()) = FILETYPE_FILE
+			Try
+				Local root:dNode = dScriptFormatter.LoadFromFile(GetMetaFile())
+				If root
+					For Local iden:dIdentifier = EachIn root
+						If tpl_scope.ValidateIdentifier(iden)
+							m_scope = dStringVariable(iden.GetValueAtIndex(0)).Get()
+						Else If tpl_name.ValidateIdentifier(iden)
+							m_name = dStringVariable(iden.GetValueAtIndex(0)).Get()
+						Else If tpl_version.ValidateIdentifier(iden)
+							m_version = dStringVariable(iden.GetValueAtIndex(0)).Get()
+						Else
+							logger.LogWarning(_s("error.load.meta.unkiden", [iden.GetName()]))
+						End If
+					Next
+				End If
+			Catch e:Object
+				logger.LogError(_s("error.load.meta.parse", [e.ToString()]))
+			End Try
+		Else
+			logger.LogWarning(_s("error.load.meta.notfound", [GetMetaFile()]))
+		End If
+	End Method
+End Type
