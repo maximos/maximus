@@ -645,8 +645,13 @@ Type mxMetaFile
 			ThrowError(_s("error.save.metafile.incomplete", [m_scope, m_name, m_version]))
 		End If
 		
-		Local stream:TStream = WriteFileExplicitly(GetMetaFile())
-		stream.WriteString(m_scope + "." + m_name + "/" + m_version)
-		stream.Close
+		Local file:String = GetMetaFile()
+		Local stream:TStream = WriteFileExplicitly(file)
+		If stream
+			stream.WriteString(m_scope + "." + m_name + "/" + m_version)
+			stream.Close
+		Else
+			ThrowError(_s("error.writeperms", [file]))
+		End If
 	End Method
 End Type
