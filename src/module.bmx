@@ -385,24 +385,6 @@ Type mxModuleVersion
 		Return m_dependencies
 	End Method
 	
-	Rem
-		bbdoc: Get the version parts for the version.
-		returns: True if the version is development, in which case the parameters are both 0; or False, in which case the parameters are set accordingly.
-	End Rem
-	Method GetVersionParts:Int(vmajor:String Var, vminor:String Var)
-		If m_name <> "dev"
-			Local i:Int = m_name.Find(".")
-			If i > -1
-				vmajor = m_name[..i]
-				vminor = m_name[i + 1..]
-			Else
-				vmajor = m_name ' I'm not sure what other version formats would be used, so I'm just playing a random card here
-			End If
-			Return False
-		End If
-		Return True
-	End Method
-	
 '#end region Field accessors
 	
 	Rem
@@ -451,25 +433,9 @@ Type mxModuleVersion
 	Method Compare:Int(with:Object)
 		Local ver:mxModuleVersion = mxModuleVersion(with)
 		If ver
-			If m_name = ver.m_name
-				Return 0
-			Else
-				Local smajor:String, sminor:String, wmajor:String, wminor:String
-				Local sdev:Int = GetVersionParts(smajor, sminor), wdev:Int = ver.GetVersionParts(wmajor, wminor)
-				If (sdev And wdev) Or (smajor = wmajor And sminor = wminor)
-					Return 0
-				Else If smajor > wmajor
-					Return 1
-				Else If smajor = wmajor
-					If sminor > wminor
-						Return 1
-					Else
-						Return -1
-					End If
-				Else
-					Return -1
-				End If
-			End If
+			Local version1:mxVersionObject = New mxVersionObject.Parse(m_name)
+			Local version2:mxVersionObject = New mxVersionObject.Parse(ver.m_name)
+			Return version1.Compare(version2)
 		End If
 		Return Super.Compare(with)
 	End Method
