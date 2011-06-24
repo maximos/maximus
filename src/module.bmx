@@ -528,6 +528,73 @@ Type mxModuleVersion
 End Type
 
 Rem
+	bbdoc: A object representing a version, not to be confused with mxModuleVersion
+	about: Supported formats are 1, 1.1 and 1.1.1.
+	Do note that because the version is represented as a Double there's a change
+	the precision of the final number is off.
+	
+	1.1.2 Would be converted to 1.001002 but when converted to a Double it results
+	in 1.0010019999999999.
+	
+	1.1.12 However would be converted to 1.001012 and when converted to a Double it
+	results in 1.0010120000000000.
+	
+	A version string of 'dev' will be represented as 99999
+End Rem
+Type mxVersionObject
+
+	Field m_version:Double
+
+	Rem
+		bbdoc: Parse a version string
+		returns: Itself.
+	End Rem
+	Method Parse:mxVersionObject(version:String)
+		If version = "dev"
+			m_version = 99999
+			Return Self
+		End If
+
+		Local parts:String[] = version.Split(".")
+		Local converted:String = parts[0]
+		If parts.Length > 1
+			converted:+"."
+			For Local part:String = EachIn parts[1..]
+				While part.Length <> 3
+					part = "0" + part
+				WEnd
+				converted:+part
+			Next
+
+			'Make sure we format to x.x.x
+			If parts.Length = 2
+				converted:+"000"
+			End If
+		End If
+
+		m_version = converted.ToDouble()
+		Return Self
+	End Method
+
+	Rem
+		bbdoc: Compare version numbers
+	End Rem
+	Method Compare:Int(withObject:Object)
+		Local version:mxVersionObject = mxVersionObject(withObject)
+		If version
+			If m_version = version.m_version
+				Return 0
+			Else If m_version > version.m_version
+				Return 1
+			Else If m_version < version.m_version
+				Return - 1
+			End If
+		End If
+		Return Super.Compare(withObject)
+	End Method
+End Type
+
+Rem
 	bbdoc: Maximus metafile handler
 End Rem
 Type mxMetaFile
