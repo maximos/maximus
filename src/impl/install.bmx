@@ -384,9 +384,10 @@ Type mxInstModule
 		logger.LogMessage(_s("message.unpacking", [archivepath]))
 		If zreader.OpenZip(archivepath)
 			Local filename:String, outputpath:String
+			Local basepath:String = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/"
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
-				outputpath = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/" + filename
+				outputpath = basepath + filename
 				'DebugLog("Zip outputpath: ~q" + outputpath + "~q")
 				If filename[filename.Length - 1] = 47 ' "/"
 					CreateDir(outputpath, True)
@@ -400,6 +401,10 @@ Type mxInstModule
 				End If
 			Next
 			zreader.CloseZip()
+
+			Local metafile:mxMetaFile = New mxMetaFile.Create(basepath + GetModuleName() + ".mod/meta.maximus")
+			metafile.SetMetaData(GetModuleScope(), GetModuleName(), GetVersionName())
+			metafile.Save()
 		Else
 			ThrowError(_s("error.install.openarchive", [archivepath]))
 		End If
