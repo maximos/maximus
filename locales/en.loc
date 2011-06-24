@@ -94,10 +94,15 @@ error {
 		}
 		metafile {
 			parse "Unable to parse metafile: {file}"
-			unkiden "Unknown identifier in metafile: {name}"
+			invalid_format "The metafile format is invalid"
 			notfound "Metafile not found: {file}"
 		}
 	}
+	save {
+		metafile {
+			incomplete "Not enough information to save metafile: {scope}.{name}/{version}"
+        }
+    }
 	update {
 		nourl "No url set for sources list (try --url or see config/help)"
 	}

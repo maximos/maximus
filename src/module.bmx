@@ -527,16 +527,12 @@ Type mxModuleVersion
 	
 End Type
 
-rem
+Rem
 	bbdoc: Maximus metafile handler
-end rem
+End Rem
 Type mxMetaFile
 
-	Field tpl_scope:dTemplate = New dTemplate.Create(["scope"], [[TV_STRING]])
-	Field tpl_name:dTemplate = New dTemplate.Create(["name"], [[TV_STRING]])
-	Field tpl_version:dTemplate = New dTemplate.Create(["version"], [[TV_STRING]])
 	Field m_metafile:String
-	
 	Field m_scope:String
 	Field m_name:String
 	Field m_version:String
@@ -577,25 +573,37 @@ Type mxMetaFile
 	Method Load()
 		If FileType(GetMetaFile()) = FILETYPE_FILE
 			Try
-				Local root:dNode = dScriptFormatter.LoadFromFile(GetMetaFile())
-				If root
-					For Local iden:dIdentifier = EachIn root
-						If tpl_scope.ValidateIdentifier(iden)
-							m_scope = dStringVariable(iden.GetValueAtIndex(0)).Get()
-						Else If tpl_name.ValidateIdentifier(iden)
-							m_name = dStringVariable(iden.GetValueAtIndex(0)).Get()
-						Else If tpl_version.ValidateIdentifier(iden)
-							m_version = dStringVariable(iden.GetValueAtIndex(0)).Get()
-						Else
-							logger.LogWarning(_s("error.load.meta.unkiden", [iden.GetName()]))
-						End If
-					Next
+				Local contents:String = LoadText(GetMetaFile()).Trim()
+				Local parts:String[] = contents.Split("/")
+				
+				If parts.Length <> 2
+					Throw _s("error.load.meta.invalid_format") ;
 				End If
+				
+				Local modinfo:String[] = parts[0].Split(".")
+				m_scope = modinfo[0]
+				m_name = modinfo[1]
+				m_version = parts[1]
 			Catch e:Object
-				logger.LogError(_s("error.load.meta.parse", [e.ToString()]))
+				logger.LogError(_s("error.load.metafile.parse", [GetMetaFile()]))
+				logger.LogError(_s("error.load.metafile.parse", [e.ToString()]))
 			End Try
 		Else
-			logger.LogWarning(_s("error.load.meta.notfound", [GetMetaFile()]))
+			logger.LogWarning(_s("error.load.metafile.notfound", [GetMetaFile()]))
 		End If
+	End Method
+	
+	Rem
+		bbdoc: Save the configuration
+		returns: Nothing.
+	End Rem
+	Method Save()
+		If m_scope.Length = 0 Or m_name.Length = 0 Or m_version.Length = 0
+			ThrowError(_s("error.save.metafile.incomplete", [m_scope, m_name, m_version]))
+		End If
+		
+		Local stream:TStream = WriteFileExplicitly(GetMetaFile())
+		stream.WriteString(m_scope + "." + m_name + "/" + m_version)
+		stream.Close
 	End Method
 End Type
