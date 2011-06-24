@@ -597,6 +597,16 @@ Type mxMetaFile
 		Return m_metafile
 	End Method
 	
+	Rem
+		bbdoc: Set metadata
+		returns: Nothing.
+	End Rem
+	Method SetMetaData(scope:String, name:String, version:String)
+		Self.m_scope = scope
+		Self.m_name = name
+		Self.m_version = version
+	End Method
+	
 '#end region Field accessors
 	
 	Rem
