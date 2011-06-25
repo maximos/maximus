@@ -48,7 +48,7 @@ arg {
 				-nothreaded (don't build threaded), -makedocs (build documentation), -force (force install when dependencies are not met)"
 		modulestoinstall "The following module(s) will be installed:"
 		nomodulestoinstall "No modules to be installed"
-		modulestoskip "The following module(s) won't be installed because Maximus doesn't manage these:"
+		modulestoskip "The following module(s) won't be installed because they already exist and have not been installed with Maximus:"
 		continuewithinstall "Continue with install? [y/n]"
 		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed) [y/n]"
 		newerinstalled "The following modules are already at newer or development versions.

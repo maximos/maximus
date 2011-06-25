@@ -237,6 +237,15 @@ Type mxInstallImpl Extends dArgumentImplementation
 			End If
 		Else
 			logger.LogMessage(_s("arg.install.nomodulestoinstall"))
+			If m_unmanagedmap.Count()
+				logger.LogMessage(_s("arg.install.modulestoskip"))
+				Local a:String
+				For Local instmod:mxInstModule = EachIn m_unmanagedmap.ValueEnumerator()
+					a:+instmod.GetVerID() + " "
+				Next
+				a = a[..a.Length - 1]
+				logger.LogMessage("~t" + a)
+			End If
 		End If
 	End Method
 	
