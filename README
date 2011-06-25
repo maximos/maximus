@@ -1,0 +1,51 @@
+This is the Maximus client. Maximus is a BlitzMax module manager.
+
+The development process of the client uses git-flow. You can find more
+information about it at the following places:
+
+    * http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
+    * https://github.com/nvie/gitflow
+
+GETTING STARTED
+
+To compile Maximus yourself you'll need to install the (latest versions) of
+the following additional modules:
+
+    * bah.volumes    (http://maximus.htbaa.com/module/bah/volumes)
+    * gman.zipengine (http://www.gprogs.com/viewtopic.php?id=28 plus this patch: http://gist.github.com/971092)
+    * htbaapub.rest  (http://maximus.htbaa.com/module/htbaapub/rest)
+    * duct.variables (http://maximus.htbaa.com/module/duct/variables)
+    * duct.objectmap (http://maximus.htbaa.com/module/duct/objectmap)
+    * duct.json      (http://maximus.htbaa.com/module/duct/json)
+    * duct.locale    (http://maximus.htbaa.com/module/duct/locale)
+    * duct.clapp     (http://maximus.htbaa.com/module/duct/clapp)
+    * duct.time      (http://maximus.htbaa.com/module/duct/time)
+
+Once you have these modules and their dependencies installed you can continue
+by compiling maximus.bmx as a command line application.
+
+When compiled simply run maximus(.exe) from the command line. If Maximus can't
+detect your BMXPATH you have to explicitly set this environment variable.
+
+    On Windows      $ set BMXPATH=C:\BlitzMax
+    On Linux        $ export BMXPATH=~/BlitzMax
+
+A few examples you could try:
+
+    $ maximus help install
+    $ maximus help list
+    $ maximus list htbaapub
+    $ maximus list duct
+
+To install a specific version of a module:
+
+    $ maximus install htbaapub.rest/1.06
+
+To install the latest version of a module:
+
+    $ maximus install htbaapub.rest
+
+To install the latest development version of a module:
+
+    $ maximus install htbaapub.rest/dev
+
