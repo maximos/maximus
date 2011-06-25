@@ -385,24 +385,6 @@ Type mxModuleVersion
 		Return m_dependencies
 	End Method
 	
-	Rem
-		bbdoc: Get the version parts for the version.
-		returns: True if the version is development, in which case the parameters are both 0; or False, in which case the parameters are set accordingly.
-	End Rem
-	Method GetVersionParts:Int(vmajor:String Var, vminor:String Var)
-		If m_name <> "dev"
-			Local i:Int = m_name.Find(".")
-			If i > -1
-				vmajor = m_name[..i]
-				vminor = m_name[i + 1..]
-			Else
-				vmajor = m_name ' I'm not sure what other version formats would be used, so I'm just playing a random card here
-			End If
-			Return False
-		End If
-		Return True
-	End Method
-	
 '#end region Field accessors
 	
 	Rem
@@ -451,25 +433,9 @@ Type mxModuleVersion
 	Method Compare:Int(with:Object)
 		Local ver:mxModuleVersion = mxModuleVersion(with)
 		If ver
-			If m_name = ver.m_name
-				Return 0
-			Else
-				Local smajor:String, sminor:String, wmajor:String, wminor:String
-				Local sdev:Int = GetVersionParts(smajor, sminor), wdev:Int = ver.GetVersionParts(wmajor, wminor)
-				If (sdev And wdev) Or (smajor = wmajor And sminor = wminor)
-					Return 0
-				Else If smajor > wmajor
-					Return 1
-				Else If smajor = wmajor
-					If sminor > wminor
-						Return 1
-					Else
-						Return -1
-					End If
-				Else
-					Return -1
-				End If
-			End If
+			Local version1:mxVersionObject = New mxVersionObject.Parse(m_name)
+			Local version2:mxVersionObject = New mxVersionObject.Parse(ver.m_name)
+			Return version1.Compare(version2)
 		End If
 		Return Super.Compare(with)
 	End Method
@@ -527,3 +493,165 @@ Type mxModuleVersion
 	
 End Type
 
+Rem
+	bbdoc: A object representing a version, not to be confused with mxModuleVersion
+	about: Supported formats are 1, 1.1 and 1.1.1.
+	Do note that because the version is represented as a Double there's a change
+	the precision of the final number is off.
+	
+	1.1.2 Would be converted to 1.001002 but when converted to a Double it results
+	in 1.0010019999999999.
+	
+	1.1.12 However would be converted to 1.001012 and when converted to a Double it
+	results in 1.0010120000000000.
+	
+	A version string of 'dev' will be represented as 99999
+End Rem
+Type mxVersionObject
+
+	Field m_version:Double
+
+	Rem
+		bbdoc: Parse a version string
+		returns: Itself.
+	End Rem
+	Method Parse:mxVersionObject(version:String)
+		If version = "dev"
+			m_version = 99999
+			Return Self
+		End If
+
+		Local parts:String[] = version.Split(".")
+		Local converted:String = parts[0]
+		If parts.Length > 1
+			converted:+"."
+			For Local part:String = EachIn parts[1..]
+				While part.Length <> 3
+					part = "0" + part
+				WEnd
+				converted:+part
+			Next
+
+			'Make sure we format to x.x.x
+			If parts.Length = 2
+				converted:+"000"
+			End If
+		End If
+
+		m_version = converted.ToDouble()
+		Return Self
+	End Method
+
+	Rem
+		bbdoc: Compare version numbers
+	End Rem
+	Method Compare:Int(withObject:Object)
+		Local version:mxVersionObject = mxVersionObject(withObject)
+		If version
+			If m_version = version.m_version
+				Return 0
+			Else If m_version > version.m_version
+				Return 1
+			Else If m_version < version.m_version
+				Return - 1
+			End If
+		End If
+		Return Super.Compare(withObject)
+	End Method
+End Type
+
+Rem
+	bbdoc: Maximus metafile handler
+End Rem
+Type mxMetaFile
+
+	Field m_metafile:String
+	Field m_scope:String
+	Field m_name:String
+	Field m_version:String
+	
+	Rem
+		bbdoc: Create a metafile handler.
+		returns: Itself.
+	End Rem
+	Method Create:mxMetaFile(metafile:String)
+		SetMetaFile(metafile)
+		Return Self
+	End Method
+	
+'#region Field accessors
+	
+	Rem
+		bbdoc: Set the metafile file path.
+		returns: Nothing.
+	End Rem
+	Method SetMetaFile(metafile:String)
+		m_metafile = metafile
+	End Method
+	
+	Rem
+		bbdoc: Get the metafile path.
+		returns: The metafile path.
+	End Rem
+	Method GetMetaFile:String()
+		Return m_metafile
+	End Method
+	
+	Rem
+		bbdoc: Set metadata
+		returns: Nothing.
+	End Rem
+	Method SetMetaData(scope:String, name:String, version:String)
+		Self.m_scope = scope
+		Self.m_name = name
+		Self.m_version = version
+	End Method
+	
+'#end region Field accessors
+	
+	Rem
+		bbdoc: Load the configuration.
+		returns: Nothing.
+	End Rem
+	Method Load()
+		If FileType(GetMetaFile()) = FILETYPE_FILE
+			Try
+				Local contents:String = LoadText(GetMetaFile()).Trim()
+				Local parts:String[] = contents.Split("/")
+				
+				If parts.Length <> 2
+					Throw _s("error.load.meta.invalid_format") ;
+				End If
+				
+				Local modinfo:String[] = parts[0].Split(".")
+				m_scope = modinfo[0]
+				m_name = modinfo[1]
+				m_version = parts[1]
+			Catch e:Object
+				logger.LogError(_s("error.load.metafile.parse", [GetMetaFile()]))
+				logger.LogError(e.ToString())
+			End Try
+		Else
+			logger.LogWarning(_s("error.load.metafile.notfound", [GetMetaFile()]))
+		End If
+	End Method
+	
+	Rem
+		bbdoc: Save the configuration
+		returns: Nothing.
+	End Rem
+	Method Save()
+		If m_scope.Length = 0 Or m_name.Length = 0 Or m_version.Length = 0
+			ThrowError(_s("error.save.metafile.incomplete", [m_scope, m_name, m_version]))
+		End If
+		
+		Local file:String = GetMetaFile()
+		Local stream:TStream = WriteFileExplicitly(file)
+		If stream
+			stream.WriteString(m_scope + "." + m_name + "/" + m_version)
+			stream.Close
+		Else
+			ThrowError(_s("error.writeperms", [file]))
+		End If
+	End Method
+End Type

@@ -6,6 +6,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	
 	Field m_instmap:dObjectMap
 	Field m_depcheckmap:dObjectMap
+	Field m_unmanagedmap:dObjectMap
 	Field m_nobuild:Int = False, m_nounpack:Int = False, m_keeptemp:Int = False
 	Field m_nothreaded:Int = False, m_makedocs:Int = False, m_forceinstall:Int = False
 	
@@ -13,6 +14,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 		init(["install"])
 		m_instmap = New dObjectMap
 		m_depcheckmap = New dObjectMap
+		m_unmanagedmap = New dObjectMap
 	End Method
 	
 	Rem
@@ -42,6 +44,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	Method Execute()
 		m_instmap.Clear()
 		m_depcheckmap.Clear()
+		m_unmanagedmap.Clear()
 		If mainapp.m_sourceshandler
 			Local nfounds:dObjectMap = New dObjectMap
 			For Local svar:dStringVariable = EachIn m_args
@@ -69,6 +72,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 				Return
 			End If
 			If CheckDependencies()
+				'Make sure we only install/update managed modules
 				If CheckVersions()
 					DoInstall()
 				End If
@@ -103,9 +107,14 @@ Type mxInstallImpl Extends dArgumentImplementation
 		returns: True if the installtion should continue, or False if the user halted the operation.
 	End Rem
 	Method CheckVersions:Int()
-		'For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
-		'	' TODO
-		'Next
+		For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
+			Local ver:String = mxModUtils.GetInstalledVersionFromVerID(instmod.GetVerID())
+			'Make sure we skip unmanaged modules
+			If ver = "unmanaged"
+				m_instmap._Remove(instmod.GetID())
+				m_unmanagedmap._Insert(instmod.GetID(), instmod)
+			End If
+		Next
 		Return True
 	End Method
 	
@@ -175,6 +184,17 @@ Type mxInstallImpl Extends dArgumentImplementation
 	Method DoInstall()
 		If m_instmap.Count() > 0
 			Local a:String, instmod:mxInstModule
+
+			If m_unmanagedmap.Count()
+				logger.LogMessage(_s("arg.install.modulestoskip"))
+				For instmod = EachIn m_unmanagedmap.ValueEnumerator()
+					a:+instmod.GetVerID() + " "
+				Next
+				a = a[..a.Length - 1]
+				logger.LogMessage("~t" + a)
+				a = ""
+			End If
+
 			logger.LogMessage(_s("arg.install.modulestoinstall"))
 			For instmod = EachIn m_instmap.ValueEnumerator()
 				a:+ instmod.GetVerID() + " "
@@ -217,6 +237,15 @@ Type mxInstallImpl Extends dArgumentImplementation
 			End If
 		Else
 			logger.LogMessage(_s("arg.install.nomodulestoinstall"))
+			If m_unmanagedmap.Count()
+				logger.LogMessage(_s("arg.install.modulestoskip"))
+				Local a:String
+				For Local instmod:mxInstModule = EachIn m_unmanagedmap.ValueEnumerator()
+					a:+instmod.GetVerID() + " "
+				Next
+				a = a[..a.Length - 1]
+				logger.LogMessage("~t" + a)
+			End If
 		End If
 	End Method
 	
@@ -384,9 +413,10 @@ Type mxInstModule
 		logger.LogMessage(_s("message.unpacking", [archivepath]))
 		If zreader.OpenZip(archivepath)
 			Local filename:String, outputpath:String
+			Local basepath:String = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/"
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
-				outputpath = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/" + filename
+				outputpath = basepath + filename
 				'DebugLog("Zip outputpath: ~q" + outputpath + "~q")
 				If filename[filename.Length - 1] = 47 ' "/"
 					CreateDir(outputpath, True)
@@ -400,6 +430,10 @@ Type mxInstModule
 				End If
 			Next
 			zreader.CloseZip()
+
+			Local metafile:mxMetaFile = New mxMetaFile.Create(basepath + GetModuleName() + ".mod/meta.maximus")
+			metafile.SetMetaData(GetModuleScope(), GetModuleName(), GetVersionName())
+			metafile.Save()
 		Else
 			ThrowError(_s("error.install.openarchive", [archivepath]))
 		End If
