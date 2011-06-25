@@ -97,28 +97,11 @@ Type mxModUtils
 		verid = GetIDFromVerID(verid)
 		'DebugLog("(mxModUtils.GetInstalledVersionFromVerID) modid: " + verid)
 		Local ver:String
-		Local path:String = mxModUtils.ModulePath(verid) + "/"
-		If FileType(path) = FILETYPE_DIR
-			If FileType(path + ".git") = FILETYPE_DIR Or FileType(path + ".svn") = FILETYPE_DIR
-				ver = "dev"
-			Else If FileType(path + GetNameFromID(verid) + ".bmx") = FILETYPE_FILE
-				Local stream:TStream = ReadStream(path + GetNameFromID(verid) + ".bmx")
-				If stream
-					Local line:String
-					While Not stream.Eof()
-						line = stream.ReadLine().Trim().ToLower()
-						If line.Contains("moduleinfo") And line.Contains("version")
-							line = line.Replace(" ", "").Replace("~q", "")
-							'Local vp:Int = line.Find("moduleinfoversion:")
-							If line.StartsWith("moduleinfoversion:") ' vp > -1 And (vp + 18 <= line.Length)
-								ver = line[18..]
-								Exit
-							End If
-						End If
-					End While
-					stream.Close()
-				End If
-			End If
+		Local path:String = mxModUtils.ModulePath(verid) + "/meta.maximus"
+		If FileType(Path) = FILETYPE_FILE
+			Local metafile:mxMetaFile = New mxMetaFile.Create(path)
+			metafile.Load()
+			ver = metafile.m_version
 		End If
 		Return ver
 	End Function
