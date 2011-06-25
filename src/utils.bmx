@@ -124,46 +124,6 @@ Type mxModUtils
 	End Function
 	
 	Rem
-	Function GetInstalledVersionFromVerID:String(verid:String)
-		verid = GetIDFromVerID(verid)
-		Local ver:String
-		Local path:String = mxModUtils.ModulePath(verid) + "/"
-		If FileType(path) = FILETYPE_DIR
-			If FileType(path + ".git") = FILETYPE_DIR Or FileType(path + ".svn") = FILETYPE_DIR
-				ver = "dev"
-			Else
-				DebugLog("(mxModUtils.GetInstalledVersionFromVerID) modid: " + verid + "  path: " + path + GetNameFromID(verid) + ".bmx")
-				Local text:String = LoadText(path + GetNameFromID(verid) + ".bmx")
-				SaveText(text, AppDir + "/tmp.tmp")
-				Local lexer:TLexer = New TLexer.InitWithSource(text)
-				If lexer.Run()
-					Local tokens:TToken[] = lexer.GetTokens()
-					For Local i:Int = 0 Until tokens.Length
-						Local token:TToken = tokens[i]
-						If token.kind = TToken.TOK_MODULEINFO_KW
-							If Not (i + 1 >= tokens.Length)
-								token = tokens[i + 1]
-								If token.kind = TToken.TOK_STRING_LIT
-									Local str:String = token.ToString().Replace("~q", "").ToLower()
-									If str.Contains("version:")
-										Local colon:Int = str.Find(":")
-										ver = str[(colon > -1 And colon + 1 Or 0)..].Trim()
-										Exit
-									End If
-								End If
-							End If
-						End If
-					Next
-				Else
-					DebugLog("(mxModule.GetInstalledVersion) lexer.Run() failed on ~q" + path + "~q : " + lexer.GetError())
-				End If
-			End If
-		End If
-		Return ver
-	End Function
-	End Rem
-	
-	Rem
 		bbdoc: Enumerate all of the current modules.
 		returns: An object map containing the current modules.
 	End Rem
