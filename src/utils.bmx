@@ -91,17 +91,20 @@ Type mxModUtils
 	
 	Rem
 		bbdoc: Get the version of the module from the given versioned-module id, if it is installed.
-		returns: The module's version (which may be "dev" if Subversion or git is found controlling the module's directory), or Null if the module was not found.
+		returns: The module's version if it's being managed by Maximus, Null if the module was not found or "unmanaged" if not being managed by Maximus
 	End Rem
 	Function GetInstalledVersionFromVerID:String(verid:String)
 		verid = GetIDFromVerID(verid)
 		'DebugLog("(mxModUtils.GetInstalledVersionFromVerID) modid: " + verid)
 		Local ver:String
-		Local path:String = mxModUtils.ModulePath(verid) + "/meta.maximus"
-		If FileType(Path) = FILETYPE_FILE
-			Local metafile:mxMetaFile = New mxMetaFile.Create(path)
+		Local path:String = mxModUtils.ModulePath(verid)
+		Local metafile_path:String = path + "/meta.maximus"
+		If FileType(metafile_path) = FILETYPE_FILE
+			Local metafile:mxMetaFile = New mxMetaFile.Create(metafile_path)
 			metafile.Load()
 			ver = metafile.m_version
+		Else If FileType(path) = FILETYPE_DIR
+			ver = "unmanaged"
 		End If
 		Return ver
 	End Function
