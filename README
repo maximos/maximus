@@ -30,7 +30,7 @@ detect your BMXPATH you have to explicitly set this environment variable.
     On Windows      $ set BMXPATH=C:\BlitzMax
     On Linux        $ export BMXPATH=~/BlitzMax
 
-A few samples you could try:
+A few examples you could try:
 
     $ maximus help install
     $ maximus help list
