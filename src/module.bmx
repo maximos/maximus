@@ -629,7 +629,7 @@ Type mxMetaFile
 				m_version = parts[1]
 			Catch e:Object
 				logger.LogError(_s("error.load.metafile.parse", [GetMetaFile()]))
-				logger.LogError(_s("error.load.metafile.parse", [e.ToString()]))
+				logger.LogError(e.ToString())
 			End Try
 		Else
 			logger.LogWarning(_s("error.load.metafile.notfound", [GetMetaFile()]))
