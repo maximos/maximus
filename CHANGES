@@ -1,5 +1,10 @@
 Revision history for Maximus.
 
+    - Modules were only compiled multi-threaded. Now by default Maximus will
+      always compile a single-threaded and multi-threaded version. The multi-
+      threaded module compilation can be skipped by specifying the -nothreaded
+      argument. Before, specifying this option made the module(s) compile in
+      single-threaded mode.
     - Removed command 'remove' as it isn't implemented yet
     - Updated sources specification
     - Added InnoSetup file for creating a Windows installer

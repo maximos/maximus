@@ -162,8 +162,12 @@ Type mxBMKUtils
 	End Rem
 	Function MakeMods:Int(args:String, threaded:Int)
 		Local opts:String
-		If threaded Then opts:+ " -h"
-		Return RunBMK("makemods" + opts + " " + args)
+		Local return_code:Int = RunBMK("makemods" + opts + " " + args)
+		If return_code = 0 And threaded
+			opts:+" -h"
+			return_code = RunBMK("makemods" + opts + " " + args)
+		End If
+		Return return_code
 	End Function
 	
 End Type
