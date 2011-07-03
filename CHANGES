@@ -1,5 +1,7 @@
 Revision history for Maximus.
 
+    - Cleaned up chunks of unimportant commented or unused code
+
 0.9.0  2011-06-25
     - First public beta release
 
