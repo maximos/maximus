@@ -13,7 +13,6 @@ arg {
 		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
 					List of commands:
 					~tinstall~tInstall the given set modules
-					~tremove~tRemove the given set of modules
 					~tupdate~tUpdate sources file
 					~tlist~tList the module scopes and modules
 					~thelp~tGet help on a specific command
