@@ -1,5 +1,6 @@
 Revision history for Maximus.
 
+    - Updated sources specification
     - Added InnoSetup file for creating a Windows installer
     - Cleaned up chunks of unimportant commented or unused code
 
