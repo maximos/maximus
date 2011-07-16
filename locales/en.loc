@@ -16,13 +16,16 @@ arg {
 					~tupdate~tUpdate sources file
 					~tlist~tList the module scopes and modules
 					~thelp~tGet help on a specific command
+					~tversion~tDisplay version information
 					Try 'maximus help <command>' for more information on a specific command."
 		cmdnotfound "Command not found"
 	}
 	version {
 		usage "description: Report Maximus' version
-				usage: maximus [-v|-version|version]"
+				usage: maximus [-v|-version|version] [-verbose]"
 		report "Maximus version {version}"
+		verbose "~nThis product includes software developed by the OpenSSL Project
+                 for use in the OpenSSL Toolkit (http://www.openssl.org/)"
 	}
 	list {
 		usage "description: List all module scopes and their modules
