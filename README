@@ -1,12 +1,23 @@
 This is the Maximus client. Maximus is a BlitzMax module manager.
 
-The development process of the client uses git-flow. You can find more
-information about it at the following places:
+The client allows you to install BlitzMax modules that are available from the
+Maximus website (http://maximus.htbaa.com, but you can also host your own).
+When you attempt to install a module the client will scan your module directory
+to see which modules are already installed and if you're missing a dependency
+the client will fetch that module as well along with the rest of its dependencies.
 
-    * http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
-    * https://github.com/nvie/gitflow
+Modules not being managed by Maximus are left alone. When you attempt to install
+a module not currently managed by Maximus it will simply tell you which modules
+it skipped. Missing dependencies will still be installed.
+
+Maximus is built with cross platform compatibility in mind, meaning it will work
+on Windows, Linux and Mac OSX. Which are all platforms that are being supported
+by BlitzMax.
 
 GETTING STARTED
+
+You can either download a precompiled binary from http://maximus.htbaa.com/client
+or you can try to compile the client yourself.
 
 To compile Maximus yourself you'll need to install the (latest versions) of
 the following additional modules:
@@ -48,6 +59,14 @@ To install the latest version of a module:
 To install the latest development version of a module:
 
     $ maximus install htbaapub.rest/dev
+
+DEVELOPMENT
+
+The development process of the client uses git-flow. You can find more
+information about it at the following places:
+
+    * http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
+    * https://github.com/nvie/gitflow
 
 LICENSE
 
