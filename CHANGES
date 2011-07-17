@@ -1,5 +1,6 @@
 Revision history for Maximus.
 
+1.0.0  2011-07-17
     - Command 'list' now sorts its output based on module (and scope) names
     - Added -verbose option to 'version' command
     - Modules were only compiled multi-threaded. Now by default Maximus will
