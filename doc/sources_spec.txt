@@ -3,8 +3,12 @@ Strings in CAPS are all meant to replaced with the respective value.
 '##' denotes a comment. These comments are simply for documentation purposes.
 Comments are not expected in the actual json data.
 
-NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need to know that "blah.blah" depends on
-	"brl.map", because we're only managing third-party modules).
+NOTE: Dependencies can either be non-official modscopes/mods (e.g. duct.etc)
+      or official modscopes/mods (e.g. brl.blitz). Official modscopes/mods are
+      included as dependencies, but can't be served by Maximus because these
+      are commercially released modules. But by mentioning these modscopes/mods
+      in the sources file the client can do a full check if all dependencies
+      are met.
 
 {
 	"MODSCOPE": {					## e.g. "duct"
@@ -14,7 +18,7 @@ NOTE: Dependencies are expected to be non-official modscopes/mods (we don't need
 				"VERSION": {		## e.g. "0.3" ('dev' for the master/trunk in a repository-stored module)
 					"deps": ["MOD", "MOD", ...],	## Dependencies for this version (e.g. ["duct.etc", "duct.appendstream"])
 													## This array can be absent if there are no dependencies.
-					"url": "URL"	## The get-line/url for the module's source (e.g. "http://github.com/komiga/duct/zipball/master").
+					"url": "URL"	## The get-line/url for the module's source (e.g. "http://maximus.htbaa.com/module/download/duct/etc/dev").
 				},
 				## more VERSIONs ...
 			},

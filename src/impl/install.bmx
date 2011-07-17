@@ -123,7 +123,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 		returns: Nothing.
 	End Rem
 	Method CheckDependencies:Int()
-		Local addlist:TListEx, nfounds:dObjectMap = New dObjectMap
+		Local nfounds:dObjectMap = New dObjectMap
 		For Local instmod:mxInstModule = EachIn m_instmap.ValueEnumerator()
 			CheckModuleDependencies(instmod, nfounds)
 		Next

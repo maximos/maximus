@@ -1,7 +1,5 @@
-
 ' English translation
 ' Author: Tim Howard
-' Updated: September 2nd, 2010
 
 name		"English"
 nativename	"English"
@@ -13,17 +11,19 @@ arg {
 		fullusage "maximus usage: maximus [--modpath ~q/path/to/mods~q] [--help [command]] [-v|-version] COMMAND [ARGS]
 					List of commands:
 					~tinstall~tInstall the given set modules
-					~tremove~tRemove the given set of modules
 					~tupdate~tUpdate sources file
 					~tlist~tList the module scopes and modules
 					~thelp~tGet help on a specific command
+					~tversion~tDisplay version information
 					Try 'maximus help <command>' for more information on a specific command."
 		cmdnotfound "Command not found"
 	}
 	version {
 		usage "description: Report Maximus' version
-				usage: maximus [-v|-version|version]"
+				usage: maximus [-v|-version|version] [-verbose]"
 		report "Maximus version {version}"
+		verbose "~nThis product includes software developed by the OpenSSL Project for use in the
+		         OpenSSL Toolkit (http://www.openssl.org/)"
 	}
 	list {
 		usage "description: List all module scopes and their modules
