@@ -112,6 +112,7 @@ Type mxListImpl Extends dArgumentImplementation
 	End Rem
 	Method ReportQueue()
 		Local namelen:Int, verlen:Int, modul:mxModule, latest_version:mxModuleVersion
+		Local modules:TList = New TList
 		Local str:String
 		For modul = EachIn m_queuemap.ValueEnumerator()
 			str = modul.GetParent().GetName() + "." + modul.GetName()
@@ -119,8 +120,12 @@ Type mxListImpl Extends dArgumentImplementation
 			latest_version:mxModuleVersion = modul.GetLatestVersion()
 			If latest_version Then str = latest_version.GetName()
 			If str.Length > verlen Then verlen = str.Length
+			modules.AddFirst(modul)
 		Next
-		For modul = EachIn m_queuemap.ValueEnumerator()
+		
+		modules.Sort()
+		
+		For modul = EachIn modules
 			latest_version:mxModuleVersion = modul.GetLatestVersion()
 			If latest_version Then str = latest_version.GetName()
 			If str <> "dev" And modul.HasVersion("dev") Then str:+ " (has dev)"

@@ -1,5 +1,6 @@
 Revision history for Maximus.
 
+    - Command 'list' now sorts its output based on module (and scope) names
     - Modules were only compiled multi-threaded. Now by default Maximus will
       always compile a single-threaded and multi-threaded version. The multi-
       threaded module compilation can be skipped by specifying the -nothreaded

@@ -270,6 +270,26 @@ Type mxModule Extends mxModuleBase
 		Return m_versions.ValueEnumerator()
 	End Method
 	
+	Rem
+		bbdoc: Compare modules with their FullName alphabetically.
+		returns: 0 if equal, -1 or 1 otherwise
+	End Rem
+	Method Compare:Int(withObject:Object)
+		Local modul:mxModule = mxModule(withObject)
+		If modul
+			Local a:String = Self.GetFullName()
+			Local b:String = modul.GetFullName()
+			If a < b
+				Return - 1
+			Else If a > b
+				Return 1
+			Else
+				Return 0
+			End If
+		End If
+		Return Super.Compare(withObject)
+	End Method
+	
 End Type
 
 Rem
