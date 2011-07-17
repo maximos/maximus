@@ -14,7 +14,7 @@ Maximus is built with cross platform compatibility in mind, meaning it will work
 on Windows, Linux and Mac OSX. Which are all platforms that are being supported
 by BlitzMax.
 
-GETTING STARTED
+GETTING THE CLIENT
 
 You can either download a precompiled binary from http://maximus.htbaa.com/client
 or you can try to compile the client yourself.
@@ -35,8 +35,10 @@ the following additional modules:
 Once you have these modules and their dependencies installed you can continue
 by compiling maximus.bmx as a command line application.
 
-When compiled simply run maximus(.exe) from the command line. If Maximus can't
-detect your BMXPATH you have to explicitly set this environment variable.
+GETTING STARTED
+
+Run maximus(.exe) from the command line. If Maximus can't detect your BMXPATH
+you have to explicitly set this environment variable.
 
     On Windows      $ set BMXPATH=C:\BlitzMax
     On Linux        $ export BMXPATH=~/BlitzMax
