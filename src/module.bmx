@@ -473,6 +473,7 @@ Type mxModuleVersion
 				Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
 				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
 				request.SetStream(stream)
+				request.SetProxyServer(mainapp.m_proxyserver)
 				Try
 					response = request.Call(GetUrl(), ["User-Agent: " + mainapp.m_useragent], "GET")
 				Catch e:Object

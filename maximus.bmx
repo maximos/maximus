@@ -56,6 +56,7 @@ Type mxApp Extends dCLApp
 	Field m_sourcesfile:String = "sources", m_sourcesurl:String = "http://maximus.htbaa.com/module/sources/json"
 	Field m_useragent:String
 	Field m_autoupdatesources:Int = True
+	Field m_proxyserver:String
 	
 	Field m_sourceshandler:mxSourcesHandler
 	
@@ -240,6 +241,14 @@ Type mxApp Extends dCLApp
 	End Rem
 	Method SetSourcesUrl(url:String)
 		m_sourcesurl = url
+	End Method
+	
+	Rem
+		bbdoc: Set a proxy server.
+		returns: Nothing.
+	End Rem
+	Method SetProxyServer(server:String)
+		m_proxyserver = server
 	End Method
 	
 	Rem
