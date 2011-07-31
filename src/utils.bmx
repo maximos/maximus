@@ -173,6 +173,19 @@ Type mxBMKUtils
 End Type
 
 Rem
+	bbdoc: Create a preconfigured HTTP request
+	returns: TRESTRequest object.
+End Rem
+Function mxHTTPRequest:TRESTRequest(stream:TStream = Null, progressFunction:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double) = Null)
+	Local request:TRESTRequest = New TRESTRequest
+	request.SetStream(stream)
+	request.SetProgressCallback(progressFunction, New _mxProgressStore)
+	request.SetProxyServer(mainapp.m_proxyserver)
+	request.AddHeader("User-Agent", mainapp.m_useragent)
+	Return request
+End Function
+
+Rem
 	bbdoc: Maximus temporary progress storage for url fetching.
 End Rem
 Type _mxProgressStore

@@ -470,11 +470,9 @@ Type mxModuleVersion
 		If FileType(file) = FILETYPE_NONE
 			Local stream:TStream = WriteFileExplicitly(file)
 			If stream
-				Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
-				request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
-				request.SetStream(stream)
+				Local request:TRESTRequest = mxHTTPRequest(stream), response:TRESTResponse
 				Try
-					response = request.Call(GetUrl(), ["User-Agent: " + mainapp.m_useragent], "GET")
+					response = request.Call(GetUrl(), Null, "GET")
 				Catch e:Object
 					stream.Close()
 					DeleteFile(file)
