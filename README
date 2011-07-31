@@ -41,13 +41,38 @@ the following additional modules:
 Once you have these modules and their dependencies installed you can continue
 by compiling maximus.bmx as a command line application.
 
-GETTING STARTED
+GETTING STARTED - CONFIGURATION
 
 Run maximus(.exe) from the command line. If Maximus can't detect your BMXPATH
 you have to explicitly set this environment variable.
 
     On Windows      $ set BMXPATH=C:\BlitzMax
     On Linux        $ export BMXPATH=~/BlitzMax
+
+It's also possible to change the configuration defaults for Maximus by creating
+a config file. You can do this by creating a maximus.config file.
+
+    On Windows      : C:\Users\<user>\AppData\Roaming\maximus\maximus.config
+               -OR- : C:\Documents and Settings\username\Application Data\maximus\maximus.config
+    On Linux        : ~/.maximus/maximus.config
+    On Mac OSX      : ~/Library/Application Support/maximus/maximus.config
+
+An example configuration file would look like this:
+
+    language en
+    maxpath C:\BlitzMax
+    modpath C:\BlitzMax\mod
+    sourcesurl http://maximus.htbaa.com/module/sources/json
+    sourcesfile sources
+    proxyserver 1.2.3.4:8080
+    autoupdate true
+
+You should only add a setting for which the default isn't optimal for your
+situation. For example, the proxyserver setting can be set if you require any
+outgoing connection to use a proxy server. The proxyserver setting will accept
+anything in the format of [protocol://][user:password@]machine[:port].
+
+GETTING STARTED - COMMANDS
 
 A few examples you could try:
 
