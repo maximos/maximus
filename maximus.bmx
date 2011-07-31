@@ -45,7 +45,7 @@ Rem
 End Rem
 Type mxApp Extends dCLApp
 	
-	Const c_version:String = "1.0.0"
+	Const c_version:String = "1.0.1"
 	Const c_configfile:String = "maximus.config"
 	
 	Field m_apppath:String
