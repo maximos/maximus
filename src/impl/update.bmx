@@ -42,10 +42,7 @@ Type mxUpdateImpl Extends dArgumentImplementation
 		logger.LogMessage("fetching: " + m_sourcesurl + " -> " + file + "~t", False)
 		Local stream:TStream = WriteFileExplicitly(file)
 		If stream
-			Local request:TRESTRequest = New TRESTRequest, response:TRESTResponse
-			request.SetProgressCallback(_ProgressCallback, New _mxProgressStore)
-			request.SetStream(stream)
-			request.SetProxyServer(mainapp.m_proxyserver)
+			Local request:TRESTRequest = mxHTTPRequest(stream), response:TRESTResponse
 			Try
 				response = request.Call(m_sourcesurl, ["User-Agent: " + mainapp.m_useragent], "GET")
 			Catch e:Object
