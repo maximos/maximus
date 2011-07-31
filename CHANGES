@@ -1,5 +1,9 @@
 Revision history for Maximus.
 
+    - Maximus can now connect through a proxy server by adding the
+      'proxyserver' setting to the configuration file. See the README file for
+      more information on how to set this up.
+
 1.0.0  2011-07-17
     - Command 'list' now sorts its output based on module (and scope) names
     - Added -verbose option to 'version' command
