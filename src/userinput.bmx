@@ -26,7 +26,7 @@ Type mxUserInput
 			Case c_cli
 				ui.m_driver = New mxUserInputDriverCLI
 			Case c_gui
-				RuntimeError("GUI driver not yet supported!")
+				ui.m_driver = New mxUserInputDriverGUI
 		End Select
 		Return ui
 	End Function
@@ -71,6 +71,16 @@ Type mxUserInputDriverCLI Extends mxUserInputDriver
 		Else
 			Return False
 		End If
+	End Method
+
+End Type
+
+Type mxUserInputDriverGUI Extends mxUserInputDriver
+	Rem
+		bbdoc:Ask user to confirm an action
+	End Rem
+	Method Confirm:Byte(question:String)
+		Return Confirm(question)
 	End Method
 
 End Type
