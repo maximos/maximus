@@ -137,8 +137,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			logger.LogMessage("~t" + a)
 			If m_forceinstall
 				m_nobuild = True
-				Local resp:String = Input(_s("arg.install.missingdeps") + " ").ToLower()
-				If resp = "y" Or resp = "yes"
+				If mainapp.m_userinput.Confirm(_s("arg.install.missingdeps"))
 					Return True
 				End If
 			End If
@@ -201,8 +200,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Next
 			a = a[..a.Length - 1]
 			logger.LogMessage("~t" + a)
-			Local resp:String = Input(_s("arg.install.continuewithinstall") + " ").ToLower()
-			If resp = "y" Or resp = "yes"
+			If mainapp.m_userinput.Confirm(_s("arg.install.continuewithinstall"))
 				For instmod = EachIn m_instmap.ValueEnumerator()
 					instmod.FetchSourceArchive()
 				Next

@@ -25,6 +25,7 @@ Include "src/config.bmx"
 Include "src/dependencies.bmx"
 Include "src/module.bmx"
 Include "src/sources.bmx"
+Include "src/userinput.bmx"
 Include "src/utils.bmx"
 Include "src/impl/help.bmx"
 Include "src/impl/version.bmx"
@@ -35,7 +36,9 @@ Include "src/impl/list.bmx"
 
 Global logger:mxLogger = New mxLogger
 Global mainapp:mxApp
-New mxApp.Create() ' Skip the first element because it is the program's location
+New mxApp.Create()
+mainapp.SetUserInput(mxUserInput.c_cli)
+'Skip the first element because it is the program's location
 mainapp.SetArgs(AppArgs[1..])
 mainapp.Run()
 
@@ -62,6 +65,8 @@ Type mxApp Extends dCLApp
 	
 	Field m_updateimpl:mxUpdateImpl
 	Field m_sourcesupdated:Int
+	
+	Field m_userinput:mxUserInput
 	
 	Rem
 		bbdoc: Create a new mxApp.
@@ -261,6 +266,14 @@ Type mxApp Extends dCLApp
 			ThrowError(_s("error.sources.setfile"))
 		End If
 		m_sourcesfile = file
+	End Method
+	
+	Rem
+		bbdoc: Set the user input driver.
+		returns: Nothing.
+	End Rem
+	Method SetUserInput(ui_driver:Byte)
+		m_userinput = mxUserInput.factory(ui_driver)
 	End Method
 	
 End Type
