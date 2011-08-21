@@ -4,6 +4,12 @@ Rem
 End Rem
 Type mxLogger
 	
+	Field m_observers:TList = New TList
+	
+	Const c_message:String = "message"
+	Const c_warning:String = "warning"
+	Const c_error:String = "error"
+
 	Rem
 		bbdoc: Log a message.
 		returns: Nothing.
@@ -11,7 +17,7 @@ Type mxLogger
 	End Rem
 	Method LogMessage(message:String, newline:Int = True)
 		If newline Then message:+ "~n"
-		StandardIOStream.WriteString(message)
+		MessageObservers(message, c_message)
 	End Method
 	
 	Rem
@@ -22,7 +28,7 @@ Type mxLogger
 	Method LogWarning(warning:String, newline:Int = True)
 		warning = _s("message.warning", [warning])
 		If newline Then warning:+ "~n"
-		StandardIOStream.WriteString(warning)
+		MessageObservers(warning, c_warning)
 	End Method
 	
 	Rem
@@ -33,8 +39,43 @@ Type mxLogger
 	Method LogError(error:String, newline:Int = True)
 		error = _s("message.error", [error])
 		If newline Then error:+ "~n"
-		StandardIOStream.WriteString(error)
+		MessageObservers(error, c_error)
 	End Method
 	
+	Rem
+		bbdoc: Add an observer
+		Returns: Nothing.
+	End Rem
+	Method AddObserver(observer:Object)
+		m_observers.AddLast(observer)
+	End Method
+	
+	Rem
+		bbdoc: Send messages to observers
+		returns: Nothing.
+		about: This helper method messages all registered observers with the SendMessage method
+	End Rem
+	Method MessageObservers(message:String, context:String)
+		For Local observer:Object = EachIn m_observers
+			observer.SendMessage(message, context)
+		Next
+	End Method
 End Type
 
+Rem
+	bbdoc: This observer for mxLogger will write received messages to StandardIOStream
+End Rem
+Type mxLoggerObserverIOStream
+	Method SendMessage:Object(message:Object, context:Object)
+		StandardIOStream.WriteString("iostream:" + String(message))
+	End Method
+End Type
+
+Rem
+	bbdoc: This observer for mxLogger will print received messages with DebugLog
+End Rem
+Type mxLoggerObserverDebuglog
+	Method SendMessage:Object(message:Object, context:Object)
+		DebugLog "[" + String(context) + "] " + String(message)
+	End Method
+End Type

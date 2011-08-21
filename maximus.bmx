@@ -36,6 +36,8 @@ Include "src/impl/update.bmx"
 Include "src/impl/list.bmx"
 
 Global logger:mxLogger = New mxLogger
+logger.AddObserver(New mxLoggerObserverIOStream)
+
 Global mainapp:mxApp
 New mxApp.Create()
 mainapp.SetUserInput(mxUserInput.c_cli)
