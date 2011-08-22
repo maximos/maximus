@@ -3,9 +3,9 @@
   <Preferences>
     <Creator>Logic Gui</Creator>
     <Version>5.1 Build 422</Version>
-    <Push_Button_Counter>2</Push_Button_Counter>
+    <Push_Button_Counter>9</Push_Button_Counter>
     <TextField_Counter>0</TextField_Counter>
-    <Panels_Counter>15</Panels_Counter>
+    <Panels_Counter>16</Panels_Counter>
     <Labels_Counter>1</Labels_Counter>
     <Slider_Counter>0</Slider_Counter>
     <Combo_Counter>0</Combo_Counter>
@@ -250,7 +250,7 @@
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>13</TypToCreate>
-    <StyleToCreate>559</StyleToCreate>
+    <StyleToCreate>557</StyleToCreate>
     <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
@@ -327,8 +327,8 @@
     <height>421</height>
     <Group>WindowMain</Group>
     <SubGroup>0</SubGroup>
-    <Group_x>122</Group_x>
-    <Group_y>103</Group_y>
+    <Group_x>121</Group_x>
+    <Group_y>102</Group_y>
     <CreateCallBack/>
     <Foreground Red="0" Green="0" Blue="0"/>
     <Background Red="255" Green="255" Blue="255"/>
@@ -578,8 +578,8 @@
     <height>421</height>
     <Group>WindowMain</Group>
     <SubGroup>0</SubGroup>
-    <Group_x>122</Group_x>
-    <Group_y>103</Group_y>
+    <Group_x>121</Group_x>
+    <Group_y>102</Group_y>
     <CreateCallBack/>
     <Foreground Red="0" Green="0" Blue="0"/>
     <Background Red="255" Green="255" Blue="255"/>
@@ -658,11 +658,11 @@
     <ToolbarItems/>
   </Item5>
   <Item6>
-    <Name>GroupConsole</Name>
+    <Name>GroupModuleAction</Name>
     <X>349</X>
-    <Y>371</Y>
+    <Y>240</Y>
     <width>436</width>
-    <height>152</height>
+    <height>129</height>
     <Group>PlainPanelModuleInfo</Group>
     <SubGroup>0</SubGroup>
     <Group_x>348</Group_x>
@@ -694,7 +694,7 @@
     <Modifier/>
     <HotKey/>
     <Layer>33743622</Layer>
-    <Lang_Text en="Console"/>
+    <Lang_Text en="Module Action"/>
     <VariableType>2</VariableType>
     <Tooltip en="????"/>
     <Use_Tooltip>0</Use_Tooltip>
@@ -745,11 +745,98 @@
     <ToolbarItems/>
   </Item6>
   <Item7>
+    <Name>GroupConsole</Name>
+    <X>349</X>
+    <Y>369</Y>
+    <width>436</width>
+    <height>154</height>
+    <Group>PlainPanelModuleInfo</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>348</Group_x>
+    <Group_y>103</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="1" Right="1" Top="1" Bottom="1"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>10</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>3</TypToCreate>
+    <StyleToCreate>8</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="Output"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <EVENT_MOUSEDOWN>0</EVENT_MOUSEDOWN>
+    <EVENT_MOUSEDOWN_TEXT/>
+    <EVENT_MOUSEUP>0</EVENT_MOUSEUP>
+    <EVENT_MOUSEUP_TEXT/>
+    <EVENT_MOUSEMOVE>0</EVENT_MOUSEMOVE>
+    <EVENT_MOUSEMOVE_TEXT/>
+    <EVENT_MOUSEENTER>0</EVENT_MOUSEENTER>
+    <EVENT_MOUSEENTER_TEXT/>
+    <EVENT_MOUSELEAVE>0</EVENT_MOUSELEAVE>
+    <EVENT_MOUSELEAVE_TEXT/>
+    <EVENT_MOUSEWHEEL>0</EVENT_MOUSEWHEEL>
+    <EVENT_MOUSEWHEEL_TEXT/>
+    <EVENT_KEYDOWN>0</EVENT_KEYDOWN>
+    <EVENT_KEYDOWN_TEXT/>
+    <EVENT_KEYUP>0</EVENT_KEYUP>
+    <EVENT_KEYUP_TEXT/>
+    <EVENT_KEYCHAR>0</EVENT_KEYCHAR>
+    <EVENT_KEYCHAR_TEXT/>
+    <EVENT_KEYREPEAT>0</EVENT_KEYREPEAT>
+    <EVENT_KEYREPEAT_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+    <Use_Menu>0</Use_Menu>
+    <MenuName/>
+    <Use_Toolbar>0</Use_Toolbar>
+    <IncBin_Toolbar>0</IncBin_Toolbar>
+    <ToolbarHeight>0</ToolbarHeight>
+    <ToolbarWidth>0</ToolbarWidth>
+    <ToolbarPath/>
+    <Use_Toolbar_Event>0</Use_Toolbar_Event>
+    <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
+    <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
+    <ToolbarType>0</ToolbarType>
+    <ToolbarItems/>
+  </Item7>
+  <Item8>
     <Name>GroupModuleInfo</Name>
     <X>349</X>
     <Y>104</Y>
     <width>436</width>
-    <height>265</height>
+    <height>136</height>
     <Group>PlainPanelModuleInfo</Group>
     <SubGroup>0</SubGroup>
     <Group_x>348</Group_x>
@@ -830,144 +917,17 @@
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
     <ToolbarItems/>
-  </Item7>
-  <Item8>
-    <Name>TextAreaModuleInformation</Name>
-    <X>353</X>
-    <Y>119</Y>
-    <width>428</width>
-    <height>178</height>
-    <Group>GroupModuleInfo</Group>
-    <SubGroup>0</SubGroup>
-    <Group_x>353</Group_x>
-    <Group_y>119</Group_y>
-    <CreateCallBack/>
-    <Foreground Red="0" Green="0" Blue="0"/>
-    <Background Red="255" Green="255" Blue="255"/>
-    <Color_Changed>0</Color_Changed>
-    <BColor_Changed>0</BColor_Changed>
-    <Layout Left="1" Right="1" Top="1" Bottom="1"/>
-    <Comment/>
-    <is_disabled>0</is_disabled>
-    <is_hidden>0</is_hidden>
-    <Position_is_locked>0</Position_is_locked>
-    <Size_is_locked>0</Size_is_locked>
-    <Marked>0</Marked>
-    <Design_Range>10</Design_Range>
-    <Virtual_Group>0</Virtual_Group>
-    <Vx>0</Vx>
-    <Vy>0</Vy>
-    <Vw>0</Vw>
-    <Vh>0</Vh>
-    <TypToCreate>8</TypToCreate>
-    <StyleToCreate>3</StyleToCreate>
-    <Font_Name/>
-    <Font_Size>0</Font_Size>
-    <Font_Style>0</Font_Style>
-    <Use_Font>0</Use_Font>
-    <Modifier/>
-    <HotKey/>
-    <Layer>33743622</Layer>
-    <Lang_Text en=""/>
-    <VariableType>2</VariableType>
-    <Tooltip en="????"/>
-    <Use_Tooltip>0</Use_Tooltip>
-    <Alpha>0.000000000</Alpha>
-    <Use_Alpha>0</Use_Alpha>
-    <Sensitivity>0</Sensitivity>
-    <Anchor>0</Anchor>
-    <AnchorParent/>
-    <AnchorX>0</AnchorX>
-    <AnchorY>0</AnchorY>
-    <AnchorW>0</AnchorW>
-    <AnchorH>0</AnchorH>
-    <Load_File/>
-    <Filter>0</Filter>
-    <FilterRange/>
-    <TabSize>0</TabSize>
-    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT/>
-    <EVENT_GADGETSELECT>0</EVENT_GADGETSELECT>
-    <EVENT_GADGETSELECT_TEXT/>
-    <EVENT_GADGETMENU>0</EVENT_GADGETMENU>
-    <EVENT_GADGETMENU_TEXT/>
-    <EVENT_GADGETLOSTFOCUS>0</EVENT_GADGETLOSTFOCUS>
-    <EVENT_GADGETLOSTFOCUS_TEXT/>
-    <Use_File>0</Use_File>
-    <IncBin_File>0</IncBin_File>
-    <FilePath/>
-    <Use_Menu>0</Use_Menu>
-    <MenuName/>
   </Item8>
   <Item9>
-    <Name>ButtonInstall</Name>
-    <X>500</X>
-    <Y>317</Y>
-    <width>114</width>
-    <height>23</height>
-    <Group>GroupModuleInfo</Group>
-    <SubGroup>0</SubGroup>
-    <Group_x>353</Group_x>
-    <Group_y>119</Group_y>
-    <CreateCallBack/>
-    <Foreground Red="0" Green="0" Blue="0"/>
-    <Background Red="255" Green="255" Blue="255"/>
-    <Color_Changed>0</Color_Changed>
-    <BColor_Changed>0</BColor_Changed>
-    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
-    <Comment/>
-    <is_disabled>1</is_disabled>
-    <is_hidden>0</is_hidden>
-    <Position_is_locked>0</Position_is_locked>
-    <Size_is_locked>0</Size_is_locked>
-    <Marked>0</Marked>
-    <Design_Range>10</Design_Range>
-    <Virtual_Group>0</Virtual_Group>
-    <Vx>0</Vx>
-    <Vy>0</Vy>
-    <Vw>0</Vw>
-    <Vh>0</Vh>
-    <TypToCreate>1</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
-    <Font_Name/>
-    <Font_Size>0</Font_Size>
-    <Font_Style>0</Font_Style>
-    <Use_Font>0</Use_Font>
-    <Modifier/>
-    <HotKey/>
-    <Layer>33743622</Layer>
-    <Lang_Text en="Install Module"/>
-    <VariableType>2</VariableType>
-    <Tooltip en="????"/>
-    <Use_Tooltip>0</Use_Tooltip>
-    <Alpha>0.000000000</Alpha>
-    <Use_Alpha>0</Use_Alpha>
-    <Sensitivity>0</Sensitivity>
-    <Anchor>0</Anchor>
-    <AnchorParent/>
-    <AnchorX>0</AnchorX>
-    <AnchorY>0</AnchorY>
-    <AnchorW>0</AnchorW>
-    <AnchorH>0</AnchorH>
-    <Checked>0</Checked>
-    <NoText>0</NoText>
-    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT>Local node:TGadget =SelectedTreeViewNode(Self.TreeView)&#10;If node&#10;&#9;Local install:String&#10;&#9;Local context:Object =GadgetExtra(node)&#10;&#9;Select context&#10;&#9;&#9;Case mxModule(context)&#10;&#9;&#9;&#9;install =mxModule(context).GetFullName()&#10;&#9;&#9;Case mxModuleVersion(context)&#10;&#9;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#10;&#9;&#9;&#9;install =ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName()&#10;&#9;End Select&#10;&#9;&#10;&#9;RunCommand([&quot;install&quot;, install], Self.TextAreaConsole)&#10;End If</EVENT_GADGETACTION_TEXT>
-    <Use_PixMap>0</Use_PixMap>
-    <IncBin_Pixmap>0</IncBin_Pixmap>
-    <PixMap_Path/>
-    <PixMapProperties>0</PixMapProperties>
-  </Item9>
-  <Item10>
     <Name>TextAreaConsole</Name>
     <X>353</X>
-    <Y>386</Y>
+    <Y>384</Y>
     <width>428</width>
-    <height>131</height>
+    <height>133</height>
     <Group>GroupConsole</Group>
     <SubGroup>0</SubGroup>
     <Group_x>353</Group_x>
-    <Group_y>386</Group_y>
+    <Group_y>384</Group_y>
     <CreateCallBack/>
     <Foreground Red="255" Green="255" Blue="255"/>
     <Background Red="0" Green="0" Blue="0"/>
@@ -1025,7 +985,370 @@
     <FilePath/>
     <Use_Menu>0</Use_Menu>
     <MenuName/>
+  </Item9>
+  <Item10>
+    <Name>TextAreaModuleInformation</Name>
+    <X>353</X>
+    <Y>119</Y>
+    <width>428</width>
+    <height>115</height>
+    <Group>GroupModuleInfo</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>119</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="1" Right="1" Top="1" Bottom="1"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>10</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>8</TypToCreate>
+    <StyleToCreate>3</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en=""/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Load_File/>
+    <Filter>0</Filter>
+    <FilterRange/>
+    <TabSize>0</TabSize>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <EVENT_GADGETSELECT>0</EVENT_GADGETSELECT>
+    <EVENT_GADGETSELECT_TEXT/>
+    <EVENT_GADGETMENU>0</EVENT_GADGETMENU>
+    <EVENT_GADGETMENU_TEXT/>
+    <EVENT_GADGETLOSTFOCUS>0</EVENT_GADGETLOSTFOCUS>
+    <EVENT_GADGETLOSTFOCUS_TEXT/>
+    <Use_File>0</Use_File>
+    <IncBin_File>0</IncBin_File>
+    <FilePath/>
+    <Use_Menu>0</Use_Menu>
+    <MenuName/>
   </Item10>
+  <Item11>
+    <Name>CheckboxNoThreaded</Name>
+    <X>369</X>
+    <Y>298</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t build threaded modules"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item11>
+  <Item12>
+    <Name>CheckboxNoBuild</Name>
+    <X>369</X>
+    <Y>266</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t build modules"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item12>
+  <Item13>
+    <Name>CheckboxKeepTemp</Name>
+    <X>369</X>
+    <Y>331</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t remove tmp directory"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item13>
+  <Item14>
+    <Name>CheckboxNoUnpack</Name>
+    <X>574</X>
+    <Y>266</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t unpack archives"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item14>
+  <Item15>
+    <Name>ButtonInstall</Name>
+    <X>574</X>
+    <Y>331</Y>
+    <width>114</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>1</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>10</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>8</StyleToCreate>
+    <Font_Name>Arial</Font_Name>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="Install Module"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT>Local node:TGadget =SelectedTreeViewNode(Self.TreeView)&#13;&#10;If node&#13;&#10;&#9;Local options:String[]&#13;&#10;&#13;&#10;&#9;If ButtonState(Self.CheckboxNoBuild)    Then options :+ [&quot;-nobuild&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoUnpack)   Then options :+ [&quot;-nounpack&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoThreaded) Then options :+ [&quot;-nothreaded&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxKeepTemp)   Then options :+ [&quot;-keeptemp&quot;]&#13;&#10;&#13;&#10;&#9;Local context:Object =GadgetExtra(node)&#13;&#10;&#9;Select context&#13;&#10;&#9;&#9;Case mxModule(context)&#13;&#10;&#9;&#9;&#9;options :+ [mxModule(context).GetFullName()]&#13;&#10;&#9;&#9;Case mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;options :+ [ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName()]&#13;&#10;&#9;End Select&#13;&#10;&#13;&#10;&#9;RunCommand([&quot;install&quot;] + options, Self.TextAreaConsole)&#13;&#10;End If</EVENT_GADGETACTION_TEXT>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item15>
   <Menu IncBin_Media="0">
     <Menu_0>
       MainMenu
