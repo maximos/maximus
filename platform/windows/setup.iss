@@ -6,6 +6,7 @@
 #define MyAppPublisher "Maximus"
 #define MyAppURL "http://maximus.htbaa.com"
 #define MyAppExeName "maximus.exe"
+#define MyAppExeNameGUI "maximus-gui.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -40,6 +41,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "F:\Projects\maximus\maximus.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "F:\Projects\maximus\maximus-gui.exe"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: F:\Projects\maximus\CHANGES; DestDir: {app}; Flags: IgnoreVersion; DestName: CHANGES.TXT; 
 Source: F:\Projects\maximus\CONTRIBUTORS; DestDir: {app}; Flags: IgnoreVersion; DestName: CONTRIBUTORS.TXT; 
@@ -50,6 +52,7 @@ Source: F:\Projects\maximus\ssleay32.dll; DestDir: {app}; Flags: IgnoreVersion;
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeNameGUI}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 
 [Tasks]
