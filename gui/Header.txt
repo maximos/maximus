@@ -43,8 +43,4 @@ Include "src/impl/list.bmx"
 'GUI specifics
 Include "gui/logger.bmx"
 
-'Skip the first element because it is the program's location
-'mainapp.SetArgs(AppArgs[1..])
-'mainapp.Run()
-
 'End Of external Header File
