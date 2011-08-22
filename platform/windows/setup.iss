@@ -2,6 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Maximus"
+#define MyAppNameGUI "Maximus GUI"
 #define MyAppVersion "1.0.1"
 #define MyAppPublisher "Maximus"
 #define MyAppURL "http://maximus.htbaa.com"
@@ -52,7 +53,7 @@ Source: F:\Projects\maximus\ssleay32.dll; DestDir: {app}; Flags: IgnoreVersion;
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeNameGUI}"
+Name: "{group}\{#MyAppNameGUI}"; Filename: "{app}\{#MyAppExeNameGUI}"; 
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 
 [Tasks]
