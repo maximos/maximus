@@ -15,6 +15,8 @@ Type mxLoggerObserverGUI
 		Else If TGadget(m_output)
 			Local gadget:TGadget = TGadget(m_output)
 			SetGadgetText(gadget, GadgetText(gadget) + "~n" + String(message))
+			'Refresh GUI
+			Driver.Poll
 		Else If m_output = Null
 			Notify(msg)
 		End If
