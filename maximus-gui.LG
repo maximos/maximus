@@ -1055,10 +1055,10 @@
     <MenuName/>
   </Item10>
   <Item11>
-    <Name>CheckboxNoThreaded</Name>
-    <X>369</X>
-    <Y>298</Y>
-    <width>191</width>
+    <Name>ButtonInstall</Name>
+    <X>574</X>
+    <Y>331</Y>
+    <width>114</width>
     <height>23</height>
     <Group>GroupModuleAction</Group>
     <SubGroup>0</SubGroup>
@@ -1071,27 +1071,27 @@
     <BColor_Changed>0</BColor_Changed>
     <Layout Left="0" Right="0" Top="0" Bottom="0"/>
     <Comment/>
-    <is_disabled>0</is_disabled>
+    <is_disabled>1</is_disabled>
     <is_hidden>0</is_hidden>
     <Position_is_locked>0</Position_is_locked>
     <Size_is_locked>0</Size_is_locked>
     <Marked>0</Marked>
-    <Design_Range>5</Design_Range>
+    <Design_Range>10</Design_Range>
     <Virtual_Group>0</Virtual_Group>
     <Vx>0</Vx>
     <Vy>0</Vy>
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>1</TypToCreate>
-    <StyleToCreate>2</StyleToCreate>
-    <Font_Name/>
+    <StyleToCreate>8</StyleToCreate>
+    <Font_Name>Arial</Font_Name>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
     <Use_Font>0</Use_Font>
     <Modifier/>
     <HotKey/>
     <Layer>33743622</Layer>
-    <Lang_Text en="don&apos;t build threaded modules"/>
+    <Lang_Text en="Install Module"/>
     <VariableType>2</VariableType>
     <Tooltip en="????"/>
     <Use_Tooltip>0</Use_Tooltip>
@@ -1107,131 +1107,13 @@
     <Checked>0</Checked>
     <NoText>0</NoText>
     <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT/>
+    <EVENT_GADGETACTION_TEXT>Local node:TGadget =SelectedTreeViewNode(Self.TreeView)&#13;&#10;If node&#13;&#10;&#9;Local options:String[]&#13;&#10;&#13;&#10;&#9;If ButtonState(Self.CheckboxNoBuild)    Then options :+ [&quot;-nobuild&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoUnpack)   Then options :+ [&quot;-nounpack&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoThreaded) Then options :+ [&quot;-nothreaded&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxKeepTemp)   Then options :+ [&quot;-keeptemp&quot;]&#13;&#10;&#13;&#10;&#9;Local context:Object =GadgetExtra(node)&#13;&#10;&#9;Select context&#13;&#10;&#9;&#9;Case mxModule(context)&#13;&#10;&#9;&#9;&#9;options :+ [mxModule(context).GetFullName()]&#13;&#10;&#9;&#9;Case mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;options :+ [ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName()]&#13;&#10;&#9;End Select&#13;&#10;&#13;&#10;&#9;RunCommand([&quot;install&quot;] + options, Self.TextAreaConsole)&#13;&#10;End If</EVENT_GADGETACTION_TEXT>
     <Use_PixMap>0</Use_PixMap>
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
   </Item11>
   <Item12>
-    <Name>CheckboxNoBuild</Name>
-    <X>369</X>
-    <Y>266</Y>
-    <width>191</width>
-    <height>23</height>
-    <Group>GroupModuleAction</Group>
-    <SubGroup>0</SubGroup>
-    <Group_x>353</Group_x>
-    <Group_y>255</Group_y>
-    <CreateCallBack/>
-    <Foreground Red="0" Green="0" Blue="0"/>
-    <Background Red="255" Green="255" Blue="255"/>
-    <Color_Changed>0</Color_Changed>
-    <BColor_Changed>0</BColor_Changed>
-    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
-    <Comment/>
-    <is_disabled>0</is_disabled>
-    <is_hidden>0</is_hidden>
-    <Position_is_locked>0</Position_is_locked>
-    <Size_is_locked>0</Size_is_locked>
-    <Marked>0</Marked>
-    <Design_Range>5</Design_Range>
-    <Virtual_Group>0</Virtual_Group>
-    <Vx>0</Vx>
-    <Vy>0</Vy>
-    <Vw>0</Vw>
-    <Vh>0</Vh>
-    <TypToCreate>1</TypToCreate>
-    <StyleToCreate>2</StyleToCreate>
-    <Font_Name/>
-    <Font_Size>0</Font_Size>
-    <Font_Style>0</Font_Style>
-    <Use_Font>0</Use_Font>
-    <Modifier/>
-    <HotKey/>
-    <Layer>33743622</Layer>
-    <Lang_Text en="don&apos;t build modules"/>
-    <VariableType>2</VariableType>
-    <Tooltip en="????"/>
-    <Use_Tooltip>0</Use_Tooltip>
-    <Alpha>0.000000000</Alpha>
-    <Use_Alpha>0</Use_Alpha>
-    <Sensitivity>0</Sensitivity>
-    <Anchor>0</Anchor>
-    <AnchorParent/>
-    <AnchorX>0</AnchorX>
-    <AnchorY>0</AnchorY>
-    <AnchorW>0</AnchorW>
-    <AnchorH>0</AnchorH>
-    <Checked>0</Checked>
-    <NoText>0</NoText>
-    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT/>
-    <Use_PixMap>0</Use_PixMap>
-    <IncBin_Pixmap>0</IncBin_Pixmap>
-    <PixMap_Path/>
-    <PixMapProperties>0</PixMapProperties>
-  </Item12>
-  <Item13>
-    <Name>CheckboxKeepTemp</Name>
-    <X>369</X>
-    <Y>331</Y>
-    <width>191</width>
-    <height>23</height>
-    <Group>GroupModuleAction</Group>
-    <SubGroup>0</SubGroup>
-    <Group_x>353</Group_x>
-    <Group_y>255</Group_y>
-    <CreateCallBack/>
-    <Foreground Red="0" Green="0" Blue="0"/>
-    <Background Red="255" Green="255" Blue="255"/>
-    <Color_Changed>0</Color_Changed>
-    <BColor_Changed>0</BColor_Changed>
-    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
-    <Comment/>
-    <is_disabled>0</is_disabled>
-    <is_hidden>0</is_hidden>
-    <Position_is_locked>0</Position_is_locked>
-    <Size_is_locked>0</Size_is_locked>
-    <Marked>0</Marked>
-    <Design_Range>5</Design_Range>
-    <Virtual_Group>0</Virtual_Group>
-    <Vx>0</Vx>
-    <Vy>0</Vy>
-    <Vw>0</Vw>
-    <Vh>0</Vh>
-    <TypToCreate>1</TypToCreate>
-    <StyleToCreate>2</StyleToCreate>
-    <Font_Name/>
-    <Font_Size>0</Font_Size>
-    <Font_Style>0</Font_Style>
-    <Use_Font>0</Use_Font>
-    <Modifier/>
-    <HotKey/>
-    <Layer>33743622</Layer>
-    <Lang_Text en="don&apos;t remove tmp directory"/>
-    <VariableType>2</VariableType>
-    <Tooltip en="????"/>
-    <Use_Tooltip>0</Use_Tooltip>
-    <Alpha>0.000000000</Alpha>
-    <Use_Alpha>0</Use_Alpha>
-    <Sensitivity>0</Sensitivity>
-    <Anchor>0</Anchor>
-    <AnchorParent/>
-    <AnchorX>0</AnchorX>
-    <AnchorY>0</AnchorY>
-    <AnchorW>0</AnchorW>
-    <AnchorH>0</AnchorH>
-    <Checked>0</Checked>
-    <NoText>0</NoText>
-    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT/>
-    <Use_PixMap>0</Use_PixMap>
-    <IncBin_Pixmap>0</IncBin_Pixmap>
-    <PixMap_Path/>
-    <PixMapProperties>0</PixMapProperties>
-  </Item13>
-  <Item14>
     <Name>CheckboxNoUnpack</Name>
     <X>574</X>
     <Y>266</Y>
@@ -1289,12 +1171,12 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
-  </Item14>
-  <Item15>
-    <Name>ButtonInstall</Name>
-    <X>574</X>
+  </Item12>
+  <Item13>
+    <Name>CheckboxKeepTemp</Name>
+    <X>359</X>
     <Y>331</Y>
-    <width>114</width>
+    <width>191</width>
     <height>23</height>
     <Group>GroupModuleAction</Group>
     <SubGroup>0</SubGroup>
@@ -1307,27 +1189,27 @@
     <BColor_Changed>0</BColor_Changed>
     <Layout Left="0" Right="0" Top="0" Bottom="0"/>
     <Comment/>
-    <is_disabled>1</is_disabled>
+    <is_disabled>0</is_disabled>
     <is_hidden>0</is_hidden>
     <Position_is_locked>0</Position_is_locked>
     <Size_is_locked>0</Size_is_locked>
     <Marked>0</Marked>
-    <Design_Range>10</Design_Range>
+    <Design_Range>5</Design_Range>
     <Virtual_Group>0</Virtual_Group>
     <Vx>0</Vx>
     <Vy>0</Vy>
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>1</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
-    <Font_Name>Arial</Font_Name>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
     <Use_Font>0</Use_Font>
     <Modifier/>
     <HotKey/>
     <Layer>33743622</Layer>
-    <Lang_Text en="Install Module"/>
+    <Lang_Text en="don&apos;t remove tmp directory"/>
     <VariableType>2</VariableType>
     <Tooltip en="????"/>
     <Use_Tooltip>0</Use_Tooltip>
@@ -1343,7 +1225,125 @@
     <Checked>0</Checked>
     <NoText>0</NoText>
     <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT>Local node:TGadget =SelectedTreeViewNode(Self.TreeView)&#13;&#10;If node&#13;&#10;&#9;Local options:String[]&#13;&#10;&#13;&#10;&#9;If ButtonState(Self.CheckboxNoBuild)    Then options :+ [&quot;-nobuild&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoUnpack)   Then options :+ [&quot;-nounpack&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxNoThreaded) Then options :+ [&quot;-nothreaded&quot;]&#13;&#10;&#9;If ButtonState(Self.CheckboxKeepTemp)   Then options :+ [&quot;-keeptemp&quot;]&#13;&#10;&#13;&#10;&#9;Local context:Object =GadgetExtra(node)&#13;&#10;&#9;Select context&#13;&#10;&#9;&#9;Case mxModule(context)&#13;&#10;&#9;&#9;&#9;options :+ [mxModule(context).GetFullName()]&#13;&#10;&#9;&#9;Case mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#13;&#10;&#9;&#9;&#9;options :+ [ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName()]&#13;&#10;&#9;End Select&#13;&#10;&#13;&#10;&#9;RunCommand([&quot;install&quot;] + options, Self.TextAreaConsole)&#13;&#10;End If</EVENT_GADGETACTION_TEXT>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item13>
+  <Item14>
+    <Name>CheckboxNoThreaded</Name>
+    <X>359</X>
+    <Y>298</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t build threaded modules"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <Use_PixMap>0</Use_PixMap>
+    <IncBin_Pixmap>0</IncBin_Pixmap>
+    <PixMap_Path/>
+    <PixMapProperties>0</PixMapProperties>
+  </Item14>
+  <Item15>
+    <Name>CheckboxNoBuild</Name>
+    <X>359</X>
+    <Y>266</Y>
+    <width>191</width>
+    <height>23</height>
+    <Group>GroupModuleAction</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>255</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="0" Green="0" Blue="0"/>
+    <Background Red="255" Green="255" Blue="255"/>
+    <Color_Changed>0</Color_Changed>
+    <BColor_Changed>0</BColor_Changed>
+    <Layout Left="0" Right="0" Top="0" Bottom="0"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>5</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>1</TypToCreate>
+    <StyleToCreate>2</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en="don&apos;t build modules"/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Checked>0</Checked>
+    <NoText>0</NoText>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
     <Use_PixMap>0</Use_PixMap>
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
