@@ -1,0 +1,35 @@
+'Start of external Append File
+
+
+Global LoggerObserver:mxLoggerObserverGUI = New mxLoggerObserverGUI
+Global logger:mxLogger = New mxLogger
+logger.AddObserver(LoggerObserver)
+?Debug
+logger.AddObserver(New mxLoggerObserverDebuglog)
+?
+
+Global mainapp:mxApp
+New mxApp.Create()
+mainapp.SetUserInput(mxUserInput.c_gui)
+
+Local MainWindow:TForm = New TWindowMain.CreateForm()
+TWindowMain(MainWindow).Init()
+
+
+While TForm.FormsExist()
+	WaitSystem
+Wend
+
+Rem
+	bbdoc: Run a Maximus command
+	about: If @observer is NULL output will be shown with Notify
+	If @observer is a TGadget its GadgetText will be updated
+End Rem
+Function RunCommand(args:String[], observer:Object = Null)
+	If TGadget(observer) Then LoggerObserver.Reset()
+	LoggerObserver.m_output = observer
+	mainapp.SetArgs(args)
+	mainapp.Run()
+End Function
+
+'End Of external Append File

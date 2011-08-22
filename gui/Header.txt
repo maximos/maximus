@@ -1,0 +1,50 @@
+'Start of external Header File
+SuperStrict
+
+Import MaxGui.Drivers
+
+'?Not win32			'Uncomment (3-lines) when using multiple canvases and BMax 1.32b and up
+'GLShareContexts
+'?
+
+Import brl.standardio
+Import brl.maxutil
+Import brl.ramstream
+
+Import bah.volumes
+Import gman.zipengine
+Import htbaapub.rest
+
+Import duct.variables
+Import duct.objectmap
+Import duct.json
+Import duct.locale
+Import duct.clapp
+Import duct.time
+
+Incbin "locales/en.loc"
+
+Include "src/main.bmx"
+Include "src/logger.bmx"
+Include "src/errors.bmx"
+Include "src/config.bmx"
+Include "src/dependencies.bmx"
+Include "src/module.bmx"
+Include "src/sources.bmx"
+Include "src/userinput.bmx"
+Include "src/utils.bmx"
+Include "src/impl/help.bmx"
+Include "src/impl/version.bmx"
+Include "src/impl/modpath.bmx"
+Include "src/impl/install.bmx"
+Include "src/impl/update.bmx"
+Include "src/impl/list.bmx"
+
+'GUI specifics
+Include "gui/logger.bmx"
+
+'Skip the first element because it is the program's location
+'mainapp.SetArgs(AppArgs[1..])
+'mainapp.Run()
+
+'End Of external Header File
