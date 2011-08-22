@@ -80,7 +80,7 @@ Type mxUserInputDriverGUI Extends mxUserInputDriver
 		bbdoc:Ask user to confirm an action
 	End Rem
 	Method Confirm:Byte(question:String)
-		Return Confirm(question)
+		Return brl.system.Confirm(question)
 	End Method
 
 End Type
