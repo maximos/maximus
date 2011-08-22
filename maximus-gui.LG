@@ -919,74 +919,6 @@
     <ToolbarItems/>
   </Item8>
   <Item9>
-    <Name>TextAreaConsole</Name>
-    <X>353</X>
-    <Y>384</Y>
-    <width>428</width>
-    <height>133</height>
-    <Group>GroupConsole</Group>
-    <SubGroup>0</SubGroup>
-    <Group_x>353</Group_x>
-    <Group_y>384</Group_y>
-    <CreateCallBack/>
-    <Foreground Red="255" Green="255" Blue="255"/>
-    <Background Red="0" Green="0" Blue="0"/>
-    <Color_Changed>1</Color_Changed>
-    <BColor_Changed>1</BColor_Changed>
-    <Layout Left="1" Right="1" Top="1" Bottom="1"/>
-    <Comment/>
-    <is_disabled>0</is_disabled>
-    <is_hidden>0</is_hidden>
-    <Position_is_locked>0</Position_is_locked>
-    <Size_is_locked>0</Size_is_locked>
-    <Marked>0</Marked>
-    <Design_Range>10</Design_Range>
-    <Virtual_Group>0</Virtual_Group>
-    <Vx>0</Vx>
-    <Vy>0</Vy>
-    <Vw>0</Vw>
-    <Vh>0</Vh>
-    <TypToCreate>8</TypToCreate>
-    <StyleToCreate>3</StyleToCreate>
-    <Font_Name/>
-    <Font_Size>0</Font_Size>
-    <Font_Style>0</Font_Style>
-    <Use_Font>0</Use_Font>
-    <Modifier/>
-    <HotKey/>
-    <Layer>33743622</Layer>
-    <Lang_Text en=""/>
-    <VariableType>2</VariableType>
-    <Tooltip en="????"/>
-    <Use_Tooltip>0</Use_Tooltip>
-    <Alpha>0.000000000</Alpha>
-    <Use_Alpha>0</Use_Alpha>
-    <Sensitivity>0</Sensitivity>
-    <Anchor>0</Anchor>
-    <AnchorParent/>
-    <AnchorX>0</AnchorX>
-    <AnchorY>0</AnchorY>
-    <AnchorW>0</AnchorW>
-    <AnchorH>0</AnchorH>
-    <Load_File/>
-    <Filter>0</Filter>
-    <FilterRange/>
-    <TabSize>0</TabSize>
-    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
-    <EVENT_GADGETACTION_TEXT/>
-    <EVENT_GADGETSELECT>0</EVENT_GADGETSELECT>
-    <EVENT_GADGETSELECT_TEXT/>
-    <EVENT_GADGETMENU>0</EVENT_GADGETMENU>
-    <EVENT_GADGETMENU_TEXT/>
-    <EVENT_GADGETLOSTFOCUS>0</EVENT_GADGETLOSTFOCUS>
-    <EVENT_GADGETLOSTFOCUS_TEXT/>
-    <Use_File>0</Use_File>
-    <IncBin_File>0</IncBin_File>
-    <FilePath/>
-    <Use_Menu>0</Use_Menu>
-    <MenuName/>
-  </Item9>
-  <Item10>
     <Name>TextAreaModuleInformation</Name>
     <X>353</X>
     <Y>119</Y>
@@ -1053,8 +985,8 @@
     <FilePath/>
     <Use_Menu>0</Use_Menu>
     <MenuName/>
-  </Item10>
-  <Item11>
+  </Item9>
+  <Item10>
     <Name>ButtonInstall</Name>
     <X>574</X>
     <Y>331</Y>
@@ -1112,8 +1044,8 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
-  </Item11>
-  <Item12>
+  </Item10>
+  <Item11>
     <Name>CheckboxNoUnpack</Name>
     <X>574</X>
     <Y>266</Y>
@@ -1171,8 +1103,8 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
-  </Item12>
-  <Item13>
+  </Item11>
+  <Item12>
     <Name>CheckboxKeepTemp</Name>
     <X>359</X>
     <Y>331</Y>
@@ -1230,8 +1162,8 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
-  </Item13>
-  <Item14>
+  </Item12>
+  <Item13>
     <Name>CheckboxNoThreaded</Name>
     <X>359</X>
     <Y>298</Y>
@@ -1289,8 +1221,8 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
-  </Item14>
-  <Item15>
+  </Item13>
+  <Item14>
     <Name>CheckboxNoBuild</Name>
     <X>359</X>
     <Y>266</Y>
@@ -1348,6 +1280,74 @@
     <IncBin_Pixmap>0</IncBin_Pixmap>
     <PixMap_Path/>
     <PixMapProperties>0</PixMapProperties>
+  </Item14>
+  <Item15>
+    <Name>TextAreaConsole</Name>
+    <X>353</X>
+    <Y>384</Y>
+    <width>428</width>
+    <height>133</height>
+    <Group>GroupConsole</Group>
+    <SubGroup>0</SubGroup>
+    <Group_x>353</Group_x>
+    <Group_y>384</Group_y>
+    <CreateCallBack/>
+    <Foreground Red="255" Green="255" Blue="255"/>
+    <Background Red="0" Green="0" Blue="0"/>
+    <Color_Changed>1</Color_Changed>
+    <BColor_Changed>1</BColor_Changed>
+    <Layout Left="1" Right="1" Top="1" Bottom="1"/>
+    <Comment/>
+    <is_disabled>0</is_disabled>
+    <is_hidden>0</is_hidden>
+    <Position_is_locked>0</Position_is_locked>
+    <Size_is_locked>0</Size_is_locked>
+    <Marked>0</Marked>
+    <Design_Range>10</Design_Range>
+    <Virtual_Group>0</Virtual_Group>
+    <Vx>0</Vx>
+    <Vy>0</Vy>
+    <Vw>0</Vw>
+    <Vh>0</Vh>
+    <TypToCreate>8</TypToCreate>
+    <StyleToCreate>3</StyleToCreate>
+    <Font_Name/>
+    <Font_Size>0</Font_Size>
+    <Font_Style>0</Font_Style>
+    <Use_Font>0</Use_Font>
+    <Modifier/>
+    <HotKey/>
+    <Layer>33743622</Layer>
+    <Lang_Text en=""/>
+    <VariableType>2</VariableType>
+    <Tooltip en="????"/>
+    <Use_Tooltip>0</Use_Tooltip>
+    <Alpha>0.000000000</Alpha>
+    <Use_Alpha>0</Use_Alpha>
+    <Sensitivity>0</Sensitivity>
+    <Anchor>0</Anchor>
+    <AnchorParent/>
+    <AnchorX>0</AnchorX>
+    <AnchorY>0</AnchorY>
+    <AnchorW>0</AnchorW>
+    <AnchorH>0</AnchorH>
+    <Load_File/>
+    <Filter>0</Filter>
+    <FilterRange/>
+    <TabSize>0</TabSize>
+    <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
+    <EVENT_GADGETACTION_TEXT/>
+    <EVENT_GADGETSELECT>0</EVENT_GADGETSELECT>
+    <EVENT_GADGETSELECT_TEXT/>
+    <EVENT_GADGETMENU>0</EVENT_GADGETMENU>
+    <EVENT_GADGETMENU_TEXT/>
+    <EVENT_GADGETLOSTFOCUS>0</EVENT_GADGETLOSTFOCUS>
+    <EVENT_GADGETLOSTFOCUS_TEXT/>
+    <Use_File>0</Use_File>
+    <IncBin_File>0</IncBin_File>
+    <FilePath/>
+    <Use_Menu>0</Use_Menu>
+    <MenuName/>
   </Item15>
   <Menu IncBin_Media="0">
     <Menu_0>
@@ -1367,9 +1367,9 @@
       <Menu_Entry Name="Info" Tag="200" disabled="0" checked="0" Use_Event_MA="0" Event_MA_Text="" Hotkey="" Modifier="" Kids="2" Index="1" VariableType="2">
         <Text en="Info"/>
         <IconStripPath IconNumber="0"/>
-        <Menu_Entry Name="Version" Tag="201" disabled="0" checked="0" Use_Event_MA="1" Event_MA_Text="RunCommand([&quot;version&quot;, &quot;-verbose&quot;])" Hotkey="" Modifier="" Kids="0" Index="0" VariableType="2">
+        <Menu_Entry Name="Version" Tag="201" disabled="0" checked="0" Use_Event_MA="1" Event_MA_Text="RunCommand([&quot;version&quot;, &quot;-verbose&quot;], Self.TextAreaConsole)" Hotkey="" Modifier="" Kids="0" Index="0" VariableType="2">
           <Text en="Version"/>
-          <IconStripPath IconNumber="0"/>
+          <IconStripPath IconNumber="-1"/>
         </Menu_Entry>
         <Menu_Entry Name="Website" Tag="202" disabled="0" checked="0" Use_Event_MA="1" Event_MA_Text="OpenURL(&quot;http://maximus.htbaa.com&quot;)" Hotkey="" Modifier="" Kids="0" Index="1" VariableType="2">
           <Text en="Go To Website"/>
