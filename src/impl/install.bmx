@@ -414,6 +414,7 @@ Type mxInstModule
 		If zreader.OpenZip(archivepath)
 			Local filename:String, outputpath:String
 			Local basepath:String = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/"
+			DeleteDir(mxModUtils.ModulePath(m_id), True)
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
 				outputpath = basepath + filename
