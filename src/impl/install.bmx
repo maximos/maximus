@@ -98,7 +98,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 				Case "-nothreaded" m_nothreaded = True
 				Case "-makedocs" m_makedocs = True
 				Case "-force" m_forceinstall = True
-				Case "-ignoreunmanaged" m_overwriteunmanaged = True
+				Case "-overwriteunmanaged" m_overwriteunmanaged = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
 		Next
