@@ -1,5 +1,7 @@
 Revision history for Maximus.
 
+    - Added -ignoreunmanaged option to 'install' command to overwrite existing
+      unmanaged modules
     - When unpacking modules Maximus now makes sure that the module directory
       gets deleted if it previous existed, to keep out unwanted files
 
