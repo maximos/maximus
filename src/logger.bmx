@@ -67,7 +67,7 @@ Rem
 End Rem
 Type mxLoggerObserverIOStream
 	Method SendMessage:Object(message:Object, context:Object)
-		StandardIOStream.WriteString("iostream:" + String(message))
+		StandardIOStream.WriteString(String(message))
 	End Method
 End Type
 
