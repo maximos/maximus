@@ -289,7 +289,7 @@
     <EVENT_WINDOWSIZE>0</EVENT_WINDOWSIZE>
     <EVENT_WINDOWSIZE_TEXT/>
     <EVENT_WINDOWCLOSE>1</EVENT_WINDOWCLOSE>
-    <EVENT_WINDOWCLOSE_TEXT>END</EVENT_WINDOWCLOSE_TEXT>
+    <EVENT_WINDOWCLOSE_TEXT>End</EVENT_WINDOWCLOSE_TEXT>
     <EVENT_WINDOWACTIVATE>0</EVENT_WINDOWACTIVATE>
     <EVENT_WINDOWACTIVATE_TEXT/>
     <EVENT_WINDOWACCEPT>0</EVENT_WINDOWACCEPT>
@@ -555,7 +555,7 @@
     <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
     <EVENT_GADGETACTION_TEXT/>
     <EVENT_GADGETSELECT>1</EVENT_GADGETSELECT>
-    <EVENT_GADGETSELECT_TEXT>Local information:String&#10;Local context:Object =GadgetExtra(TGadget(Node))&#10;Select context&#10;&#9;Case mxModuleScope(context)&#10;&#9;&#9;SetStatusText(Self.WindowMain, &quot;&quot;)&#10;&#9;&#9;DisableGadget(Self.ButtonInstall)&#10;&#9;Case mxModuleVersion(context)&#10;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#10;&#9;&#9;Local description:String =ver.GetParent().GetDescription()&#10;&#9;&#9;If description.Length &gt; 0&#10;&#9;&#9;&#9;information :+ ver.GetParent().GetDescription() + &quot;~n~n&quot;&#10;&#9;&#9;End If&#10;&#9;&#9;information :+ &quot;Depends on: &quot; + ver.GetDependencies().DependencyList()&#10;&#9;&#9;EnableGadget(Self.ButtonInstall)&#10;&#9;&#9;SetStatusText(Self.WindowMain, ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName())&#10;End Select&#10;&#10;Local textarea:TGadget =Self.TextAreaModuleInformation&#10;SetGadgetText(textarea, information)</EVENT_GADGETSELECT_TEXT>
+    <EVENT_GADGETSELECT_TEXT>If Not Node Then Return&#10;&#10;Local information:String&#10;Local context:Object =GadgetExtra(TGadget(Node))&#10;Select context&#10;&#9;Case mxModuleScope(context)&#10;&#9;&#9;SetStatusText(Self.WindowMain, &quot;&quot;)&#10;&#9;&#9;DisableGadget(Self.ButtonInstall)&#10;&#9;Case mxModuleVersion(context)&#10;&#9;&#9;Local ver:mxModuleVersion =mxModuleVersion(context)&#10;&#9;&#9;Local description:String =ver.GetParent().GetDescription()&#10;&#9;&#9;If description.Length &gt; 0&#10;&#9;&#9;&#9;information :+ ver.GetParent().GetDescription() + &quot;~n~n&quot;&#10;&#9;&#9;End If&#10;&#9;&#9;information :+ &quot;Depends on: &quot; + ver.GetDependencies().DependencyList()&#10;&#9;&#9;EnableGadget(Self.ButtonInstall)&#10;&#9;&#9;SetStatusText(Self.WindowMain, ver.GetParent().GetFullName() + &quot;/&quot; + ver.GetName())&#10;End Select&#10;&#10;Local textarea:TGadget =Self.TextAreaModuleInformation&#10;SetGadgetText(textarea, information)</EVENT_GADGETSELECT_TEXT>
     <EVENT_GADGETMENU>0</EVENT_GADGETMENU>
     <EVENT_GADGETMENU_TEXT/>
     <EVENT_GADGETOPEN>0</EVENT_GADGETOPEN>
@@ -1416,7 +1416,7 @@
         <IconStripPath IconNumber="0"/>
         <Menu_Entry Name="Update" Tag="101" disabled="0" checked="0" Use_Event_MA="1" Event_MA_Text="RunCommand([&quot;update&quot;], Self.TextAreaConsole)&#10;UpdateModuleList" Hotkey="" Modifier="" Kids="0" Index="0" VariableType="2">
           <Text en="Update Sources"/>
-          <IconStripPath IconNumber="0"/>
+          <IconStripPath IconNumber="-1"/>
         </Menu_Entry>
         <Menu_Entry Name="Exit" Tag="102" disabled="0" checked="0" Use_Event_MA="1" Event_MA_Text="End" Hotkey="" Modifier="" Kids="0" Index="1" VariableType="2">
           <Text en="Exit"/>
