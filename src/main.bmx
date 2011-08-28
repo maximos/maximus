@@ -72,7 +72,7 @@ Type mxApp Extends dCLApp
 		m_arghandler.AddArgImpl(m_updateimpl)
 		m_arghandler.AddArgImpl(New mxListImpl)
 		UpdateSources()
-		m_sourceshandler = New mxSourcesHandler.FromFile(m_apppath + m_sourcesfile)
+		SetSourcesHandler()
 		If Not m_sourceshandler
 			' Don't throw an error here, the user may be updating the sources (an error will occur otherwise)
 			logger.LogWarning(_s("error.load.sources.file", [m_apppath + m_sourcesfile]))
@@ -148,6 +148,15 @@ Type mxApp Extends dCLApp
 				m_updateimpl.Execute()
 			End If
 		End If
+	End Method
+	
+	Rem
+		bbdoc: Set the sourceshandler.
+		returns: Nothing.
+		about: Create a new mxSourcesHandler object to set a fresh module list
+	End Rem
+	Method SetSourcesHandler()
+		m_sourceshandler = New mxSourcesHandler.FromFile(m_apppath + m_sourcesfile)
 	End Method
 	
 	Rem
