@@ -9,7 +9,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	Field m_unmanagedmap:dObjectMap
 	Field m_nobuild:Int = False, m_nounpack:Int = False, m_keeptemp:Int = False
 	Field m_nothreaded:Int = False, m_makedocs:Int = False, m_forceinstall:Int = False
-	Field m_ignoreunmanaged:Int = False
+	Field m_overwriteunmanaged:Int = False
 	
 	Method New()
 		init(["install"])
@@ -98,7 +98,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 				Case "-nothreaded" m_nothreaded = True
 				Case "-makedocs" m_makedocs = True
 				Case "-force" m_forceinstall = True
-				Case "-ignoreunmanaged" m_ignoreunmanaged = True
+				Case "-ignoreunmanaged" m_overwriteunmanaged = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
 		Next
@@ -113,7 +113,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Local ver:String = mxModUtils.GetInstalledVersionFromVerID(instmod.GetVerID())
 			'Make sure we skip unmanaged modules
 			If ver = "unmanaged"
-				If Not m_ignoreunmanaged Then m_instmap._Remove(instmod.GetID())
+				If Not m_overwriteunmanaged Then m_instmap._Remove(instmod.GetID())
 				m_unmanagedmap._Insert(instmod.GetID(), instmod)
 			End If
 		Next
@@ -188,7 +188,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Local a:String, instmod:mxInstModule
 
 			If m_unmanagedmap.Count()
-				If m_ignoreunmanaged
+				If m_overwriteunmanaged
 					logger.LogMessage(_s("arg.install.modulestooverwrite"))
 				Else
 					logger.LogMessage(_s("arg.install.modulestoskip"))
