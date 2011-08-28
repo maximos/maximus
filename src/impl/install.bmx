@@ -89,7 +89,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	End Rem
 	Method CheckOptions()
 		m_nobuild = False; m_nounpack = False; m_keeptemp = False
-		m_nothreaded = False; m_makedocs = False
+		m_nothreaded = False; m_makedocs = False; m_forceinstall = False; m_overwriteunmanaged = False
 		For Local opt:dIdentifier = EachIn m_args
 			Select opt.GetName().ToLower()
 				Case "-nobuild" m_nobuild = True
