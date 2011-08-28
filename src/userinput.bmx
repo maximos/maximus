@@ -65,7 +65,7 @@ Type mxUserInputDriverCLI Extends mxUserInputDriver
 		returns: True or False
 	End Rem
 	Method Confirm:Byte(question:String)
-		Local resp:String = Input(question + " ").ToLower()
+		Local resp:String = Input(question + " " + _s("message.confirm")).ToLower()
 		If resp = "y" Or resp = "yes"
 			Return True
 		Else

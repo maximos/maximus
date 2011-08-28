@@ -51,8 +51,8 @@ arg {
 		nomodulestoinstall "No modules to be installed"
 		modulestoskip "The following module(s) won't be installed because they already exist and have not been installed with Maximus:"
 		modulestooverwrite "The following module(s) will be overwritten, even though they've not been previously installed by Maximus:"
-		continuewithinstall "Continue with install? [y/n]"
-		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed) [y/n]"
+		continuewithinstall "Continue with install?"
+		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed)"
 		newerinstalled "The following modules are already at newer or development versions.
 						If you choose to continue installing, the entire module folders will be destroyed and replaced."
 		notfound {
@@ -145,5 +145,6 @@ message {
 		build "Skipping build"
 		install "Skipping install"
 	}
+	confirm "[y/n]"
 }
 
