@@ -9,6 +9,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	Field m_unmanagedmap:dObjectMap
 	Field m_nobuild:Int = False, m_nounpack:Int = False, m_keeptemp:Int = False
 	Field m_nothreaded:Int = False, m_makedocs:Int = False, m_forceinstall:Int = False
+	Field m_ignoreunmanaged:Int = False
 	
 	Method New()
 		init(["install"])
@@ -97,6 +98,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 				Case "-nothreaded" m_nothreaded = True
 				Case "-makedocs" m_makedocs = True
 				Case "-force" m_forceinstall = True
+				Case "-ignoreunmanaged" m_ignoreunmanaged = True
 				Default ThrowCommonError(mxOptErrors.UNKNOWN, opt.GetName())
 			End Select
 		Next
@@ -111,7 +113,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Local ver:String = mxModUtils.GetInstalledVersionFromVerID(instmod.GetVerID())
 			'Make sure we skip unmanaged modules
 			If ver = "unmanaged"
-				m_instmap._Remove(instmod.GetID())
+				If Not m_ignoreunmanaged Then m_instmap._Remove(instmod.GetID())
 				m_unmanagedmap._Insert(instmod.GetID(), instmod)
 			End If
 		Next
@@ -186,7 +188,11 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Local a:String, instmod:mxInstModule
 
 			If m_unmanagedmap.Count()
-				logger.LogMessage(_s("arg.install.modulestoskip"))
+				If m_ignoreunmanaged
+					logger.LogMessage(_s("arg.install.modulestooverwrite"))
+				Else
+					logger.LogMessage(_s("arg.install.modulestoskip"))
+				End If
 				For instmod = EachIn m_unmanagedmap.ValueEnumerator()
 					a:+instmod.GetVerID() + " "
 				Next
@@ -414,6 +420,7 @@ Type mxInstModule
 		If zreader.OpenZip(archivepath)
 			Local filename:String, outputpath:String
 			Local basepath:String = mainapp.m_modpath + "/" + mxModUtils.GetScopeFromID(m_id) + ".mod/"
+			DeleteDir(mxModUtils.ModulePath(m_id), True)
 			For Local fileinfo:SZipFileEntry = EachIn zreader.m_zipFileList.FileList
 				filename = fileinfo.zipFileName
 				outputpath = basepath + filename

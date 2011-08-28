@@ -1,5 +1,10 @@
 Revision history for Maximus.
 
+    - Added -ignoreunmanaged option to 'install' command to overwrite existing
+      unmanaged modules
+    - When unpacking modules Maximus now makes sure that the module directory
+      gets deleted if it previous existed, to keep out unwanted files
+
 1.0.1  2011-07-31
     - Maximus can now connect through a proxy server by adding the
       'proxyserver' setting to the configuration file. See the README file for
