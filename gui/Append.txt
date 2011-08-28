@@ -8,13 +8,14 @@ logger.AddObserver(LoggerObserver)
 logger.AddObserver(New mxLoggerObserverDebuglog)
 ?
 
+Local MainWindow:TForm = New TWindowMain.CreateForm()
+'Catch any output by mxApp in the textarea for console output
+LoggerObserver.m_output = TWindowMain(MainWindow).TextAreaConsole
+
 Global mainapp:mxApp
 New mxApp.Create()
 mainapp.SetUserInput(mxUserInput.c_gui)
-
-Local MainWindow:TForm = New TWindowMain.CreateForm()
 TWindowMain(MainWindow).Init()
-
 
 While TForm.FormsExist()
 	WaitSystem
