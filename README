@@ -55,7 +55,8 @@ you have to explicitly set this environment variable.
     On Linux        $ export BMXPATH=~/BlitzMax
 
 It's also possible to change the configuration defaults for Maximus by creating
-a config file. You can do this by creating a maximus.config file.
+a config file. You can do this by creating a maximus.config file. For Maximus GUI
+on Linux you need to create this file with at least the maxpath setting specified.
 
     On Windows      : C:\Users\<user>\AppData\Roaming\maximus\maximus.config
                -OR- : C:\Documents and Settings\username\Application Data\maximus\maximus.config
