@@ -43,14 +43,16 @@ arg {
 	}
 	install {
 		usage "description: Install the given set of modules
-				usage: maximus install [-nounpack] [-nobuild] [-keeptemp] [-nothreaded] [-makedocs] modules
+				usage: maximus install [-nounpack] [-nobuild] [-keeptemp] [-nothreaded] [-makedocs] [-overwriteunmanaged] modules
 				options: -nounpack (don't unpack archives), -nobuild (don't build modules), -keeptemp (don't remove 'tmp/' directory)
-				-nothreaded (don't build threaded), -makedocs (build documentation), -force (force install when dependencies are not met)"
+				-nothreaded (don't build threaded), -makedocs (build documentation), -force (force install when dependencies are not met)
+				-overwriteunmanaged (overwrite any unmanaged modules)"
 		modulestoinstall "The following module(s) will be installed:"
 		nomodulestoinstall "No modules to be installed"
 		modulestoskip "The following module(s) won't be installed because they already exist and have not been installed with Maximus:"
-		continuewithinstall "Continue with install? [y/n]"
-		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed) [y/n]"
+		modulestooverwrite "The following module(s) will be overwritten, even though they've not been previously installed by Maximus:"
+		continuewithinstall "Continue with install?"
+		missingdeps "Continue with install? (will not build, and missing dependencies will not be installed)"
 		newerinstalled "The following modules are already at newer or development versions.
 						If you choose to continue installing, the entire module folders will be destroyed and replaced."
 		notfound {
@@ -143,5 +145,6 @@ message {
 		build "Skipping build"
 		install "Skipping install"
 	}
+	confirm "[y/n]"
 }
 

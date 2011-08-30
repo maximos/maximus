@@ -41,6 +41,11 @@ the following additional modules:
 Once you have these modules and their dependencies installed you can continue
 by compiling maximus.bmx as a command line application.
 
+Maximus GUI is being build with Logic GUI 5.4. Unfortunately isn't available for
+free but can be bought from http://jsp.logiczone.de. Because of this some
+external files aren't included in the repository. The files I'm talking about
+reside in gui/ExternalTypes and come with Logic GUI.
+
 GETTING STARTED - CONFIGURATION
 
 Run maximus(.exe) from the command line. If Maximus can't detect your BMXPATH
@@ -50,7 +55,8 @@ you have to explicitly set this environment variable.
     On Linux        $ export BMXPATH=~/BlitzMax
 
 It's also possible to change the configuration defaults for Maximus by creating
-a config file. You can do this by creating a maximus.config file.
+a config file. You can do this by creating a maximus.config file. For Maximus GUI
+on Linux you need to create this file with at least the maxpath setting specified.
 
     On Windows      : C:\Users\<user>\AppData\Roaming\maximus\maximus.config
                -OR- : C:\Documents and Settings\username\Application Data\maximus\maximus.config

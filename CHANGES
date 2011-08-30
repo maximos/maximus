@@ -1,5 +1,12 @@
 Revision history for Maximus.
 
+1.1.0  2011-08-30
+    - A Graphical User Interface has been added in the form of maximus-gui
+    - Added -overwriteunmanaged option to 'install' command to overwrite existing
+      unmanaged modules
+    - When unpacking modules Maximus now makes sure that the module directory
+      gets deleted if it previous existed, to keep out unwanted files
+
 1.0.1  2011-07-31
     - Maximus can now connect through a proxy server by adding the
       'proxyserver' setting to the configuration file. See the README file for
