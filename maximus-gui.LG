@@ -2,7 +2,7 @@
 <root>
   <Preferences>
     <Creator>Logic Gui</Creator>
-    <Version>5.1 Build 422</Version>
+    <Version>5.4 Build 457</Version>
     <Push_Button_Counter>10</Push_Button_Counter>
     <TextField_Counter>0</TextField_Counter>
     <Panels_Counter>16</Panels_Counter>
@@ -404,7 +404,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item2>
   <Item3>
     <Name>GroupModules</Name>
@@ -435,7 +441,7 @@
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>3</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
+    <StyleToCreate>3</StyleToCreate>
     <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
@@ -491,7 +497,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item3>
   <Item4>
     <Name>TreeView</Name>
@@ -655,7 +667,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item5>
   <Item6>
     <Name>GroupModuleAction</Name>
@@ -686,7 +704,7 @@
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>3</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
+    <StyleToCreate>3</StyleToCreate>
     <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
@@ -742,7 +760,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item6>
   <Item7>
     <Name>GroupConsole</Name>
@@ -773,7 +797,7 @@
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>3</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
+    <StyleToCreate>3</StyleToCreate>
     <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
@@ -829,7 +853,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item7>
   <Item8>
     <Name>GroupModuleInfo</Name>
@@ -860,7 +890,7 @@
     <Vw>0</Vw>
     <Vh>0</Vh>
     <TypToCreate>3</TypToCreate>
-    <StyleToCreate>8</StyleToCreate>
+    <StyleToCreate>3</StyleToCreate>
     <Font_Name/>
     <Font_Size>0</Font_Size>
     <Font_Style>0</Font_Style>
@@ -916,7 +946,13 @@
     <Use_Toolbar_Tip>0</Use_Toolbar_Tip>
     <Use_Toolbar_Extra>0</Use_Toolbar_Extra>
     <ToolbarType>0</ToolbarType>
+    <CreateAsType>0</CreateAsType>
     <ToolbarItems/>
+    <Use_TextInsideType>0</Use_TextInsideType>
+    <InsideType_TEXT/>
+    <Use_TextInsideOnEventMethod>0</Use_TextInsideOnEventMethod>
+    <InsideOnEvent_TEXT/>
+    <WindowGroup/>
   </Item8>
   <Item9>
     <Name>TextAreaModuleInformation</Name>
@@ -971,6 +1007,7 @@
     <Load_File/>
     <Filter>0</Filter>
     <FilterRange/>
+    <FilterFunction/>
     <TabSize>0</TabSize>
     <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
     <EVENT_GADGETACTION_TEXT/>
@@ -1216,6 +1253,7 @@
     <Load_File/>
     <Filter>0</Filter>
     <FilterRange/>
+    <FilterFunction/>
     <TabSize>0</TabSize>
     <EVENT_GADGETACTION>1</EVENT_GADGETACTION>
     <EVENT_GADGETACTION_TEXT/>
