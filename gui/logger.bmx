@@ -22,7 +22,7 @@ Type mxLoggerObserverGUI
 	End Rem
 	Method SendMessage:Object(message:Object, context:Object)
 		Local msg:String = String(message)
-		If String(context) = "error"
+		If String(context) = mxLogger.c_error
 			Notify(msg, True)
 		Else If TGadget(m_output)
 			Local gadget:TGadget = TGadget(m_output)
