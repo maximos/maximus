@@ -89,7 +89,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 	End Rem
 	Method CheckOptions()
 		m_nobuild = False; m_nounpack = False; m_keeptemp = False
-		m_nothreaded = False; m_makedocs = False
+		m_nothreaded = False; m_makedocs = False; m_forceinstall = False; m_overwriteunmanaged = False
 		For Local opt:dIdentifier = EachIn m_args
 			Select opt.GetName().ToLower()
 				Case "-nobuild" m_nobuild = True
@@ -139,8 +139,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			logger.LogMessage("~t" + a)
 			If m_forceinstall
 				m_nobuild = True
-				Local resp:String = Input(_s("arg.install.missingdeps") + " ").ToLower()
-				If resp = "y" Or resp = "yes"
+				If mainapp.m_userinput.Confirm(_s("arg.install.missingdeps"))
 					Return True
 				End If
 			End If
@@ -207,8 +206,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 			Next
 			a = a[..a.Length - 1]
 			logger.LogMessage("~t" + a)
-			Local resp:String = Input(_s("arg.install.continuewithinstall") + " ").ToLower()
-			If resp = "y" Or resp = "yes"
+			If mainapp.m_userinput.Confirm(_s("arg.install.continuewithinstall"))
 				For instmod = EachIn m_instmap.ValueEnumerator()
 					instmod.FetchSourceArchive()
 				Next

@@ -1,5 +1,6 @@
 Revision history for Maximus.
 
+    - A Graphical User Interface has been added in the form of maximus-gui
     - Added -overwriteunmanaged option to 'install' command to overwrite existing
       unmanaged modules
     - When unpacking modules Maximus now makes sure that the module directory

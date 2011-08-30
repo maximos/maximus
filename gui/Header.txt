@@ -1,7 +1,12 @@
-
+'Start of external Header File
 SuperStrict
 
-Framework brl.blitz
+Import MaxGui.Drivers
+
+'?Not win32			'Uncomment (3-lines) when using multiple canvases and BMax 1.32b and up
+'GLShareContexts
+'?
+
 Import brl.standardio
 Import brl.maxutil
 Import brl.ramstream
@@ -35,12 +40,7 @@ Include "src/impl/install.bmx"
 Include "src/impl/update.bmx"
 Include "src/impl/list.bmx"
 
-Global logger:mxLogger = New mxLogger
-logger.AddObserver(New mxLoggerObserverIOStream)
+'GUI specifics
+Include "gui/logger.bmx"
 
-Global mainapp:mxApp
-New mxApp.Create()
-mainapp.SetUserInput(mxUserInput.c_cli)
-'Skip the first element because it is the program's location
-mainapp.SetArgs(AppArgs[1..])
-mainapp.Run()
+'End Of external Header File

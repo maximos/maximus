@@ -56,6 +56,8 @@ Type mxUpdateImpl Extends dArgumentImplementation
 				logger.LogMessage(_s("message.fetch.done", [String(response.responseCode)]))
 				CopyFile(file, mainapp.m_sourcesfile)
 				DeleteFile(file)
+				'Refresh loaded sources file
+				mainapp.SetSourcesHandler()
 			Else
 				DeleteFile(file)
 				logger.LogMessage("")
