@@ -3,7 +3,7 @@
 
 #define MyAppName "Maximus"
 #define MyAppNameGUI "Maximus GUI"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "Maximus"
 #define MyAppURL "http://maximus.htbaa.com"
 #define MyAppExeName "maximus.exe"
