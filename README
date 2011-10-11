@@ -29,7 +29,7 @@ To compile Maximus yourself you'll need to install the (latest versions) of
 the following additional modules:
 
     * bah.volumes    (http://maximus.htbaa.com/module/bah/volumes)
-    * gman.zipengine (https://github.com/downloads/maximos/maximus/gman.zipengine-patched.zip)
+    * gman.zipengine (http://maximus.htbaa.com/module/gman/zipengine)
     * htbaapub.rest  (http://maximus.htbaa.com/module/htbaapub/rest)
     * duct.variables (http://maximus.htbaa.com/module/duct/variables)
     * duct.objectmap (http://maximus.htbaa.com/module/duct/objectmap)
