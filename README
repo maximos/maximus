@@ -41,10 +41,10 @@ the following additional modules:
 Once you have these modules and their dependencies installed you can continue
 by compiling maximus.bmx as a command line application.
 
-Maximus GUI is being build with Logic GUI 5.4. Unfortunately isn't available for
-free but can be bought from http://jsp.logiczone.de. Because of this some
-external files aren't included in the repository. The files I'm talking about
-reside in gui/ExternalTypes and come with Logic GUI.
+Maximus GUI is being build with Logic GUI 5.4. Unfortunately Logic GUI isn't
+available for free but can be bought from http://jsp.logiczone.de. Because of
+this some external files aren't included in the repository. The files I'm
+talking about reside in gui/ExternalTypes and come with Logic GUI.
 
 GETTING STARTED - CONFIGURATION
 
