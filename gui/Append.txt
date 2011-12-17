@@ -26,11 +26,15 @@ Rem
 	about: If @observer is NULL output will be shown with Notify
 	If @observer is a TGadget its GadgetText will be updated
 End Rem
-Function RunCommand(args:String[], observer:Object = Null)
+Function RunCommand(args:String[], observer:Object = Null, completedMsg:Byte = True)
 	If TGadget(observer) Then LoggerObserver.Reset()
 	LoggerObserver.m_output = observer
 	mainapp.SetArgs(args)
 	mainapp.Run()
+	
+	If completedMsg
+		LoggerObserver.SendMessage(_s("message.finished"), mxLogger.c_message)
+	End If
 End Function
 
 'End Of external Append File

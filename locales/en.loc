@@ -146,5 +146,6 @@ message {
 		install "Skipping install"
 	}
 	confirm "[y/n]"
+	finished "Operation finished"
 }
 
