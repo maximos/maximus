@@ -57,7 +57,11 @@ Type mxApp Extends dCLApp
 		m_confighandler.Load()
 		If Not m_maxpath
 			Try
-				SetMaxPath(BlitzMaxPath())
+				Local path:String = BlitzMaxPath()
+				If path.Length = 0 And mxUserInputDriverGUI(m_userinput.m_driver)
+					path = RequestDir(_s("message.selectbmxpath"), CurrentDir())
+				End If
+				SetMaxPath(path)
 			Catch e:Object
 				ThrowError(_s("error.notfound.maxenv"))
 			End Try

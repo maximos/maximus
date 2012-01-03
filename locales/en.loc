@@ -147,5 +147,6 @@ message {
 	}
 	confirm "[y/n]"
 	finished "Operation finished"
+	selectbmxpath "Select your BlitzMax folder"
 }
 
