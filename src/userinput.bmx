@@ -75,7 +75,11 @@ Type mxUserInputDriverCLI Extends mxUserInputDriver
 
 End Type
 
+Rem
+	bbdoc: UserInputDriver for Graphical User Interface
+End Rem
 Type mxUserInputDriverGUI Extends mxUserInputDriver
+
 	Rem
 		bbdoc:Ask user to confirm an action
 	End Rem
