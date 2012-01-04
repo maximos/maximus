@@ -1,5 +1,6 @@
 Revision history for Maximus.
 
+1.1.1  2012-01-04
     - maximus-gui will now display a directory dialog when BMXPATH hasn't been
       provided
     - maximus-gui will now display a confirmation message when done executing
