@@ -12,9 +12,9 @@ Local MainWindow:TForm = New TWindowMain.CreateForm()
 'Catch any output by mxApp in the textarea for console output
 LoggerObserver.m_output = TWindowMain(MainWindow).TextAreaConsole
 
-Global mainapp:mxApp
-New mxApp.Create()
+Global mainapp:mxApp = New mxApp
 mainapp.SetUserInput(mxUserInput.c_gui)
+mainapp.Create()
 TWindowMain(MainWindow).Init()
 
 While TForm.FormsExist()

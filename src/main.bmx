@@ -57,15 +57,15 @@ Type mxApp Extends dCLApp
 		m_confighandler.Load()
 		If Not m_maxpath
 			Try
-				Local path:String = BlitzMaxPath()
-				If path.Length = 0 And mxUserInputDriverGUI(m_userinput.m_driver)
-					path = RequestDir(_s("message.selectbmxpath"), CurrentDir())
-				End If
-				SetMaxPath(path)
+				SetMaxPath(BlitzMaxPath())
 			Catch e:Object
-				ThrowError(_s("error.notfound.maxenv"))
+				If m_userinput <> Null And mxUserInputDriverGUI(m_userinput.m_driver)
+					Local path:String = RequestDir(_s("message.selectbmxpath"), CurrentDir())
+					SetMaxPath(path)
+				End If
 			End Try
 		End If
+		If Not m_maxpath Then ThrowError(_s("error.notfound.maxenv"))
 		If Not m_modpath Then SetModPath(m_maxpath + "/mod", False)
 		m_arghandler = New dArgumentHandler.Create()
 		m_arghandler.AddArgImpl(New mxHelpImpl)
