@@ -162,7 +162,7 @@ Type mxInstallImpl Extends dArgumentImplementation
 					If dmodul
 						If Not m_instmap._Contains(modid)
 							Local dinstmod:mxInstModule = New mxInstModule.Create(modid, dmodul)
-							If instmod.GetVersionName().ToLower() = "dev"
+							If dinstmod.GetVersion() <> Null And instmod.GetVersionName().ToLower() = "dev"
 								dinstmod.SetVersionFromName("dev")
 							Else
 								dinstmod.SetVersion(Null)
