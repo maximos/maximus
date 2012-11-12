@@ -1,5 +1,9 @@
 Revision history for Maximus.
 
+1.1.2  2012-11-12
+    - Fixed a memory access violation bug that occurred when trying to install
+      a module that didn't have a dev-release
+
 1.1.1  2012-01-04
     - maximus-gui will now display a directory dialog when BMXPATH hasn't been
       provided
